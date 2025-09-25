@@ -12,6 +12,13 @@ lerna-debug.log*
 *.test.js
 *.test.jsx
 *.test.json
+*.test.ts
+*.test.tsx
+*.spec.js
+*.spec.jsx
+*.spec.ts
+*.spec.tsx
+**/__snapshots__/**
 
 node_modules
 dist
