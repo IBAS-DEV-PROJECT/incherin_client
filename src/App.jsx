@@ -1,5 +1,5 @@
 // --- 라이브러리 ---
-import { ThemeProvider } from '@emotion/react';
+import { ThemeProvider, Global, css } from '@emotion/react';
 import { theme } from './styles/theme';
 import React from 'react';
 
@@ -11,6 +11,18 @@ import AppRouter from './routes/AppRouter';
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
+      <Global
+        styles={css`
+          html,
+          body,
+          #root {
+            height: 100%;
+          }
+          body {
+            margin: 0;
+          }
+        `}
+      />
       <AppRouter />
     </ThemeProvider>
   );

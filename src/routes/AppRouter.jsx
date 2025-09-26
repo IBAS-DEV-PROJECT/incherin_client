@@ -4,9 +4,12 @@ import {
   createBrowserRouter,
   RouterProvider,
   Navigate,
+  Outlet,
 } from 'react-router-dom';
 // --- 내부 (현재) ---
 import { ROUTES } from './routeTable';
+import { Header } from '../layouts/Header';
+import { Footer } from '../layouts/Footer';
 
 // --- 인증 상태 (문서: 서비스/API & 라우팅 컨벤션) ---
 // TODO: auth 전역 상태(Jotai 등) 연동 시 교체
@@ -39,21 +42,37 @@ function Protected({ children }) {
 // - 모든 페이지 lazy 로딩 + Suspense
 // - MY는 Protected로 보호
 const router = createBrowserRouter([
-  { path: ROUTES.HOME, element: withSuspense(<HomePage />) },
-  { path: ROUTES.AUTH, element: withSuspense(<AuthPage />) },
-  { path: ROUTES.MAP, element: withSuspense(<MapPage />) },
-  { path: ROUTES.STORES, element: withSuspense(<StoresPage />) },
-  { path: ROUTES.STORE_DETAIL(), element: withSuspense(<StoreDetailPage />) },
   {
-    path: ROUTES.MY,
-    element: withSuspense(
-      <Protected>
-        <MyPage />
-      </Protected>
+    // 기본 레이아웃: Header/Footer 고정
+    element: (
+      <>
+        <Header />
+        <Outlet />
+        <Footer />
+      </>
     ),
+    children: [
+      { path: ROUTES.HOME, element: withSuspense(<HomePage />) },
+      { path: ROUTES.AUTH, element: withSuspense(<AuthPage />) },
+      { path: ROUTES.STORES, element: withSuspense(<StoresPage />) },
+      {
+        path: ROUTES.STORE_DETAIL(),
+        element: withSuspense(<StoreDetailPage />),
+      },
+      {
+        path: ROUTES.MY,
+        element: withSuspense(
+          <Protected>
+            <MyPage />
+          </Protected>
+        ),
+      },
+      { path: ROUTES.ADMIN, element: withSuspense(<AdminPage />) },
+      { path: ROUTES.NOT_FOUND, element: withSuspense(<NotFoundPage />) },
+    ],
   },
-  { path: ROUTES.ADMIN, element: withSuspense(<AdminPage />) },
-  { path: ROUTES.NOT_FOUND, element: withSuspense(<NotFoundPage />) },
+  // Map은 레이아웃 제외 (Header/Footer 없음)
+  { path: ROUTES.MAP, element: withSuspense(<MapPage />) },
 ]);
 
 export default function AppRouter() {
