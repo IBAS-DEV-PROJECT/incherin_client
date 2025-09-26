@@ -3,10 +3,15 @@ export const theme = {
     white: '#FFFFFF', // 흰색
     gray: '#F2F2F2', // 연한 회색
     darkGray: '#B1B1B1', // 진한 회색
-    lightBlue: '#D4E7FA', // 하늘색
+    lightBlue: '#D4E7FA', // 하늘색 (info와 동일)
     blue: '#27509B', // 파란색
     red: '#AC182D', // 빨간색
     black: '#121212', // 검은색
+    // Badge 컴포넌트용 추가 색상들 (기존 색상과 중복 제거)
+    success: '#28a745', // 성공 색상
+    warning: '#ffc107', // 경고 색상
+    lightBorder: '#dee2e6', // 밝은 테두리
+    lightText: '#495057', // 밝은 텍스트
   },
   typography: {
     fontFamily: "'Noto Sans KR', sans-serif",
