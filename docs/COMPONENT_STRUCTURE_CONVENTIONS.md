@@ -1,7 +1,6 @@
 # 컴포넌트 구조 컨벤션
 
 > React 컴포넌트 (JS 기준)
-> 
 
 ---
 
@@ -35,7 +34,7 @@ export function Modal({ isOpen, onClose }) {
   const [countState, setCountState] = useState(0);
 
   // --- 핸들러 ---
-  const handleClick = () => setCountState((c) => c + 1);
+  const handleClick = () => setCountState(c => c + 1);
 
   // --- 렌더링 ---
   if (!isOpen) return null;
