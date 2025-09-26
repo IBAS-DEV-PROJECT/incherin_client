@@ -1,132 +1,343 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-//Header 컨테이너
-const HeaderContainer = styled.header`
-  width: 100%;
-  background: #FFFFFF;
-  box-sizing: border-box;
-  padding: 18px;
-  margin: 0;
+// 전체 Wrapper
+const Wrapper = styled.div`
+  position: relative;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
 `;
 
-//로고 영역
-const Logo = styled.div`
+// Sidebar 컨테이너
+const SidebarContainer = styled.div`
+  width: ${({ isOpen }) => (isOpen ? "180px" : "68px")};
+  transition: width 0.3s ease;
+  background-color: #ffffff;
+  height: 100vh;
+  border-right: 1px solid #e9e9e9;
   display: flex;
-  align-items: center;
+  flex-direction: column;
 
-  img {
-    transform: scale(0.8);
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 `;
 
-//사용자 유형
-const UserType = styled.div`
-  font-size: 16px;
-  font-weight: bold;
-  color: #B1B1B1;
-  padding-left: 22px;
-  word-spacing: 2px;
-  letter-spacing: 2px;
+// 사이드바 토글 버튼
+const ToggleButton = styled.button`
+  position: absolute;
+  top: 30px;
+  left: ${({ isOpen }) => (isOpen ? "180px" : "68px")};
+  z-index: 2;
 
-  span {
-    font-size: 16px;
-    color: #27509B;
-    margin: 0 10px;
-  }
-`;
-
-//오른쪽 요소들 컨테이너
-const RightContainer = styled.div`
-  display: flex;
-  align-items: center;
-  padding-right: 18px;
-  gap: 18px;
-`;
-
-//search 컨테이너
-const Search = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 10px 16px;
-  gap: 8px;
-  border: 1px solid #B1B1B1;
-  border-radius: 6px;
-`;
-
-//검색 입력 받는 부분
-const SearchInput = styled.input`
-  border: none;
-  outline: none;
-  font-size: 16px;
-  font-weight: bold;
-  width: 80px;
-`;
-
-//로그인or로그아웃 버튼
-const Button = styled.button`
-  display: flex;
-  align-items: center;
-  width: 114px;
-  gap: 4px;
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: bold;
+  width: 28px;
+  height: 28px;
+  background: #fff;
+  border: 1px solid #e9e9e9;
   cursor: pointer;
-  background-color: #FFFFFF;
-  border: 1px solid ${({ isLoggedIn }) => (isLoggedIn ? "#B1B1B1" : "#27509B")};
-  color: ${({ isLoggedIn }) => (isLoggedIn ? "#B1B1B1" : "#27509B")};
-
-  img {
-    transform: scale(0.7);
-    margin: 0px;
-  }
+  font-size: 16px;
+  color: #b1b1b1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: left 0.3s ease;
 
   &:hover {
-    background: ${({ isLoggedIn }) => (isLoggedIn ? "#FFFFFF" : "#27509B")};
-    color: ${({ isLoggedIn }) => (isLoggedIn ? "#121212" : "#FFFFFF")}
+    background-color: #f4f4f4;
   }
 `;
 
-export default function Header() {
-    const [userType, setUserType] = useState("게스트");
-    const isLoggedIn = userType !== "게스트";
-    
-    const handleLoginToggle = () => {
-      if (isLoggedIn) {
-        setUserType("게스트");
-      } else {
-        setUserType("이용자");
-      }
-    };
-  
-    return (
-      <HeaderContainer>
-        <Logo>
-          <img src="/image/logo2.png" alt="Logo"/>
-        </Logo>
-  
-        <UserType>
-          당신은 현재 <span>{userType}</span> 입니다
-        </UserType>
-  
-        <RightContainer>
-          <Search>
-            <img src="/image/search.png" alt="Search" width={16} />
-          <SearchInput type="text" placeholder="통합검색" />
-          </Search>
+// 프로필 사진, 닉네임 들어가는 영역
+const Header = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  padding-top: 30px;
+  font-weight: bold;
+`;
 
-          <Button isLoggedIn={isLoggedIn} onClick={handleLoginToggle}>
-            <img src="/image/user.png" alt="User"/>
-            {isLoggedIn ? "로그아웃" : "로그인"}
-          </Button>
-        </RightContainer>
-      </HeaderContainer>
-    );
+const Profile = styled.img`
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  margin-right: 10px;
+`;
+
+const HeaderLeft = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+// Admin, Menu, System 구분
+const Section = styled.div`
+  margin-top: 20px;
+`;
+
+// Section 제목 (클릭 시 접기/펼치기)
+const SectionTitle = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #121212;
+  cursor: pointer;
+
+  &:hover {
+    color: #27509B;
   }
+`;
+
+// 섹션 내부 메뉴 리스트 (expanded 여부에 따라 표시/숨김)
+const MenuList = styled.div`
+  display: ${({ expanded }) => (expanded ? "block" : "none")};
+`;
+
+const SectionItem = styled(Link, {
+  shouldForwardProp: (prop) => prop !== "isActive",
+})`
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  font-size: 14px;
+  text-decoration: none;
+  color: ${({ isActive }) => (isActive ? "#121212" : "#b1b1b1")};
+  cursor: ${({ isActive }) => (isActive ? "pointer" : "default")};
+  font-weight: ${({ isActive }) => (isActive ? "500" : "400")};
+
+  &:hover {
+    color: ${({ isActive }) => (isActive ? "#27509B" : "#b1b1b1")};
+    background-color: ${({ isActive }) =>
+      isActive ? "#e9e9e9" : "transparent"};
+  }
+`;
+
+const IconWrapper = styled.div`
+  width: 28px;
+  display: flex;
+  justify-content: center;
+  margin-right: ${({ isOpen }) => (isOpen ? "8px" : "0")};
+`;
+
+// SectionItem에 들어갈 아이콘
+const IconImg = styled.img`
+  width: 20px;
+  height: 20px;
+  border-radius: 30%;
+`;
+
+// 하위 상세 메뉴 (My 페이지, 문의하기의 상세)
+const ItemDetail = styled(Link)`
+  display: block;
+  padding: 4px 32px;
+  font-size: 13px;
+  color: #121212;
+  text-decoration: none;
+
+  &:hover {
+    color: #27509B;
+  }
+`;
+
+export default function Sidebar({
+  userType = "guest",
+  nickname = "User Name",
+  profileImage = "/image/logo1.png",
+}) {
+  // 사이드바 열림/닫힘 상태
+  const [isOpen, setIsOpen] = useState(false);
+
+  // 각 섹션 확장 여부 상태
+  const [expandedState, setExpandedState] = useState({
+    menu: true,
+    system: true,
+    myPage: false,
+    inquiry: false,
+    admin: true,
+  });
+
+  // 섹션 확장/축소 핸들러
+  const handleExpandedToggle = (key) => {
+    setExpandedState((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  // 유저 타입별 메뉴 구성
+  const sidebarConfigMap = {
+    guest: {
+      menu: [
+        { name: "지도 탐색", isActive: true, icon: "/image/map-01.png", path: "/map" },
+        { name: "메뉴 탐색", isActive: true, icon: "/image/menu.png", path: "/menu" },
+        { name: "찜한 가게", isActive: false, icon: "/image/heart.png", path: "#" },
+        { name: "리뷰 탐색", isActive: false, icon: "/image/review.png", path: "#" },
+        { name: "MY 페이지", isActive: false, icon: "/image/user-circle.png", path: "#" },
+      ],
+      system: [
+        { name: "공지사항", isActive: true, icon: "/image/announcement.png", path: "/notice" },
+        { name: "문의하기", isActive: false, icon: "/image/question.png", path: "/question" },
+        { name: "신고하기", isActive: false, icon: "/image/alert.png", path: "#" },
+        { name: "설정", isActive: true, icon: "/image/settings.png", path: "/setting" },
+      ],
+    },
+    user: {
+      menu: [
+        { name: "지도 탐색", isActive: true, icon: "/image/map-01.png", path: "/map" },
+        { name: "메뉴 탐색", isActive: true, icon: "/image/menu.png", path: "/menu" },
+        { name: "찜한 가게", isActive: true, icon: "/image/heart.png", path: "/favorites" },
+        { name: "리뷰 탐색", isActive: true, icon: "/image/review.png", path: "/reviews" },
+        {
+          name: "MY 페이지",
+          isActive: true,
+          icon: "/image/user-circle.png",
+          path: "/mypage",
+          hasDetail: true,
+          details: [
+            { name: "내 정보", path: "/mypage/info" },
+            { name: "내가 쓴 리뷰", path: "/mypage/reviews" },
+            { name: "내 리스트 관리", path: "/mypage/lists" },
+          ],
+        },
+      ],
+      system: [
+        { name: "공지사항", isActive: true, icon: "/image/announcement.png", path: "/notice" },
+        {
+          name: "문의하기",
+          isActive: true,
+          icon: "/image/question.png",
+          path: "/inquiry",
+          hasDetail: true,
+          details: [
+            { name: "새 문의하기", path: "/inquiry/new" },
+            { name: "내가 남긴 문의", path: "/inquiry/my" },
+          ],
+        },
+        { name: "신고하기", isActive: true, icon: "/image/alert.png", path: "/report" },
+        { name: "설정", isActive: true, icon: "/image/settings.png", path: "/setting" },
+      ],
+    },
+  };
+
+  // Admin 전용 메뉴 (userType === "admin"일 때만 표시)
+  const adminExtra = [
+    { name: "Dashboard", isActive: true, icon: "/image/blue.png", path: "/admin/dashboard" },
+    { name: "Notification", isActive: true, icon: "/image/blue.png", path: "/admin/notification" },
+    { name: "FAQ", isActive: true, icon: "/image/blue.png", path: "/admin/faq" },
+    { name: "Report", isActive: true, icon: "/image/blue.png", path: "/admin/report" },
+    { name: "Members", isActive: true, icon: "/image/blue.png", path: "/admin/members" },
+  ];
+
+  const sidebarConfig = userType === "guest" ? sidebarConfigMap.guest : sidebarConfigMap.user;
+  const showAdmin = userType === "admin";
+
+  return (
+    <Wrapper>
+      <SidebarContainer isOpen={isOpen}>
+        {/* Header */}
+        <Header>
+          <HeaderLeft>
+            <Profile src={profileImage} alt="profile" />
+            {isOpen && <span>{userType === "guest" ? "Guest" : nickname}</span>}
+          </HeaderLeft>
+        </Header>
+
+        {/* Admin Section */}
+        {showAdmin && (
+          <Section>
+            <SectionTitle onClick={() => handleExpandedToggle("admin")}>Admin</SectionTitle>
+            <MenuList expanded={expandedState.admin}>
+              {adminExtra.map((item, i) => (
+                <SectionItem key={i} to={item.path} isActive={item.isActive}>
+                  <IconWrapper isOpen={isOpen}>
+                    <IconImg src={item.icon} alt={item.name} />
+                  </IconWrapper>
+                  {isOpen && item.name}
+                </SectionItem>
+              ))}
+            </MenuList>
+          </Section>
+        )}
+
+        {/* Menu Section */}
+        <Section>
+          <SectionTitle onClick={() => handleExpandedToggle("menu")}>Menu</SectionTitle>
+          <MenuList expanded={expandedState.menu}>
+            {sidebarConfig.menu.map((item, i) => (
+              <div key={i}>
+                <SectionItem
+                  to={item.path}
+                  isActive={item.isActive}
+                  onClick={(e) => {
+                    if (item.hasDetail) {
+                      e.preventDefault();
+                      handleExpandedToggle("myPage");
+                    }
+                    if (!item.isActive) e.preventDefault();
+                  }}
+                >
+                  <IconWrapper isOpen={isOpen}>
+                    <IconImg src={item.icon} alt={item.name} />
+                  </IconWrapper>
+                  {isOpen && item.name}
+                </SectionItem>
+
+                {item.hasDetail && expandedState.myPage && item.details && isOpen && (
+                  <div>
+                    {item.details.map((detail, j) => (
+                      <ItemDetail key={j} to={detail.path}>
+                        • {detail.name}
+                      </ItemDetail>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </MenuList>
+        </Section>
+
+        {/* System Section */}
+        <Section>
+          <SectionTitle onClick={() => handleExpandedToggle("system")}>System</SectionTitle>
+          <MenuList expanded={expandedState.system}>
+            {sidebarConfig.system.map((item, i) => (
+              <div key={i}>
+                <SectionItem
+                  to={item.path}
+                  isActive={item.isActive}
+                  onClick={(e) => {
+                    if (item.hasDetail) {
+                      e.preventDefault();
+                      handleExpandedToggle("inquiry");
+                    }
+                    if (!item.isActive) e.preventDefault();
+                  }}
+                >
+                  <IconWrapper isOpen={isOpen}>
+                    <IconImg src={item.icon} alt={item.name} />
+                  </IconWrapper>
+                  {isOpen && item.name}
+                </SectionItem>
+
+                {item.hasDetail && expandedState.inquiry && item.details && isOpen && (
+                  <div>
+                    {item.details.map((detail, j) => (
+                      <ItemDetail key={j} to={detail.path}>
+                        • {detail.name}
+                      </ItemDetail>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </MenuList>
+        </Section>
+      </SidebarContainer>
+
+      {/* Toggle Button */}
+      <ToggleButton isOpen={isOpen} onClick={() => setIsOpen(!isOpen)}>
+        {isOpen ? "<" : ">"}
+      </ToggleButton>
+    </Wrapper>
+  );
+}
