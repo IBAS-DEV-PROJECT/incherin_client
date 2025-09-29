@@ -11,21 +11,28 @@ import { Button, Input } from '../../common';
 import { ROUTES } from '../../../routes/routeTable';
 import { searchStateAtom, SEARCH_TYPES } from '../../../stores/searchStore';
 
+// --- 에셋 ---
+import InduckLineLogo from '../../../assets/image/induck-line-logo.png';
+import InduckLogo from '../../../assets/image/induck-logo.svg';
+
 // --- 스타일 ---
 const StyledLandingHero = styled.section(({ theme }) => ({
   width: '100%',
   backgroundColor: theme.colors.blue,
   color: theme.colors.white,
+  position: 'relative',
 }));
 
 const StyledLandingInner = styled.div(() => ({
   maxWidth: 1120,
   margin: '0 auto',
-  padding: '56px 24px 64px',
+  padding: '56px 24px 160px',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   gap: 32,
+  position: 'relative',
+  zIndex: 1,
 }));
 
 const StyledLandingTitle = styled.h1(() => ({
@@ -49,7 +56,7 @@ const StyledSearchCard = styled.div(({ theme }) => ({
   boxShadow: '0 6px 24px rgba(0,0,0,0.15)',
   overflow: 'hidden',
   width: '100%',
-  maxWidth: 600,
+  maxWidth: 520,
 }));
 
 const StyledSearchTabs = styled.div(({ theme }) => ({
@@ -66,7 +73,6 @@ const StyledSearchRow = styled.div(({ theme }) => ({
   padding: 16,
 }));
 
-// 통합된 StyledButton - 탭과 검색 버튼 모두 사용
 const StyledTabButton = styled(Button)(({ theme, $isActive }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -93,12 +99,33 @@ const StyledSearchButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const StyledMascot = styled.div(() => ({
-  justifySelf: 'end',
+const StyledLogo = styled.img(() => ({
+  width: 240,
+  height: 'auto',
+  display: 'block',
+}));
+
+const StyledSearchAndLogoRow = styled.div(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-start',
+  gap: 24,
+  width: '100%',
+}));
+
+const StyledLeftAlign = styled.div(() => ({
+  alignSelf: 'flex-start',
+}));
+
+const StyledBottomLogo = styled.img(() => ({
+  position: 'absolute',
+  bottom: 0,
+  left: '70%',
+  transform: 'translateX(-50%)',
   width: 260,
-  height: 260,
-  borderRadius: 130,
-  background: 'rgba(255,255,255,0.15)',
+  height: 'auto',
+  pointerEvents: 'none',
+  zIndex: 0,
 }));
 
 /**
@@ -147,54 +174,57 @@ export function HeroSection() {
             인하대/인하공전 학생들이 직접 공유하고 솔직하게 리뷰하는 인슐랭
             가이드입니다 :D
           </StyledLandingSubtitle>
-          <StyledSearchCard>
-            <StyledSearchTabs>
-              {[
-                {
-                  type: SEARCH_TYPES.MAP,
-                  icon: <Map01 size={16} />,
-                  label: '지도 탐색',
-                },
-                {
-                  type: SEARCH_TYPES.MENU,
-                  icon: <LayoutAlt04 size={16} />,
-                  label: '메뉴 탐색',
-                },
-              ].map(tab => (
-                <StyledTabButton
-                  key={tab.type}
+          <StyledSearchAndLogoRow>
+            <StyledSearchCard>
+              <StyledSearchTabs>
+                {[
+                  {
+                    type: SEARCH_TYPES.MAP,
+                    icon: <Map01 size={16} />,
+                    label: '지도 탐색',
+                  },
+                  {
+                    type: SEARCH_TYPES.MENU,
+                    icon: <LayoutAlt04 size={16} />,
+                    label: '메뉴 탐색',
+                  },
+                ].map(tab => (
+                  <StyledTabButton
+                    key={tab.type}
+                    variant="secondary"
+                    $isActive={activeTab === tab.type}
+                    onClick={() => setActiveTab(tab.type)}
+                  >
+                    {tab.icon}
+                    {tab.label}
+                  </StyledTabButton>
+                ))}
+              </StyledSearchTabs>
+              <StyledSearchRow>
+                <Input
+                  placeholder="가까운 식당을 찾아보세요!"
+                  value={searchInput}
+                  onChange={e => setSearchInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  width="88%"
+                  leftIcon={
+                    <MarkerPin01 size={20} style={{ display: 'block' }} solid />
+                  }
+                />
+                <StyledSearchButton
                   variant="secondary"
-                  $isActive={activeTab === tab.type}
-                  onClick={() => setActiveTab(tab.type)}
+                  onClick={handleSearch}
+                  style={{ width: '10%', minWidth: '120px' }}
                 >
-                  {tab.icon}
-                  {tab.label}
-                </StyledTabButton>
-              ))}
-            </StyledSearchTabs>
-            <StyledSearchRow>
-              <Input
-                placeholder="가까운 식당을 찾아보세요!"
-                value={searchInput}
-                onChange={e => setSearchInput(e.target.value)}
-                onKeyDown={handleKeyDown}
-                width="88%"
-                leftIcon={
-                  <MarkerPin01 size={20} style={{ display: 'block' }} solid />
-                }
-              />
-              <StyledSearchButton
-                variant="secondary"
-                onClick={handleSearch}
-                style={{ width: '10%', minWidth: '120px' }}
-              >
-                <SearchMd size={16} />
-                &nbsp;검색하기
-              </StyledSearchButton>
-            </StyledSearchRow>
-          </StyledSearchCard>
+                  <SearchMd size={16} />
+                  &nbsp;검색하기
+                </StyledSearchButton>
+              </StyledSearchRow>
+            </StyledSearchCard>
+          </StyledSearchAndLogoRow>
         </div>
       </StyledLandingInner>
+      <StyledBottomLogo src={InduckLineLogo} alt="인덕이 로고" />
     </StyledLandingHero>
   );
 }
