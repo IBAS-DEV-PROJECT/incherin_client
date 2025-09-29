@@ -23,7 +23,7 @@ const StyledSection = styled.section(({ theme }) => ({
 
 const StyledSectionTitle = styled.h2(({ theme }) => ({
   margin: '0 0 24px',
-  fontSize: 20,
+  fontSize: 28,
   fontWeight: 700,
   color: theme.colors.black,
   textAlign: 'center',
