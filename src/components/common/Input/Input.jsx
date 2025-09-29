@@ -14,13 +14,13 @@ const StyledInputContainer = styled.div(({ theme, $width }) => ({
 }));
 
 const StyledInput = styled.input(
-  ({ theme, $inactive, $isError, $variantStyles }) => ({
+  ({ theme, $inactive, $isError, $variantStyles, $hasLeftIcon }) => ({
     ...theme.typography.paragraph.p1,
     fontFamily: theme.typography.fontFamily,
     boxSizing: 'border-box',
     width: '100%',
     height: '44px',
-    padding: '4px 5px 4px 18px',
+    padding: $hasLeftIcon ? '12px 5px 12px 40px' : '4px 5px 4px 18px',
     borderRadius: '10px',
     border: `solid 1px ${theme.colors.darkGray}`,
     backgroundColor: theme.colors.white,
@@ -54,6 +54,18 @@ const StyledInput = styled.input(
   })
 );
 
+const StyledLeftIcon = styled.div(({ theme }) => ({
+  position: 'absolute',
+  left: '12px',
+  top: '36%',
+  transform: 'translateY(-50%)',
+  width: '20px',
+  height: '20px',
+  pointerEvents: 'none',
+  zIndex: 1,
+  color: theme.colors.blue,
+}));
+
 const StyledErrorIcon = styled.div(({ theme }) => ({
   position: 'absolute',
   right: '12px',
@@ -76,6 +88,7 @@ const StyledErrorIcon = styled.div(({ theme }) => ({
  * @param {string} [props.placeholder] - 플레이스홀더 텍스트
  * @param {string} [props.type] - input type 속성
  * @param {boolean} [props.disabled=false] - 비활성화 여부
+ * @param {React.ReactNode} [props.leftIcon] - 왼쪽 아이콘
  * @returns {JSX.Element}
  */
 export function Input({
@@ -88,6 +101,7 @@ export function Input({
   placeholder,
   type,
   disabled = false,
+  leftIcon,
   ...rest
 }) {
   // --- 내부 상태/훅 ---
@@ -109,6 +123,7 @@ export function Input({
   // --- 렌더링 ---
   return (
     <StyledInputContainer $width={width}>
+      {leftIcon && <StyledLeftIcon>{leftIcon}</StyledLeftIcon>}
       <StyledInput
         type={type || safeVariant}
         value={value}
@@ -117,6 +132,7 @@ export function Input({
         disabled={isDisabled || isInactive}
         $inactive={isInactive}
         $isError={isErrorState}
+        $hasLeftIcon={!!leftIcon}
         $variantStyles={variantProps.styles}
         aria-invalid={isErrorState}
         aria-disabled={isDisabled || isInactive}
