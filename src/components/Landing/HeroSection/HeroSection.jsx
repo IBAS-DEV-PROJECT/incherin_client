@@ -13,7 +13,6 @@ import { searchStateAtom, SEARCH_TYPES } from '../../../stores/searchStore';
 
 // --- 에셋 ---
 import InduckLineLogo from '../../../assets/image/induck-line-logo.png';
-import InduckLogo from '../../../assets/image/induck-logo.svg';
 
 // --- 스타일 ---
 const StyledLandingHero = styled.section(({ theme }) => ({
