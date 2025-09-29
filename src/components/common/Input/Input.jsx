@@ -57,13 +57,16 @@ const StyledInput = styled.input(
 const StyledLeftIcon = styled.div(({ theme }) => ({
   position: 'absolute',
   left: '12px',
-  top: '36%',
+  top: '50%',
   transform: 'translateY(-50%)',
   width: '20px',
   height: '20px',
   pointerEvents: 'none',
   zIndex: 1,
   color: theme.colors.blue,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 }));
 
 const StyledErrorIcon = styled.div(({ theme }) => ({
