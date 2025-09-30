@@ -1,8 +1,7 @@
 # 서비스/API 레이어 & 라우팅 컨벤션
 
 > **서비스(API)**는 services/에서 표준화하고, **라우팅**은 `routes/`에서 중앙집중 관리합니다.
-페이지 엔트리(`pages/<RouteName>/index.jsx`)는 **default export 허용**(진입점).
-> 
+> 페이지 엔트리(`pages/<RouteName>/index.jsx`)는 **default export 허용**(진입점).
 
 ---
 
@@ -20,13 +19,13 @@ services/
 **공통 클라이언트 (axios)**
 
 > **services/api.js**
-> 
 
 ```jsx
 import axios from 'axios';
 
 export const api = axios.create({
-  baseURL: import.meta?.env?.VITE_API_BASE_URL || process.env.API_BASE_URL || '/api',
+  baseURL:
+    import.meta?.env?.VITE_API_BASE_URL || process.env.API_BASE_URL || '/api',
   withCredentials: true,
   timeout: 15000, // 15s
 });
@@ -45,12 +44,12 @@ function normalizeError(error) {
 }
 
 api.interceptors.response.use(
-  (res) => res.data, // 성공 시 data만 반환
-  (err) => Promise.reject(normalizeError(err))
+  res => res.data, // 성공 시 data만 반환
+  err => Promise.reject(normalizeError(err))
 );
 
 // 선택: 요청 인터셉터 (토큰)
-api.interceptors.request.use((config) => {
+api.interceptors.request.use(config => {
   const token = localStorage.getItem('access_token');
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
@@ -60,7 +59,6 @@ api.interceptors.request.use((config) => {
 **피처 서비스 예시**
 
 > **services/users.js**
-> 
 
 ```jsx
 import { api } from './api';
@@ -78,8 +76,7 @@ export function createUser(payload) {
 }
 ```
 
-> 권장: **서비스 레이어에서만 I/O**(HTTP)를 수행하고, 컴포넌트에서는 서비스 호출 결과를 **훅**으로 감싼 뒤(예: ``useUsers``) 3분기(로딩/에러/빈) 처리.
-> 
+> 권장: **서비스 레이어에서만 I/O**(HTTP)를 수행하고, 컴포넌트에서는 서비스 호출 결과를 **훅**으로 감싼 뒤(예: `useUsers`) 3분기(로딩/에러/빈) 처리.
 
 ### 2) 라우팅 표준 (React Router v6+)
 
@@ -90,7 +87,7 @@ routes/
 	appRouter.jsx      # 라우터 구성 (코드 스플리팅)
 ```
 
-```jsx
+````jsx
 ### 경로 상수
 `routes/routeTable.js`
 ```js
@@ -101,7 +98,7 @@ export const ROUTES = {
   USER_DETAIL: (id = ':id') => `/users/${id}`,
   NOT_FOUND: '*',
 };
-```
+````
 
 ### **3) 코드 스플리팅 + 보호 라우트**
 
@@ -109,7 +106,11 @@ export const ROUTES = {
 
 ```jsx
 import { Suspense, lazy } from 'react';
-import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from 'react-router-dom';
 import { ROUTES } from './routeTable';
 import { useAtom } from 'jotai';
 import { userAtom } from '../contexts/authAtoms';
@@ -188,7 +189,7 @@ export default function UsersPage() {
 
   return (
     <ul>
-      {data.map((u) => (
+      {data.map(u => (
         <li key={u.id}>{u.name}</li>
       ))}
       <button onClick={refetch}>다시 불러오기</button>

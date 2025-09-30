@@ -1,8 +1,7 @@
 # 훅(Hooks) 컨벤션
 
 > 팀 파일명 규칙은 **PascalCase**지만, **훅 파일은 업계 관례상 `useXxx.js`** 를 권장(소문자 u).
-문서에서는 `useXxx.js` 표기를 사용.
-> 
+> 문서에서는 `useXxx.js` 표기를 사용.
 
 ---
 
@@ -23,7 +22,6 @@
 5. **반환값**: 객체 형태로 명확하게 반환 { data, isLoading, error, ... }
 
 > 컴포넌트에서 훅은 **파일 상단에서만 호출**합니다.
-> 
 
 ---
 
@@ -41,7 +39,7 @@ import { useCallback, useState } from 'react';
 export function useToggle(initial = false) {
   const [isOn, setIsOn] = useState(Boolean(initial));
 
-  const toggle = useCallback(() => setIsOn((v) => !v), []);
+  const toggle = useCallback(() => setIsOn(v => !v), []);
   const on = useCallback(() => setIsOn(true), []);
   const off = useCallback(() => setIsOn(false), []);
 
@@ -119,7 +117,10 @@ export function useFetch(url, options) {
     ctrlRef.current = new AbortController();
 
     try {
-      const res = await fetch(url, { ...options, signal: ctrlRef.current.signal });
+      const res = await fetch(url, {
+        ...options,
+        signal: ctrlRef.current.signal,
+      });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const json = await res.json();
       setData(json);
@@ -156,7 +157,7 @@ export function UsersPage() {
     <div>
       <button onClick={refetch}>다시 불러오기</button>
       <ul>
-        {data.map((u) => (
+        {data.map(u => (
           <li key={u.id}>{u.name}</li>
         ))}
       </ul>

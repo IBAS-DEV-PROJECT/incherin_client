@@ -20,30 +20,25 @@ src/
 ```
 
 > **피처 단위 컴포넌트 폴더 구조 예시**
-> 
+
 - 특정 기능(Feature)에 종속적인 UI 컴포넌트를 모아둠
 - 보통은 index.js를 배럴 파일로 둬서 import를 간결하게
 
 ```jsx
-components/
-  domain/
-    User/
-      UserCard.jsx
-      UserProfile.jsx
-      UserList.jsx
-      index.js
+components / domain / User / UserCard.jsx;
+UserProfile.jsx;
+UserList.jsx;
+index.js;
 ```
 
 > **페이지 단위 엔트리 폴더 구조 예시**
-> 
+
 - 라우트와 1:1 매칭되는 화면
 - 보통은 해당 페이지에서 사용하는 domain 컴포넌트들을 조립해서 완성된 UI를 구성
 - export default 허용되는 대표적인 파일.
 
 ```jsx
-pages/
-  Users/
-    index.jsx
+pages / Users / index.jsx;
 ```
 
 ---
@@ -53,15 +48,12 @@ pages/
 <aside>
 
 - public/: 번들러가 관리하지 않고 그대로 복사됨 → URL로 직접 접근 (/logo.png).
-    - favicon, manifest.json, robots.txt
-    - 외부에서 절대 경로 접근이 필요한 파일
-- src/assets/: import해서 사용하는 정적 자원 → 빌드시 해시 처리, 캐싱 관리 가능.
-    - 컴포넌트 안에서 사용하는 이미지, 아이콘, SVG, 폰트
-    - 코드와 함께 버전 관리되어야 하는 리소스
+  - favicon, manifest.json, robots.txt
+  - 외부에서 절대 경로 접근이 필요한 파일
+- src/assets/: import해서 사용하는 정적 자원 → 빌드시 해시 처리, 캐싱 관리 가능. - 컴포넌트 안에서 사용하는 이미지, 아이콘, SVG, 폰트 - 코드와 함께 버전 관리되어야 하는 리소스
 </aside>
 
 > **결론: UI에 쓰이는 대부분의 이미지/아이콘은 src/assets/에 두고, SEO/메타데이터용은 public/ 유지**
-> 
 
 ---
 
@@ -70,7 +62,6 @@ pages/
 - **배럴 파일(Barrel file)**은 index.js를 두고 해당 폴더의 export를 한 번에 모아주는 패턴
 
 > **예시:**
-> 
 
 ```
 components/domain/User/
@@ -86,7 +77,7 @@ export { default as UserProfile } from './UserProfile';
 ```
 
 > import를 간결하게 만들지만, 전역으로 쓰면 추적이 어려움
-> 
+
 - **허용**: 특정 도메인/피처 단위(components/domain/<Feature>/index.js)
 - **금지**: 전역(components/index.js 등)
 
@@ -97,11 +88,10 @@ export { default as UserProfile } from './UserProfile';
 <aside>
 
 - **컴포넌트/훅/Provider/Context/파일명**: PascalCase
-    - 예) Button.jsx, UserCard.jsx, useToggle.js, AuthProvider.js
+  - 예) Button.jsx, UserCard.jsx, useToggle.js, AuthProvider.js
 - **함수/유틸**: camelCase
-    - 예) formatDate, parseQueryString
-- **상수**: UPPER_SNAKE_CASE
-    - 예) API_BASE_URL
+  - 예) formatDate, parseQueryString
+- **상수**: UPPER_SNAKE_CASE - 예) API_BASE_URL
 </aside>
 
 ---
@@ -167,12 +157,9 @@ import App from './App';
 <aside>
 
 - **페이지 엔트리(pages/<RouteName>/index.jsx)**
-    - 라우터와 바로 연결되는 파일은 무조건 1개 컴포넌트만 내보냄.
-    - export default Page가 직관적이고 관례적임.
-- **루트 엔트리(App.jsx, main.jsx)**
-    - 앱 전체를 감싸는 단일 컴포넌트.
-    - 역시 default export가 자연스럽고 명확함.
+  - 라우터와 바로 연결되는 파일은 무조건 1개 컴포넌트만 내보냄.
+  - export default Page가 직관적이고 관례적임.
+- **루트 엔트리(App.jsx, main.jsx)** - 앱 전체를 감싸는 단일 컴포넌트. - 역시 default export가 자연스럽고 명확함.
 </aside>
 
 > **결론: 여러 개 export될 수 있는 파일에서는 named export만 사용해 추적성과 일관성을 유지하고, “이 파일은 무조건 하나만 내보낸다”가 보장되는 진입점에서는 default export를 허용한다.**
->

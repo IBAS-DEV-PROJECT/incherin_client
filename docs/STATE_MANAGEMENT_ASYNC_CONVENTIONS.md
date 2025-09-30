@@ -1,8 +1,7 @@
 # 상태 관리 & 비동기 컨벤션
 
 > 전역 상태는 Jotai를 사용.
-비동기는 서비스 레이어(services/)와 컴포넌트 사이에 명시적 3분기(로딩/에러/빈) 를 적용.
-> 
+> 비동기는 서비스 레이어(services/)와 컴포넌트 사이에 명시적 3분기(로딩/에러/빈) 를 적용.
 
 ---
 
@@ -13,7 +12,6 @@
 3. **서버 데이터인가?** → 서비스 레이어(또는 react-query 등)로 가져오고, UI에서는 3분기 처리.
 
 > 원칙: 가장 좁은 범위에 상태를 둔다. 전역으로 올릴 합당한 이유(공유·동기화·캐싱)가 있을 때만 끌어올린다.
-> 
 
 ---
 
@@ -26,8 +24,8 @@
 export function QuantityCounter() {
   const [countState, setCountState] = useState(1);
 
-  const handleInc = () => setCountState((v) => v + 1);
-  const handleDec = () => setCountState((v) => Math.max(1, v - 1));
+  const handleInc = () => setCountState(v => v + 1);
+  const handleDec = () => setCountState(v => Math.max(1, v - 1));
 
   return (
     <div>
@@ -37,7 +35,6 @@ export function QuantityCounter() {
     </div>
   );
 }
-
 ```
 
 ---
@@ -51,9 +48,8 @@ export function QuantityCounter() {
 // contexts/authAtoms.js
 import { atom } from 'jotai';
 
-export const userAtom = atom(null);        // null | { id, name, ... }
+export const userAtom = atom(null); // null | { id, name, ... }
 export const authLoadingAtom = atom(false);
-
 ```
 
 **사용 예시:**
@@ -70,12 +66,10 @@ export function ProfileBadge() {
   if (!user) return <button>로그인</button>;
   return <span>{user.name}</span>;
 }
-
 ```
 
 > 도메인별 파일로 분리해 관리(예: cartAtoms.js, uiAtoms.js).
-전역 원시값 남용 금지, **읽기 전용 파생(atom)**을 적극 활용.
-> 
+> 전역 원시값 남용 금지, **읽기 전용 파생(atom)**을 적극 활용.
 
 ---
 
@@ -101,7 +95,6 @@ export async function getUsers() {
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 }
-
 ```
 
 ```jsx
@@ -127,11 +120,12 @@ export function useUsers() {
     }
   };
 
-  useEffect(() => { refetch(); }, []);
+  useEffect(() => {
+    refetch();
+  }, []);
 
   return { data, isLoading, error, refetch };
 }
-
 ```
 
 ```jsx
@@ -141,13 +135,19 @@ import { useUsers } from '../../hooks/useUsers';
 export default function UsersPage() {
   const { data, isLoading, error, refetch } = useUsers();
 
-  if (isLoading) return <SkeletonUsers />;     // 로딩 상태
-  if (error) return <ErrorBlock message="사용자 목록을 불러오지 못했습니다." onRetry={refetch} />; // 에러 상태
-  if (!data || data.length === 0) return <EmptyState text="사용자가 없습니다" />; // 빈 상태
+  if (isLoading) return <SkeletonUsers />; // 로딩 상태
+  if (error)
+    return (
+      <ErrorBlock
+        message="사용자 목록을 불러오지 못했습니다."
+        onRetry={refetch}
+      />
+    ); // 에러 상태
+  if (!data || data.length === 0)
+    return <EmptyState text="사용자가 없습니다" />; // 빈 상태
 
-  return <UsersList items={data} />;           // 성공 상태
+  return <UsersList items={data} />; // 성공 상태
 }
-
 ```
 
 ---
@@ -167,7 +167,6 @@ export function ErrorBlock({ message, onRetry }) {
     </div>
   );
 }
-
 ```
 
 ---
@@ -178,8 +177,10 @@ export function ErrorBlock({ message, onRetry }) {
 - 콜백은 필요할 때만 `useCallback`으로 고정(남용 금지).
 
 ```jsx
-const totalPrice = useMemo(() => items.reduce((a, b) => a + b.price, 0), [items]);
-
+const totalPrice = useMemo(
+  () => items.reduce((a, b) => a + b.price, 0),
+  [items]
+);
 ```
 
 ---
