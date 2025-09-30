@@ -21,7 +21,7 @@ const withSuspense = element => (
 );
 
 // --- Lazy pages (문서: 라우팅 표준, 코드 스플리팅) ---
-const HomePage = lazy(() => import('../pages/Home'));
+const HomePage = lazy(() => import('../pages/Landing'));
 const NotFoundPage = lazy(() => import('../pages/NotFound'));
 const AuthPage = lazy(() => import('../pages/Auth'));
 const MapPage = lazy(() => import('../pages/Map'));
