@@ -2,7 +2,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '@emotion/react';
 
 // --- 내부 ---
 import { Button } from '../../common';

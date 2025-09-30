@@ -1,7 +1,6 @@
 // --- 라이브러리 ---
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom';
 
 // --- 내부 (부모) ---
 import LogoImage from '../assets/image/logo2.png';

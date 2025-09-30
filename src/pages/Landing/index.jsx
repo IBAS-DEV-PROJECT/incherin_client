@@ -1,7 +1,5 @@
 // --- 라이브러리 ---
 import React from 'react';
-import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
 
 // --- 내부 (현재) ---
 import { Button } from '../../components/common';

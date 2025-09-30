@@ -17,7 +17,6 @@ export const getImageStyles = (
   transition: 'all 0.3s ease',
   display: 'block',
   maxWidth: '100%',
-  height: 'auto',
 });
 
 // 로딩 상태 스타일
