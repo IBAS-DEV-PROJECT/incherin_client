@@ -1,4 +1,3 @@
-// Sidebar.jsx
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
@@ -223,12 +222,12 @@ export default function Sidebar({
           name: 'MY 페이지',
           isActive: true,
           icon: userIcon,
-          path: '/mypage',
+          path: '/my',
           hasDetail: true,
           details: [
-            { name: '내 정보', path: '/mypage/info' },
-            { name: '내가 쓴 리뷰', path: '/mypage/reviews' },
-            { name: '내 리스트 관리', path: '/mypage/lists' },
+            { name: '내 정보', path: '/my/info' },
+            { name: '내가 쓴 리뷰', path: '/my/reviews' },
+            { name: '내 리스트 관리', path: '/my/lists' },
           ],
         },
       ],
