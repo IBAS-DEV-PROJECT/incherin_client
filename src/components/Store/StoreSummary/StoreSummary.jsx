@@ -1,7 +1,7 @@
 // --- 라이브러리 ---
 import React from 'react';
 import styled from '@emotion/styled';
-import { Heart, MapPin } from '@untitledui/icons';
+import { Heart, MarkerPin01 } from '@untitledui/icons';
 
 // --- 스타일 ---
 const SummaryContainer = styled.div`
@@ -13,11 +13,17 @@ const SummaryContainer = styled.div`
 
 const MetaInfo = styled.div(({ theme }) => ({
   display: 'flex',
-  align-items: 'center',
-  gap: 4px,
+  alignItems: 'center',
+  gap: '4px',
   fontSize: '14px',
-  color: theme.colors.darkGray,
+  color: theme.colors.black,
 }));
+
+const StyledIcon = styled.span`
+  display: flex;
+  align-items: center;
+  transform: translateY(1px);
+`;
 
 /**
  * @param {object} props
@@ -26,7 +32,12 @@ const MetaInfo = styled.div(({ theme }) => ({
  * @param {number} props.likeCount - 찜하기 수
  * @param {string} props.distance - 거리 (예: '451m')
  */
-export function StoreSummary({ rating, reviewCount, likeCount, distance }) {
+export function StoreSummary({
+  rating = 4.9,
+  reviewCount = 21,
+  likeCount = 231,
+  distance = '451m',
+}) {
   return (
     <SummaryContainer>
       <MetaInfo>
@@ -37,10 +48,16 @@ export function StoreSummary({ rating, reviewCount, likeCount, distance }) {
       </MetaInfo>
       <MetaInfo>리뷰 {reviewCount}</MetaInfo>
       <MetaInfo>
-        <Heart size={14} /> {likeCount}
+        <StyledIcon>
+          <Heart size={14} />
+        </StyledIcon>
+        {likeCount}
       </MetaInfo>
       <MetaInfo>
-        <MapPin size={14} /> {distance}
+        <StyledIcon>
+          <MarkerPin01 size={14} />
+        </StyledIcon>
+        {distance}
       </MetaInfo>
     </SummaryContainer>
   );
