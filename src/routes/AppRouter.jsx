@@ -30,6 +30,11 @@ const StoreDetailPage = lazy(() => import('../pages/StoreDetail'));
 const MyPage = lazy(() => import('../pages/My'));
 const AdminPage = lazy(() => import('../pages/Admin'));
 
+// --- My 내부 섹션 ---
+const UserInfoSection = lazy(() => import('../components/My/UserInfoSection/UserInfoSection'));
+const MyList = lazy(() => import('../components/My/MyListSection/MyListSection'));
+const MyListDetail = lazy(() => import('../components/My/MyListDetail/MyListDetail'));
+
 // --- 보호 라우트 (문서: 보호 라우트) ---
 // - 인증이 필요한 경로에서 사용
 // - 인증되지 않은 경우 AUTH 경로로 리다이렉트
@@ -59,13 +64,17 @@ const router = createBrowserRouter([
         path: ROUTES.STORE_DETAIL(),
         element: withSuspense(<StoreDetailPage />),
       },
-      {
-        path: ROUTES.MY,
-        element: withSuspense(
-          <Protected>
+      { path: ROUTES.MY, element: withSuspense(
+          //<Protected>
             <MyPage />
-          </Protected>
+          //</Protected>
         ),
+        children: [
+        { index: true, element: <Navigate to="info" replace /> },
+        { path: "info", element: withSuspense(<UserInfoSection />) },
+        { path: "lists", element: withSuspense(<MyList />) },
+        { path: "lists/:id", element: withSuspense(<MyListDetail />) },
+]
       },
       { path: ROUTES.ADMIN, element: withSuspense(<AdminPage />) },
       { path: ROUTES.NOT_FOUND, element: withSuspense(<NotFoundPage />) },
