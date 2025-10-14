@@ -1,11 +1,11 @@
 // --- 라이브러리 ---
-import React, { useState } from "react";
-import styled from "@emotion/styled";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 // --- 내부 공용 컴포넌트 ---
-import { Button } from "../../common/Button";
-import { Input } from "../../common/Input";
+import { Button } from '../../common/Button';
+import { Input } from '../../common/Input';
 
 // --- 스타일 ---
 const StyledContainer = styled.div`
@@ -27,9 +27,9 @@ const StyledCardWrapper = styled.div`
 const StyledTitle = styled.h2`
   font-size: 20px;
   font-weight: bold;
-  color: #27509B;
+  color: #27509b;
   margin-bottom: 24px;
-  border-bottom: 1px solid #27509B;
+  border-bottom: 1px solid #27509b;
   padding-bottom: 12px;
 `;
 
@@ -64,7 +64,7 @@ const StyledIcon = styled.div`
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: ${({ $color }) => $color || "#ffffff"};
+  background: ${({ $color }) => $color || '#ffffff'};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -103,8 +103,11 @@ const StyledDeleteButton = styled.button`
 
 const StyledModalOverlay = styled.div`
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -136,7 +139,8 @@ const StyledColorCircle = styled.div`
   height: 32px;
   border-radius: 50%;
   background: ${({ $color }) => $color};
-  border: 2px solid ${({ $selected }) => ($selected ? "#ffffff" : "transparent")};
+  border: 2px solid
+    ${({ $selected }) => ($selected ? '#ffffff' : 'transparent')};
   cursor: pointer;
 `;
 
@@ -150,14 +154,14 @@ export default function MyListSection() {
   // --- 내부 상태/훅 ---
   const [listsState, setListsState] = useState(initialLists);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newListNameState, setNewListNameState] = useState("");
+  const [newListNameState, setNewListNameState] = useState('');
   const [newListColorState, setNewListColorState] = useState(colorPalette[0]);
 
   const navigate = useNavigate();
 
   // --- 핸들러 ---
   const handleOpenModal = () => {
-    setNewListNameState("");
+    setNewListNameState('');
     setNewListColorState(colorPalette[0]);
     setIsModalOpen(true);
   };
@@ -177,8 +181,8 @@ export default function MyListSection() {
     handleCloseModal();
   };
 
-  const handleDelete = (id) => {
-    setListsState(listsState.filter((list) => list.id !== id));
+  const handleDelete = id => {
+    setListsState(listsState.filter(list => list.id !== id));
   };
 
   // --- 렌더링 ---
@@ -186,9 +190,9 @@ export default function MyListSection() {
     <StyledContainer>
       <StyledCardWrapper>
         <StyledTitle>내 리스트 관리</StyledTitle>
-        
+
         <StyledListContainer>
-          {listsState.map((list) => (
+          {listsState.map(list => (
             <StyledListCard
               key={list.id}
               onClick={() => navigate(`/my/lists/${list.id}`)}
@@ -201,7 +205,7 @@ export default function MyListSection() {
                 </div>
               </StyledLeftSection>
               <StyledDeleteButton
-                onClick={(e) => {
+                onClick={e => {
                   e.stopPropagation();
                   handleDelete(list.id);
                 }}
@@ -227,12 +231,12 @@ export default function MyListSection() {
               variant="text"
               placeholder="리스트 이름을 입력하세요"
               value={newListNameState}
-              onChange={(e) => setNewListNameState(e.target.value)}
+              onChange={e => setNewListNameState(e.target.value)}
               width="100%"
             />
 
             <StyledColorOptions>
-              {colorPalette.map((color) => (
+              {colorPalette.map(color => (
                 <StyledColorCircle
                   key={color}
                   $color={color}
@@ -259,9 +263,9 @@ export default function MyListSection() {
 
 // --- 초기 더미 데이터 ---
 const initialLists = [
-  { id: 1, name: "가고 싶은 한식 맛집!", count: 26, color: "#ac182d" },
-  { id: 2, name: "가고 싶은 양식 맛집!", count: 26, color: "#27509b" },
-  { id: 3, name: "가고 싶은 중식 맛집!", count: 26, color: "#d4e7fa" },
+  { id: 1, name: '가고 싶은 한식 맛집!', count: 26, color: '#ac182d' },
+  { id: 2, name: '가고 싶은 양식 맛집!', count: 26, color: '#27509b' },
+  { id: 3, name: '가고 싶은 중식 맛집!', count: 26, color: '#d4e7fa' },
 ];
 
-const colorPalette = ["#ac182d", "#27509b", "#d4e7fa", "#b1b1b1", "#121212"];
+const colorPalette = ['#ac182d', '#27509b', '#d4e7fa', '#b1b1b1', '#121212'];

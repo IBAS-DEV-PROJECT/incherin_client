@@ -2,12 +2,10 @@
 // --- 라이브러리 ---
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-// import { useTheme } from '@emotion/react';
 
 // --- 내부 모듈 ---
-import { Input } from '../common/Input';
-
-// --- Styled Components ---
+import MorePannel from './Pannel/MorePannel.jsx';
+import InchelinGuide from './Pannel/InchelinGuide.jsx';
 
 // 패널 전체를 감싸는 컨테이너
 const StyledPanelContainer = styled.div`
@@ -44,40 +42,14 @@ const StyledToggleButton = styled.button`
   font-size: 16px;
 `;
 
-// 패널 내부 콘텐츠 영역
-const StyledContentWrapper = styled.div`
-  padding: 20px;
-  height: 100%;
-  box-sizing: border-box;
-  overflow-y: auto;
-`;
-
-// --- 임시 컴포넌트들 ---
-const MockRestaurantCard = () => (
-  <div
-    style={{
-      padding: '16px',
-      border: '1px solid #ddd',
-      marginBottom: '8px',
-      borderRadius: '8px',
-    }}
-  >
-    <h3>맛있는 가게</h3>
-    <p>2명에서 먹으로 가기 좋은 가게</p>
-  </div>
-);
-
 /**
  * @description 지도 페이지의 가게 목록을 보여주는 슬라이딩 패널
  */
-export function ListPannel({ style, ...rest }) {
-  // style과 rest props를 받도록 수정
-  // --- 내부 상수/훅 호출 ---
+export function ListPannel({ activePanel, style, ...rest }) {
   // const theme = useTheme();
   const [isOpenState, setIsOpenState] = useState(true); // 패널 열림/닫힘 상태
   const [searchState, setSearchState] = useState(''); // 검색창 입력값 상태
 
-  // --- 핸들러 함수 ---
   const handleTogglePanel = () => {
     setIsOpenState(prevState => !prevState);
   };
@@ -86,27 +58,23 @@ export function ListPannel({ style, ...rest }) {
     setSearchState(e.target.value);
   };
 
-  // --- 렌더링(JSX) ---
+  const renderPanelContent = () => {
+    switch (activePanel) {
+      case 'map':
+        return <InchelinGuide />;
+      case 'more':
+        return <MorePannel />;
+      default:
+        return <InchelinGuide />; // 기본값
+    }
+  };
+
   return (
     <StyledPanelContainer isOpen={isOpenState} style={style} {...rest}>
-      {/* 토글 버튼 */}
       <StyledToggleButton onClick={handleTogglePanel}>
         {isOpenState ? '‹' : '›'}
       </StyledToggleButton>
-
-      {/* 내부 콘텐츠 */}
-      <StyledContentWrapper>
-        {/* Input 컴포넌트로 교체 */}
-        <Input
-          value={searchState}
-          onChange={handleSearchChange}
-          placeholder="가게 검색"
-          style={{ width: '100%' }} // Input의 너비를 100%로 설정
-        />
-        <h2 style={{ marginTop: '24px' }}>7월 인슐랭 가이드</h2>
-        <MockRestaurantCard />
-        <MockRestaurantCard />
-      </StyledContentWrapper>
+      {renderPanelContent()}
     </StyledPanelContainer>
   );
 }

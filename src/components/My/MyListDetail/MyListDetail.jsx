@@ -1,7 +1,7 @@
 // --- 라이브러리 ---
-import React from "react";
-import { useParams } from "react-router-dom";
-import styled from "@emotion/styled";
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import styled from '@emotion/styled';
 
 // --- 스타일 ---
 const StyledContainer = styled.div`
@@ -14,7 +14,7 @@ const StyledContainer = styled.div`
 const StyledTitle = styled.h2`
   font-size: 22px;
   font-weight: bold;
-  color: #27509B;
+  color: #27509b;
   margin-bottom: 12px;
 `;
 
