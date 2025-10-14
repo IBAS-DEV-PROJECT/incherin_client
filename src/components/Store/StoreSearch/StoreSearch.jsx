@@ -13,6 +13,7 @@ const StyleStoreSearch = styled.div(({ theme }) => ({
     padding: '10px 16px',
     border: `1px solid ${theme.colors.darkGray}`,
     borderRadius: '4px',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
 }));
 
 // 검색 입력 
