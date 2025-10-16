@@ -7,6 +7,7 @@ import { useMemo, useState } from 'react';
 // --- 내부 (부모) ---
 import { StoreCard, StoreSearch, StoreDropdown } from '../../components/Store';
 import { Tab } from '../../components/common/Tab';
+import { Button } from '../../components/common';
 import { FILTER_TYPES, filterTypeAtom } from '../../stores/filterStore';
 
 // --- 에셋 ---
@@ -45,6 +46,12 @@ const StyledDropdownWrapper = styled.div({
   justifyContent: 'flex-end',
 })
 
+const StyledFilterButtonGroup = styled.div({
+  display: 'flex',
+  gap: 8,
+  justifyContent: 'flex-start',
+})
+
 // --- 카테고리 --- 
 const CATEGORIES = ['all', '한식', '중식', '양식', '일식', '카페/디저트', '기타'];
 
@@ -79,13 +86,27 @@ export default function Stores() {
   const [activeTab, setActiveTab] = useState('all');
   const [filterType] = useAtom(filterTypeAtom);
 
-  // 탭 + 정렬 적용된 가게 목록
+  // 필터 버튼 상태
+  const [isOperatingFilter, setIsOperatingFilter] = useState(false);
+  const [isDeliveryFilter, setIsDeliveryFilter] = useState(false);
+
+  // 탭 + 정렬 + 필터 적용된 가게 목록
   const sortedStores = useMemo(() => {
     let stores = [...MOCK_STORES];
 
     // 카테고리 필터링
     if (activeTab && activeTab !== 'all') {
       stores = stores.filter(s => s.category === activeTab);
+    }
+
+    // 영업 중 필터링
+    if (isOperatingFilter) {
+      stores = stores.filter(s => s.isOperating);
+    }
+
+    // 배달 가능 필터링
+    if (isDeliveryFilter) {
+      stores = stores.filter(s => s.isDelivery);
     }
 
     // 필터가 없으면 정렬하지 않고 반환
@@ -106,7 +127,7 @@ export default function Stores() {
       default:
         return stores;
   }
-  }, [filterType, activeTab]);
+  }, [filterType, activeTab, isOperatingFilter, isDeliveryFilter]);
   
   return (
     <StyledStoresContainer>
@@ -116,9 +137,9 @@ export default function Stores() {
             <StoreSearch />
           </StyledSearchWrapper>
           <Tab
-          items={TAB_ITEMS}
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
+            items={TAB_ITEMS}
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
           />  
           <StyledDropdownWrapper>
             <StoreDropdown 
@@ -126,6 +147,20 @@ export default function Stores() {
               placeholder='정렬 선택'  
             />  
           </StyledDropdownWrapper>
+          <StyledFilterButtonGroup>
+            <Button
+              variant="subsidiary"
+              active={isOperatingFilter}
+              onClick={() => setIsOperatingFilter(!isOperatingFilter)}
+            > 현재 영업 중
+            </Button>
+            <Button
+              variant="subsidiary"
+              active={isDeliveryFilter}
+              onClick={() => setIsDeliveryFilter(!isDeliveryFilter)}
+            > 배달 가능
+            </Button>
+          </StyledFilterButtonGroup>
         </StyledTopRow>
       </StyledHeader>
 
