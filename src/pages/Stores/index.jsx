@@ -2,16 +2,36 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { useAtom } from 'jotai';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 // --- 내부 (부모) ---
 import { StoreCard, StoreSearch, StoreDropdown } from '../../components/Store';
 import { storeFilterTypeAtom, STORE_FILTER_TYPES } from '../../stores/storeFilterStore';
+import { Tab } from '../../components/common/Tab';
+
+// --- 에셋 ---
+import FoodImg from '../../assets/image/food.webp';
 
 // ================== 스타일 ==================
 const StyledStoresContainer = styled.div({
   padding: 24,
 });
+
+const StyledHeader = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 12,
+})
+
+const StyledTopRow = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 16,
+})
+
+const StyledSearchWrapper = styled.div({
+  flex: 1,
+})
 
 const StyledStoreGrid = styled.div({
   display: 'grid',
@@ -23,18 +43,22 @@ const StyledStoreGrid = styled.div({
 const StyledDropdownWrapper = styled.div({
   display: 'flex',
   justifyContent: 'flex-end',
-  margin: '16px 0',
 })
 
-// -- Mock 데이터 -- 
-const MOCK_STORES = Array.from({ length: 12 }, (_, i) => ({
-  id: i + 1,
-  name: `가게 ${i + 1}`,
-  price: Math.floor(Math.random() * 20000) + 5000, // 가격 순
-  distance: Math.floor(Math.random() * 1000) + 100, // 거리 순
-  rating: (Math.random() * 2 + 3).toFixed(1), // 별점 높은 순
-  popular: Math.floor(Math.random() * 100), // 찜 많은 순
-}));
+// --- 카테고리 --- 
+const CATEGORIES = ['all', '한식', '중식', '양식', '일식', '카페/디저트', '기타'];
+
+// -- Mock 데이터 --
+const MOCK_STORES = [
+  { id: 1, name: 'A 가게', price: 5000,  distance: 100, rating: 4.9, popular: 5,  category: '한식', imageUrl: FoodImg, isOperating: true,  isDelivery: true,  reviewCount: 12, likeCount: 5 },
+  { id: 2, name: 'B 가게', price: 8000,  distance: 200, rating: 4.7, popular: 15, category: '중식', imageUrl: FoodImg, isOperating: true,  isDelivery: false, reviewCount: 34, likeCount: 15 },
+  { id: 3, name: 'C 가게', price: 12000, distance: 50,  rating: 3.8, popular: 40, category: '양식', imageUrl: FoodImg, isOperating: false, isDelivery: true,  reviewCount: 8,  likeCount: 40 },
+  { id: 4, name: 'D 가게', price: 15000, distance: 300, rating: 4.2, popular: 80, category: '일식', imageUrl: FoodImg, isOperating: true,  isDelivery: true,  reviewCount: 102, likeCount: 80 },
+  { id: 5, name: 'E 가게', price: 20000, distance: 150, rating: 4.5, popular: 60, category: '카페/디저트', imageUrl: FoodImg, isOperating: true,  isDelivery: false, reviewCount: 21, likeCount: 60 },
+  { id: 6, name: 'F 가게', price: 3000,  distance: 500, rating: 3.5, popular: 2,  category: '기타', imageUrl: FoodImg, isOperating: false, isDelivery: false, reviewCount: 3,  likeCount: 2 },
+  { id: 7, name: 'G 가게', price: 10000, distance: 120, rating: 4.8, popular: 22, category: '한식', imageUrl: FoodImg, isOperating: true,  isDelivery: true,  reviewCount: 45, likeCount: 22 },
+  { id: 8, name: 'H 가게', price: 7000,  distance: 80,  rating: 4.0, popular: 30, category: '중식', imageUrl: FoodImg, isOperating: true,  isDelivery: false, reviewCount: 18, likeCount: 30 },
+];
 
 // -- 필터 옵션 --
 const FILTER_OPTIONS = [
@@ -44,14 +68,32 @@ const FILTER_OPTIONS = [
   { value: STORE_FILTER_TYPES.POPULAR, label: '찜 많은 순' },
 ]
 
+// 탭 항목
+const TAB_ITEMS = CATEGORIES.map(c => ({
+  value: c,
+  label: c === 'all' ? '전체' : c
+}))
+
 // --- 페이지 엔트리 (Default Export 허용) ---
 export default function Stores() {
-  
+  const [activeTab, setActiveTab] = useState('all');
   const [filterType] = useAtom(storeFilterTypeAtom);
 
-  // 정렬된 가게 목록
+  // 탭 + 정렬 적용된 가게 목록
   const sortedStores = useMemo(() => {
-    const stores = [...MOCK_STORES];
+    let stores = [...MOCK_STORES];
+
+    // 카테고리 필터링
+    if (activeTab && activeTab !== 'all') {
+      stores = stores.filter(s => s.category === activeTab);
+    }
+
+    // 필터가 없으면 정렬하지 않고 반환
+    if (!filterType) {
+      return stores;
+    }
+
+    // 정렬
     switch (filterType) {
       case STORE_FILTER_TYPES.PRICE:
         return stores.sort((a, b) => a.price - b.price);
@@ -60,23 +102,36 @@ export default function Stores() {
       case STORE_FILTER_TYPES.RATING:
         return stores.sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
       case STORE_FILTER_TYPES.POPULAR:
-      default:
         return stores.sort((a, b) => b.popular - a.popular);
+      default:
+        return stores;
   }
-  }, [filterType]);
+  }, [filterType, activeTab]);
   
   return (
     <StyledStoresContainer>
-      <StoreSearch />
-      <StyledDropdownWrapper>
-        <StoreDropdown 
-          options={FILTER_OPTIONS}
-          placeholder='정렬 선택'  
-        />
-      </StyledDropdownWrapper>
+      <StyledHeader>
+        <StyledTopRow>
+          <StyledSearchWrapper>
+            <StoreSearch />
+          </StyledSearchWrapper>
+          <Tab
+          items={TAB_ITEMS}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          />  
+          <StyledDropdownWrapper>
+            <StoreDropdown 
+              options={FILTER_OPTIONS}
+              placeholder='정렬 선택'  
+            />  
+          </StyledDropdownWrapper>
+        </StyledTopRow>
+      </StyledHeader>
+
       <StyledStoreGrid>
         {sortedStores.map(store => (
-          <StoreCard key={store.id} {...store} />
+          <StoreCard key={store.id} store={store} />
         ))}
       </StyledStoreGrid>
     </StyledStoresContainer>
