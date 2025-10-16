@@ -5,7 +5,7 @@ import { useAtom } from "jotai";
 import { useState, useRef, useEffect } from "react";
 
 // --- 내부 ---
-import { storeFilterTypeAtom, STORE_FILTER_TYPES } from '../../../stores/storeFilterStore';
+import { filterTypeAtom } from '../../../stores/filterStore';
 
 // --- 스타일 ---
 // 드롭다운 컴포넌트
@@ -77,7 +77,7 @@ const StyledCheckIcon = styled.span(({ theme }) => ({
 
 // --- 컴포넌트 ---
 export function StoreDropdown({ options = [], placeholder = '정렬 선택' }) {
-    const [filterType, setFilterType] = useAtom(storeFilterTypeAtom);
+    const [filterType, setFilterType] = useAtom(filterTypeAtom);
     const [isOpen, setIsOpen] = useState(false);
     const [hoveredItem, setHoveredItem] = useState(null);
     const dropdownRef = useRef(null);

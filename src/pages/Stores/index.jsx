@@ -6,8 +6,8 @@ import { useMemo, useState } from 'react';
 
 // --- 내부 (부모) ---
 import { StoreCard, StoreSearch, StoreDropdown } from '../../components/Store';
-import { storeFilterTypeAtom, STORE_FILTER_TYPES } from '../../stores/storeFilterStore';
 import { Tab } from '../../components/common/Tab';
+import { FILTER_TYPES, filterTypeAtom } from '../../stores/filterStore';
 
 // --- 에셋 ---
 import FoodImg from '../../assets/image/food.webp';
@@ -62,10 +62,10 @@ const MOCK_STORES = [
 
 // -- 필터 옵션 --
 const FILTER_OPTIONS = [
-  { value: STORE_FILTER_TYPES.PRICE, label: '가격 순' },
-  { value: STORE_FILTER_TYPES.DISTANCE, label: '거리 순' },
-  { value: STORE_FILTER_TYPES.RATING, label: '별점 높은 순' },
-  { value: STORE_FILTER_TYPES.POPULAR, label: '찜 많은 순' },
+  { value: FILTER_TYPES.PRICE, label: '가격 순' },
+  { value: FILTER_TYPES.DISTANCE, label: '거리 순' },
+  { value: FILTER_TYPES.RATING, label: '별점 높은 순' },
+  { value: FILTER_TYPES.POPULAR, label: '찜 많은 순' },
 ]
 
 // 탭 항목
@@ -77,7 +77,7 @@ const TAB_ITEMS = CATEGORIES.map(c => ({
 // --- 페이지 엔트리 (Default Export 허용) ---
 export default function Stores() {
   const [activeTab, setActiveTab] = useState('all');
-  const [filterType] = useAtom(storeFilterTypeAtom);
+  const [filterType] = useAtom(filterTypeAtom);
 
   // 탭 + 정렬 적용된 가게 목록
   const sortedStores = useMemo(() => {
@@ -95,13 +95,13 @@ export default function Stores() {
 
     // 정렬
     switch (filterType) {
-      case STORE_FILTER_TYPES.PRICE:
+      case FILTER_TYPES.PRICE:
         return stores.sort((a, b) => a.price - b.price);
-      case STORE_FILTER_TYPES.DISTANCE:
+      case FILTER_TYPES.DISTANCE:
         return stores.sort((a, b) => a.distance - b.distance);
-      case STORE_FILTER_TYPES.RATING:
+      case FILTER_TYPES.RATING:
         return stores.sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
-      case STORE_FILTER_TYPES.POPULAR:
+      case FILTER_TYPES.POPULAR:
         return stores.sort((a, b) => b.popular - a.popular);
       default:
         return stores;
