@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 
 // --- 내부 ---
 import { Button } from "../../common/Button";
+import { Input } from "../../common/Input";
 
 // --- 스타일 ---
 const Container = styled.div`
@@ -14,7 +15,7 @@ const Container = styled.div`
 `;
 
 const Card = styled.div`
-  width: 500px;
+  width: 700px;
   background: #ffffff;
   border: 1px solid #f2f2f2;
   border-radius: 12px;
@@ -83,28 +84,12 @@ const Stats = styled.div`
 
 const FormGroup = styled.div`
   margin-bottom: 16px;
-  width: 95%;
+  width: 100%;
 `;
 
 const Label = styled.div`
-  font-size: 14px;
-  font-weight: bold;
+  font-size: 16px;
   margin-bottom: 6px;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 8px 12px;
-  font-size: 14px;
-  border: 1px solid #d9d9d9;
-  border-radius: 6px;
-
-  ${({ readOnly }) =>
-    readOnly &&
-    `
-    background: #f9f9f9;
-    color: #b1b1b1;
-  `}
 `;
 
 const ButtonRow = styled.div`
@@ -141,7 +126,7 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalBox = styled.div`
-  background: #fff;
+  background: #ffffff;
   border-radius: 12px;
   padding: 24px;
   width: 400px;
@@ -182,11 +167,11 @@ export default function UserInfoSection({
   initialData = {
     intro: "인슐랭 화이팅!",
     name: "김지후",
-    nickname: "김지후",
+    nickname: "kimjihu",
     id: "incherin",
     password: "********",
-    followers: 0,
-    following: 0,
+    followers: 100,
+    following: 100,
     profileImage: null,
   },
 }) {
@@ -197,8 +182,8 @@ export default function UserInfoSection({
 
   const fileInputRef = useRef(null);
 
-  const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+  const handleChange = (field, value) => {
+    setUser({ ...user, [field]: value });
   };
 
   const handleToggle = () => {
@@ -273,26 +258,27 @@ export default function UserInfoSection({
             variant="subsidiary"
             style={{ fontSize: 12, padding: "6px 10px", height: "auto" }}
             onClick={() => fileInputRef.current.click()}
-            >
+          >
             사진 변경
-            </Button>
-            <Button
-              variant="secondary"
-              style={{ fontSize: 12, padding: "6px 10px", height: "auto" }}
-              onClick={handleImageDelete}
-              >
-              사진 삭제
-            </Button>
+          </Button>
+          <Button
+            variant="secondary"
+            style={{ fontSize: 12, padding: "6px 10px", height: "auto" }}
+            onClick={handleImageDelete}
+          >
+            사진 삭제
+          </Button>
         </ProfileButtonRow>
 
         {/* 한 줄 소개 */}
         <FormGroup>
           <Label>한 줄 소개</Label>
           <Input
-            name="intro"
+            variant="text"
             value={user.intro}
-            onChange={handleChange}
-            readOnly={!editMode}
+            onChange={(e) => handleChange("intro", e.target.value)}
+            inactive={!editMode}
+            width="100%"
           />
         </FormGroup>
 
@@ -300,10 +286,11 @@ export default function UserInfoSection({
         <FormGroup>
           <Label>이름</Label>
           <Input
-            name="name"
+            variant="text"
             value={user.name}
-            onChange={handleChange}
-            readOnly={!editMode}
+            onChange={(e) => handleChange("name", e.target.value)}
+            inactive={!editMode}
+            width="100%"
           />
         </FormGroup>
 
@@ -311,28 +298,35 @@ export default function UserInfoSection({
         <FormGroup>
           <Label>닉네임</Label>
           <Input
-            name="nickname"
+            variant="text"
             value={user.nickname}
-            onChange={handleChange}
-            readOnly={!editMode}
+            onChange={(e) => handleChange("nickname", e.target.value)}
+            inactive={!editMode}
+            width="100%"
           />
         </FormGroup>
 
         {/* 아이디 */}
         <FormGroup>
           <Label>아이디</Label>
-          <Input name="id" value={user.id} readOnly />
+          <Input
+            variant="id"
+            value={user.id}
+            inactive={true}
+            width="100%"
+          />
         </FormGroup>
 
         {/* 비밀번호 */}
         <FormGroup>
           <Label>비밀번호</Label>
           <Input
+            variant="password"
             type="password"
-            name="password"
             value={user.password}
-            onChange={handleChange}
-            readOnly={!editMode}
+            onChange={(e) => handleChange("password", e.target.value)}
+            inactive={!editMode}
+            width="100%"
           />
         </FormGroup>
 
@@ -351,13 +345,14 @@ export default function UserInfoSection({
             <Button
               variant="secondary"
               style={{
-              border: "1px solid #ac182d",
-              color: "#ac182d",
-              backgroundColor: "#ffffff",
+                border: "1px solid #ac182d",
+                color: "#ac182d",
+                backgroundColor: "#ffffff",
               }}
-              onClick={() => setShowDeleteModal(true)}>
+              onClick={() => setShowDeleteModal(true)}
+            >
               회원 탈퇴
-            </Button> 
+            </Button>
           </RightButtons>
         </ButtonRow>
       </Card>
