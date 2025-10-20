@@ -1,10 +1,12 @@
 /** @jsxImportSource @emotion/react */
-// --- 라이브러리 (외부 모듈) ---
-import React, { useState } from 'react'; // useState를 다시 import
+// --- 라이브러리 ---
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { css, useTheme } from '@emotion/react';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '../routes/routeTable.js';
 
-// --- 내부 모듈 (내부 파일들) ---
+// --- 아이콘 및 로고 파일들 ---
 import heartIcon from '../assets/image/heart.png';
 import layoutIcon from '../assets/image/layout.png';
 import logoImage from '../assets/image/logo3.png';
@@ -16,35 +18,39 @@ import moreIcon from '../assets/image/dots-horizontal.png';
 
 // --- 스타일이 적용된 컴포넌트들 ---
 
-// 사이드바 전체를 감싸는 틀
+// -- 사이드바 틀 스타일 --
 const StyledSidebarContainer = styled.aside`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   width: 76px;
-  height: 100vh;
   padding: 30px 0;
   background-color: ${({ theme }) => theme.colors.white};
   border-right: 1px solid ${({ theme }) => theme.colors.gray};
   flex-shrink: 0;
   box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: 20; /*z-index:10(패널)보다 위로 둠*/
 `;
 
-// 로고 이미지 스타일
+// -- 사이드바 상단 로고 스타일 --
 const StyledLogo = styled.img`
   width: 48px;
   height: 40px;
 `;
 
-// 메뉴 버튼들을 감싸는 영역
+// -- 사이드바 메뉴들 정렬 --
 const StyledMenu = styled.nav`
   display: flex;
   flex-direction: column;
 `;
 
-// 사이드바의 각 메뉴 버튼 (button으로 다시 변경)
-const StyledSidebarButton = styled.button`
+// 모든 메뉴 버튼을 위한 단일 스타일 컴포넌트
+const StyledMenuButton = styled.button`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -53,22 +59,18 @@ const StyledSidebarButton = styled.button`
   height: 76px;
   border: none;
   cursor: pointer;
-  transition: background-color 0.2s ease;
   position: relative;
-
-  /* $active prop을 기준으로 스타일 적용 */
+  transition: background-color 0.2s ease;
   background-color: ${({ theme, $active }) =>
     $active ? theme.colors.gray : 'transparent'};
-  color: ${({ theme, $active }) =>
-    $active ? theme.colors.blue : theme.colors.black};
 
   &:hover {
     background-color: ${({ theme, $active }) =>
       $active ? theme.colors.gray : theme.colors.lightGray};
   }
 
-  /* $active prop을 기준으로 작대기 표시 */
   &::after {
+    /* 활성화 시 버튼 옆에 파란 바 생성 */
     content: '';
     position: absolute;
     right: 0;
@@ -79,11 +81,10 @@ const StyledSidebarButton = styled.button`
     border-radius: 2px;
     background-color: ${({ theme, $active }) =>
       $active ? theme.colors.blue : 'transparent'};
-    transition: background-color 0.2s ease;
   }
 `;
 
-// 아이콘 스타일
+// -- 버튼 안 아이콘 스타잏 --
 const StyledIcon = styled.div`
   width: 24px;
   height: 24px;
@@ -95,14 +96,15 @@ const StyledIcon = styled.div`
   transition: background-color 0.2s ease;
 `;
 
-// 메뉴 버튼의 텍스트 스타일
+// -- 버튼 안 텍스트 스타일 --
 const StyledMenuText = styled.span`
   margin-top: 4px;
   font-size: 12px;
   font-weight: 500;
+  color: ${({ color }) => color};
 `;
 
-// 하단 설정 버튼 스타일
+// -- 사이드 바 메뉴 하단 설정 버튼 스타일 --
 const StyledSettingsButton = styled.button`
   width: 40px;
   height: 40px;
@@ -119,30 +121,37 @@ const StyledSettingsButton = styled.button`
   }
 `;
 
-// --- 메뉴 데이터 (path 속성 제거) ---
+// --- 사이드바 메뉴 데이터 ---
 const menuItems = [
-  { id: 'map', icon: mapIcon, text: '지도 탐색' },
-  { id: 'menu', icon: layoutIcon, text: '메뉴 탐색' },
-  { id: 'liked', icon: heartIcon, text: '찜한 가게' },
-  { id: 'review', icon: reviewIcon, text: '리뷰 작성' },
-  { id: 'my', icon: myPageIcon, text: 'MY 페이지' },
-  { id: 'more', icon: moreIcon, text: '더보기' },
+  { id: 'map', icon: mapIcon, text: '지도 탐색', path: ROUTES.MAP },
+  { id: 'stores', icon: layoutIcon, text: '메뉴 탐색', path: ROUTES.STORES },
+  { id: 'liked', icon: heartIcon, text: '찜한 가게', path: ROUTES.MY },
+  { id: 'review', icon: reviewIcon, text: '리뷰 작성', path: ROUTES.MY },
+  { id: 'my', icon: myPageIcon, text: 'MY 페이지', path: ROUTES.MY },
+  { id: 'more', icon: moreIcon, text: '더보기' /* path 없음 */ },
 ];
 
-/**
- * @description 앱의 메인 사이드바 내비게이션
- */
-export function MapsPageSidebar() {
-  // --- 내부 상수/훅 호출 ---
+// --- 맵의 메인 사이드바 내비게이션 ---
+export function MapsPageSidebar({ onMenuChange }) {
   const theme = useTheme();
-  // useState와 핸들러를 다시 사용
-  const [activeMenuState, setActiveMenuState] = useState('map');
+  const navigate = useNavigate();
+  const [activeMenuId, setActiveMenuId] = useState('map');
 
-  const handleMenuClick = menuId => {
-    setActiveMenuState(menuId);
+  const handleMenuClick = (menuId, path) => {
+    // 활성화 상태를 업데이트
+    setActiveMenuId(menuId);
+
+    // 부모 컴포넌트에 알림 (패널 내용 변경용)
+    if (onMenuChange) {
+      onMenuChange(menuId);
+    }
+
+    // 페이지 이동이 필요하면 이동
+    if (path) {
+      navigate(path);
+    }
   };
 
-  // --- 렌더링(JSX) ---
   return (
     <StyledSidebarContainer>
       {/* 상단 그룹 */}
@@ -154,33 +163,35 @@ export function MapsPageSidebar() {
           gap: 30px;
         `}
       >
-        {/* 로고 */}
         <StyledLogo src={logoImage} alt="Inchelin Logo" />
 
         {/* 메뉴 버튼 그룹 */}
         <StyledMenu>
           {menuItems.map(item => {
-            const isActive = activeMenuState === item.id;
+            const isActive = activeMenuId === item.id; // 메뉴 버튼이 활성화 상태면 True
+
             return (
-              <StyledSidebarButton
+              <StyledMenuButton
                 key={item.id}
                 $active={isActive}
-                onClick={() => handleMenuClick(item.id)}
-                aria-pressed={isActive}
+                onClick={() => handleMenuClick(item.id, item.path)}
               >
                 <StyledIcon
                   src={item.icon}
                   alt=""
                   color={isActive ? theme.colors.blue : theme.colors.black}
                 />
-                <StyledMenuText>{item.text}</StyledMenuText>
-              </StyledSidebarButton>
+                <StyledMenuText
+                  color={isActive ? theme.colors.blue : theme.colors.black}
+                >
+                  {item.text}
+                </StyledMenuText>
+              </StyledMenuButton>
             );
           })}
         </StyledMenu>
       </div>
 
-      {/* 하단 설정 버튼 */}
       <StyledSettingsButton aria-label="Settings">
         <StyledIcon color={theme.colors.darkGray} src={settingsIcon} alt="" />
       </StyledSettingsButton>
