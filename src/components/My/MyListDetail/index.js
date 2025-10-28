@@ -1,2 +1,2 @@
 export { default as MyListDetail } from './MyListDetail';
-export { default as MyListDetail } from './ListDetailCard';
+export { default as ListDetailCard } from './ListDetailCard';
