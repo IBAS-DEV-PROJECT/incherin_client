@@ -11,23 +11,24 @@ const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 24px 48px;
+  padding: 24px 340px; 
   background-color: #f9fafb;
 `;
 
 const InfoCard = styled(Card)`
-  padding: 24px;
+  /* 상하 여백은 18px, 좌우 여백은 24px로 조정합니다. */
+  padding: 18px 24px; 
 `;
 
 const Title = styled.h3`
   margin: 0 0 8px;
-  font-size: 16px;
+  font-size: 19px;
   color: ${({ theme }) => theme.colors.blue};
 `;
 
 const Content = styled.p`
   margin: 0;
-  font-size: 14px;
+  font-size: 16px;
   color: #333;
 `;
 
@@ -39,10 +40,11 @@ const HoursToggle = styled.div`
 `;
 
 const HoursDetail = styled.div`
-  padding-left: 18px;
-  font-size: 12px;
+  padding-left: 71px;
+  font-size: 14px;
   color: #555;
   line-height: 1.8;
+  margin-top: 8px;
 `;
 
 // --- 더미 데이터 ---

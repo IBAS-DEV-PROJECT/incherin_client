@@ -101,7 +101,6 @@ const MetaItem = styled.span`
 `;
 const UnderlinedMetaItem = styled(MetaItem)`
   text-decoration: underline;
-  cursor: pointer;
   font-size: 15px;
 `;
 const ActionRow = styled.div`
