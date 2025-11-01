@@ -7,7 +7,7 @@ export default function MyPage() {
   return (
     <div style={{ display: 'flex', height: '100vh' }}>
       {/* 왼쪽 사이드바 */}
-      <Sidebar userType="user" nickname="김지후" />
+      <Sidebar userType="user" nickname="김인하" />
 
       {/* 오른쪽 메인 영역 */}
       <div

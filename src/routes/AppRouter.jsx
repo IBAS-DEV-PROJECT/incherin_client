@@ -31,15 +31,10 @@ const MyPage = lazy(() => import('../pages/My'));
 const AdminPage = lazy(() => import('../pages/Admin'));
 
 // --- My 내부 섹션 ---
-const UserInfoSection = lazy(
-  () => import('../components/My/UserInfoSection/UserInfoSection')
-);
-const MyList = lazy(
-  () => import('../components/My/MyListSection/MyListSection')
-);
-const MyListDetail = lazy(
-  () => import('../components/My/MyListDetail/MyListDetail')
-);
+const UserInfoSection = lazy(() => import('../components/My/UserInfoSection/UserInfoSection'));
+const MyList = lazy(() => import('../components/My/MyListSection/MyListSection'));
+const MyListDetail = lazy(() => import('../components/My/MyListDetail/MyListDetail'));
+const MyReview = lazy(() => import('../components/My/MyReview/MyReview'));
 
 // --- 보호 라우트 (문서: 보호 라우트) ---
 // - 인증이 필요한 경로에서 사용
@@ -78,11 +73,12 @@ const router = createBrowserRouter([
           //</Protected>
         ),
         children: [
-          { index: true, element: <Navigate to="info" replace /> },
-          { path: 'info', element: withSuspense(<UserInfoSection />) },
-          { path: 'lists', element: withSuspense(<MyList />) },
-          { path: 'lists/:id', element: withSuspense(<MyListDetail />) },
-        ],
+        { index: true, element: <Navigate to="info" replace /> },
+        { path: "info", element: withSuspense(<UserInfoSection />) },
+        { path: "lists", element: withSuspense(<MyList />) },
+        { path: "lists/:id", element: withSuspense(<MyListDetail />) },
+        { path: "review", element: withSuspense(<MyReview />) },
+]
       },
       { path: ROUTES.ADMIN, element: withSuspense(<AdminPage />) },
       { path: ROUTES.NOT_FOUND, element: withSuspense(<NotFoundPage />) },
