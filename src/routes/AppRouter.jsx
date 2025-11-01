@@ -84,7 +84,6 @@ const router = createBrowserRouter([
       { path: ROUTES.NOT_FOUND, element: withSuspense(<NotFoundPage />) },
     ],
   },
-  // Map은 레이아웃 제외 (Header/Footer 없음)
   { path: ROUTES.MAP, element: withSuspense(<MapPage />) },
 ]);
 
