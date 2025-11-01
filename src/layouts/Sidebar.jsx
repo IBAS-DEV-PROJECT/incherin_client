@@ -226,7 +226,7 @@ export default function Sidebar({
           hasDetail: true,
           details: [
             { name: '내 정보', path: '/my/info' },
-            { name: '내가 쓴 리뷰', path: '/my/reviews' },
+            { name: '내가 쓴 리뷰', path: '/my/review' },
             { name: '내 리스트 관리', path: '/my/lists' },
           ],
         },
