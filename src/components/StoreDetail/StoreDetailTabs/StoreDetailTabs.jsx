@@ -6,18 +6,20 @@ import styled from '@emotion/styled';
 const TabContainer = styled.div`
   display: flex;
   border-bottom: 1px solid #e5e7eb;
-  padding-left: 470px; 
+  padding-left: 470px;
 `;
 
 const TabButton = styled.button`
   padding: 12px 30px; /* ◀ 버튼의 상하좌우 여백을 늘렸습니다 */
-  font-size: 21px; 
+  font-size: 21px;
   font-weight: 600;
   border: none;
   background: none;
   cursor: pointer;
-  color: ${({ theme, active }) => (active ? theme.colors.blue : theme.colors.darkGray)};
-  border-bottom: 3.3px solid ${({ theme, active }) => (active ? theme.colors.blue : 'transparent')}; /* ◀ 아래 파란 선 두께를 키웠습니다 */
+  color: ${({ theme, active }) =>
+    active ? theme.colors.blue : theme.colors.darkGray};
+  border-bottom: 3.3px solid
+    ${({ theme, active }) => (active ? theme.colors.blue : 'transparent')}; /* ◀ 아래 파란 선 두께를 키웠습니다 */
   margin-bottom: -1px;
 `;
 

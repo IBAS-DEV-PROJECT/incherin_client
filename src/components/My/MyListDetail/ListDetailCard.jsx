@@ -1,7 +1,7 @@
 // --- 라이브러리 ---
-import React from "react";
-import styled from "@emotion/styled";
-import { StoreBadgeGroup } from "../../Store/StoreBadgeGroup";
+import React from 'react';
+import styled from '@emotion/styled';
+import { StoreBadgeGroup } from '../../Store/StoreBadgeGroup';
 
 // --- 스타일 ---
 const CardContainer = styled.div`
@@ -9,7 +9,7 @@ const CardContainer = styled.div`
   border: 1px solid #e9e9e9;
   border-radius: 12px;
   padding: 12px;
-  margin-bottom: 6px;;
+  margin-bottom: 6px;
   display: flex;
   align-items: flex-start;
   gap: 20px;
@@ -101,7 +101,6 @@ export default function ListDetailCard({
       <StoreImage src={imageUrl} alt={name} />
 
       <InfoContainer>
-
         <TopInfoWrapper>
           <StoreName>{name}</StoreName>
         </TopInfoWrapper>
@@ -116,7 +115,7 @@ export default function ListDetailCard({
             <MetaInfo>
               <StarIcon>★</StarIcon>
               <strong>{rating}</strong>
-              <span style={{ color: "#121212" }}>({reviewCount})</span>
+              <span style={{ color: '#121212' }}>({reviewCount})</span>
             </MetaInfo>
             <Address>{address}</Address>
           </BottomInfoWrapper>

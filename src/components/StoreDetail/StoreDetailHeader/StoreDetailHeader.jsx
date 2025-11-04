@@ -1,7 +1,14 @@
 // --- 라이브러리 ---
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { Phone, Heart, Share01, Star01, MarkerPin01, XClose } from '@untitledui/icons';
+import {
+  Phone,
+  Heart,
+  Share01,
+  Star01,
+  MarkerPin01,
+  XClose,
+} from '@untitledui/icons';
 
 // --- 내부 (부모) ---
 import { Button } from '../../common';
@@ -168,7 +175,6 @@ const PhoneNumberModalCopyLink = styled.button(({ theme }) => ({
   fontSize: '16px',
 }));
 
-
 // --- 기본 더미 데이터 ---
 const defaultStoreData = {
   imageUrl: FoodImg,
@@ -203,7 +209,8 @@ export function StoreDetailHeader({ store = defaultStoreData }) {
   const handleCloseModal = () => setIsModalOpen(false);
 
   const handleCopyPhoneNumber = () => {
-    navigator.clipboard.writeText(store.phone)
+    navigator.clipboard
+      .writeText(store.phone)
       .then(() => {
         alert('전화번호가 복사되었습니다.');
         handleCloseModal();
@@ -237,17 +244,33 @@ export function StoreDetailHeader({ store = defaultStoreData }) {
             </AiSummary>
 
             <MetaRow>
-              <MetaItem><Star01 size={19} fill="currentColor" /> {store.rating}</MetaItem>
+              <MetaItem>
+                <Star01 size={19} fill="currentColor" /> {store.rating}
+              </MetaItem>
               <MetaItem>리뷰 {store.reviewCount}</MetaItem>
-              <MetaItem><Heart size={19} /> {store.likeCount}</MetaItem>
-              <MetaItem><MarkerPin01 size={19} /> {store.distance}</MetaItem>
-              {store.isDelivery && <UnderlinedMetaItem>배달 가능</UnderlinedMetaItem>}
+              <MetaItem>
+                <Heart size={19} /> {store.likeCount}
+              </MetaItem>
+              <MetaItem>
+                <MarkerPin01 size={19} /> {store.distance}
+              </MetaItem>
+              {store.isDelivery && (
+                <UnderlinedMetaItem>배달 가능</UnderlinedMetaItem>
+              )}
             </MetaRow>
-            
+
             <ActionRow>
-              <ActionButton variant="subsidiary" onClick={handleOpenModal}><Phone size={17} />전화</ActionButton>
-              <ActionButton variant="subsidiary"><Heart size={17} />찜</ActionButton>
-              <ActionButton variant="subsidiary"><Share01 size={17} />공유</ActionButton>
+              <ActionButton variant="subsidiary" onClick={handleOpenModal}>
+                <Phone size={17} />
+                전화
+              </ActionButton>
+              <ActionButton variant="subsidiary">
+                <Heart size={17} />찜
+              </ActionButton>
+              <ActionButton variant="subsidiary">
+                <Share01 size={17} />
+                공유
+              </ActionButton>
             </ActionRow>
           </InfoWrapper>
         </Container>
@@ -259,8 +282,12 @@ export function StoreDetailHeader({ store = defaultStoreData }) {
             <PhoneNumberModalCloseButton onClick={handleCloseModal}>
               <XClose size={18} />
             </PhoneNumberModalCloseButton>
-            <PhoneNumberModalText>전화번호 : {store.phone}</PhoneNumberModalText>
-            <PhoneNumberModalCopyLink onClick={handleCopyPhoneNumber}>복사</PhoneNumberModalCopyLink>
+            <PhoneNumberModalText>
+              전화번호 : {store.phone}
+            </PhoneNumberModalText>
+            <PhoneNumberModalCopyLink onClick={handleCopyPhoneNumber}>
+              복사
+            </PhoneNumberModalCopyLink>
           </PhoneNumberModalContent>
         </PhoneNumberModalBackdrop>
       )}
