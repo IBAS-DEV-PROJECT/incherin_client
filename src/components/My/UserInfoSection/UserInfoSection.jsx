@@ -2,54 +2,54 @@
 import React, { useState, useRef } from 'react';
 import styled from '@emotion/styled';
 
-// --- 내부 ---
+// --- 컴포넌트 ---
 import { Button } from '../../common/Button';
 import { Input } from '../../common/Input';
 
 // --- 스타일 ---
 const Container = styled.div`
-  flex: 1;
-  padding: 40px;
+  width: 100%;
   display: flex;
   justify-content: center;
+  padding: 30px 0;
 `;
 
 const Card = styled.div`
-  width: 700px;
-  background: #ffffff;
-  border: 1px solid #f2f2f2;
-  border-radius: 12px;
-  padding: 32px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  width: 65%;
+  max-width: 500px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 50px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 `;
 
 const Title = styled.h2`
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 26px;
+  font-weight: 700;
   color: #27509b;
-  margin-bottom: 24px;
-  border-bottom: 1px solid #d9d9d9;
-  padding-bottom: 12px;
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #27509b;
 `;
 
-const ProfileRow = styled.div`
+const UserInfoWrapper = styled.div`
   display: flex;
+  gap: 25px;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  margin-left: 28px;
 `;
 
 const Avatar = styled.div`
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
-  background: #f2f2f2;
+  background: #e9e9e9;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
-  margin-right: 40px;
-  margin-left: 20px;
   overflow: hidden;
+  font-size: 28px;
 
   img {
     width: 100%;
@@ -58,64 +58,75 @@ const Avatar = styled.div`
   }
 `;
 
-const ProfileInfo = styled.div`
+const NicknameBox = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const TopRow = styled.div`
-  display: flex;
   align-items: center;
-  gap: 40px;
+  font-size: 20px;
+  font-weight: 700;
+  padding-left: 16px;
 `;
 
-const Nickname = styled.div`
-  font-size: 16px;
-  font-weight: bold;
-  color: #121212;
-`;
-
-const Stats = styled.div`
-  display: flex;
-  gap: 40px;
-  font-size: 14px;
-  color: #121212;
-`;
-
-const FormGroup = styled.div`
-  margin-bottom: 16px;
-  width: 100%;
-`;
-
-const Label = styled.div`
-  font-size: 16px;
-  margin-bottom: 6px;
-`;
-
-const ButtonRow = styled.div`
+const ButtonBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 24px;
+  margin-bottom: 30px;
 `;
 
-const LeftButtons = styled.div`
-  display: flex;
-  gap: 12px;
-`;
-
-const RightButtons = styled.div`
-  display: flex;
-  gap: 12px;
-`;
-
-const ProfileButtonRow = styled.div`
+const ActionButtonsLeft = styled.div`
   display: flex;
   gap: 8px;
-  margin-bottom: 8px;
 `;
 
-// --- 모달 ---
+const SmallButton = styled(Button)`
+  font-size: 12px;
+  padding: 6px 10px;
+  height: auto;
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+`;
+
+const InputRow = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: right;
+  gap: 8px;
+`;
+
+const Label = styled.div`
+  width: 110px;
+  font-size: 14px;
+  font-weight: 600;
+`;
+
+const SmallInputWrapper = styled.div`
+  flex: 1;
+  width: 100%;
+
+  input {
+    height: 38px !important;
+    padding: 4px 10px !important;
+    font-size: 14px !important;
+  }
+`;
+
+const EditButton = styled.div`
+  display: flex;
+  justify-content: right;
+`;
+const ButtonGroup = styled.div`
+  display: flex;
+  justify-content: left;
+  margin-top: 10px;
+  gap: 5px;
+`;
+
 const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
@@ -126,6 +137,7 @@ const ModalOverlay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 9999;
 `;
 
 const ModalBox = styled.div`
@@ -165,36 +177,27 @@ function ConfirmModal({ message, onConfirm, onCancel }) {
   );
 }
 
-// --- 메인 컴포넌트 ---
 export default function UserInfoSection({
   initialData = {
-    intro: '인슐랭 화이팅!',
-    name: '김지후',
-    nickname: 'kimjihu',
-    id: 'incherin',
-    password: '********',
-    followers: 100,
-    following: 100,
+    intro: '인슐랭 파이팅!!',
+    name: '김인하',
+    nickname: '인하대학생47',
+    id: 'inha2025',
+    password: '12345678',
+    followers: 40,
+    following: 40,
     profileImage: null,
   },
 }) {
   const [editMode, setEditMode] = useState(false);
   const [user, setUser] = useState(initialData);
+  const fileInputRef = useRef(null);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const fileInputRef = useRef(null);
+  const handleChange = (field, value) => setUser({ ...user, [field]: value });
 
-  const handleChange = (field, value) => {
-    setUser({ ...user, [field]: value });
-  };
-
-  const handleToggle = () => {
-    if (editMode) {
-      console.log('저장된 데이터:', user);
-    }
-    setEditMode(!editMode);
-  };
+  const handleImageDelete = () => setUser({ ...user, profileImage: null });
 
   const handleLogout = () => {
     console.log('로그아웃 실행');
@@ -202,20 +205,8 @@ export default function UserInfoSection({
   };
 
   const handleDelete = () => {
-    console.log('회원 탈퇴 실행');
+    console.log('회원탈퇴 실행');
     setShowDeleteModal(false);
-  };
-
-  const handleImageChange = e => {
-    const file = e.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setUser({ ...user, profileImage: imageUrl });
-    }
-  };
-
-  const handleImageDelete = () => {
-    setUser({ ...user, profileImage: null });
   };
 
   return (
@@ -223,162 +214,98 @@ export default function UserInfoSection({
       <Card>
         <Title>내 정보</Title>
 
-        {/* 프로필 */}
-        <ProfileRow>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <Avatar>
-              {user.profileImage ? (
-                <img src={user.profileImage} alt="프로필" />
-              ) : (
-                '^ㅡ^'
-              )}
-            </Avatar>
-
-            {/* 숨겨진 파일 input */}
+        <UserInfoWrapper>
+          <Avatar>
+            {user.profileImage ? <img src={user.profileImage} /> : ' '}
+          </Avatar>
+          <NicknameBox>{user.nickname}</NicknameBox>
+        </UserInfoWrapper>
+        <ButtonBox>
+          <ActionButtonsLeft>
+            <SmallButton
+              variant="subsidiary"
+              onClick={() => fileInputRef.current.click()}
+            >
+              사진 추가
+            </SmallButton>
+            <SmallButton variant="secondary" onClick={handleImageDelete}>
+              사진 삭제
+            </SmallButton>
             <input
               type="file"
               accept="image/*"
               ref={fileInputRef}
               style={{ display: 'none' }}
-              onChange={handleImageChange}
+              onChange={e =>
+                handleChange(
+                  'profileImage',
+                  URL.createObjectURL(e.target.files[0])
+                )
+              }
             />
-          </div>
+          </ActionButtonsLeft>
+        </ButtonBox>
 
-          <ProfileInfo>
-            <TopRow>
-              <Nickname>{user.nickname}</Nickname>
-              <Stats>
-                <span>팔로워 {user.followers}</span>
-                <span>팔로잉 {user.following}</span>
-              </Stats>
-            </TopRow>
-          </ProfileInfo>
-        </ProfileRow>
+        <InputWrapper>
+          {[
+            ['한 줄 소개', 'intro'],
+            ['이름', 'name'],
+            ['닉네임', 'nickname'],
+            ['아이디', 'id'],
+            ['비밀번호', 'password', 'password'],
+          ].map(([label, field, type]) => (
+            <InputRow key={field}>
+              <Label>{label}</Label>
 
-        {/* 사진 변경 / 삭제 버튼 */}
-        <ProfileButtonRow>
+              <SmallInputWrapper>
+                <Input
+                  type={type || 'text'}
+                  value={user[field]}
+                  inactive={!editMode || field === 'id'}
+                  onChange={e => handleChange(field, e.target.value)}
+                  width="100%"
+                />
+              </SmallInputWrapper>
+            </InputRow>
+          ))}
+        </InputWrapper>
+
+        <EditButton>
+          <Button variant="primary" onClick={() => setEditMode(!editMode)}>
+            {editMode ? '저장' : '수정하기'}
+          </Button>
+        </EditButton>
+        <ButtonGroup>
           <Button
             variant="subsidiary"
-            style={{ fontSize: 12, padding: '6px 10px', height: 'auto' }}
-            onClick={() => fileInputRef.current.click()}
+            style={{ border: '1px solid #ac182d', color: '#ac182d' }}
+            onClick={() => setShowDeleteModal(true)}
           >
-            사진 변경
+            회원탈퇴
           </Button>
-          <Button
-            variant="secondary"
-            style={{ fontSize: 12, padding: '6px 10px', height: 'auto' }}
-            onClick={handleImageDelete}
-          >
-            사진 삭제
+
+          <Button variant="subsidiary" onClick={() => setShowLogoutModal(true)}>
+            로그아웃
           </Button>
-        </ProfileButtonRow>
+        </ButtonGroup>
 
-        {/* 한 줄 소개 */}
-        <FormGroup>
-          <Label>한 줄 소개</Label>
-          <Input
-            variant="text"
-            value={user.intro}
-            onChange={e => handleChange('intro', e.target.value)}
-            inactive={!editMode}
-            width="100%"
+        {/*모달*/}
+        {showLogoutModal && (
+          <ConfirmModal
+            message="정말 로그아웃하시겠습니까?"
+            onConfirm={handleLogout}
+            onCancel={() => setShowLogoutModal(false)}
           />
-        </FormGroup>
+        )}
 
-        {/* 이름 */}
-        <FormGroup>
-          <Label>이름</Label>
-          <Input
-            variant="text"
-            value={user.name}
-            onChange={e => handleChange('name', e.target.value)}
-            inactive={!editMode}
-            width="100%"
+        {showDeleteModal && (
+          <ConfirmModal
+            message="정말 탈퇴하시겠습니까?"
+            onConfirm={handleDelete}
+            onCancel={() => setShowDeleteModal(false)}
           />
-        </FormGroup>
-
-        {/* 닉네임 */}
-        <FormGroup>
-          <Label>닉네임</Label>
-          <Input
-            variant="text"
-            value={user.nickname}
-            onChange={e => handleChange('nickname', e.target.value)}
-            inactive={!editMode}
-            width="100%"
-          />
-        </FormGroup>
-
-        {/* 아이디 */}
-        <FormGroup>
-          <Label>아이디</Label>
-          <Input variant="id" value={user.id} inactive={true} width="100%" />
-        </FormGroup>
-
-        {/* 비밀번호 */}
-        <FormGroup>
-          <Label>비밀번호</Label>
-          <Input
-            variant="password"
-            type="password"
-            value={user.password}
-            onChange={e => handleChange('password', e.target.value)}
-            inactive={!editMode}
-            width="100%"
-          />
-        </FormGroup>
-
-        {/* 버튼 */}
-        <ButtonRow>
-          <LeftButtons>
-            <Button variant="primary" onClick={handleToggle}>
-              {editMode ? '저장' : '수정하기'}
-            </Button>
-          </LeftButtons>
-
-          <RightButtons>
-            <Button
-              variant="subsidiary"
-              onClick={() => setShowLogoutModal(true)}
-            >
-              로그아웃
-            </Button>
-            <Button
-              variant="secondary"
-              style={{
-                border: '1px solid #ac182d',
-                color: '#ac182d',
-                backgroundColor: '#ffffff',
-              }}
-              onClick={() => setShowDeleteModal(true)}
-            >
-              회원 탈퇴
-            </Button>
-          </RightButtons>
-        </ButtonRow>
+        )}
       </Card>
-
-      {/* 모달 */}
-      {showLogoutModal && (
-        <ConfirmModal
-          message="정말 로그아웃하시겠습니까?"
-          onConfirm={handleLogout}
-          onCancel={() => setShowLogoutModal(false)}
-        />
-      )}
-      {showDeleteModal && (
-        <ConfirmModal
-          message="정말 탈퇴하시겠습니까?"
-          onConfirm={handleDelete}
-          onCancel={() => setShowDeleteModal(false)}
-        />
-      )}
     </Container>
   );
 }
