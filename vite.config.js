@@ -10,4 +10,14 @@ export default defineConfig({
       },
     }),
   ],
+  resolve: {
+    alias: [
+      { find: '@app', replacement: '/src/app' },
+      { find: '@pages', replacement: '/src/pages' },
+      { find: '@widgets', replacement: '/src/widgets' },
+      { find: '@features', replacement: '/src/features' },
+      { find: '@entities', replacement: '/src/entities' },
+      { find: '@shared', replacement: '/src/shared' },
+    ],
+  },
 });

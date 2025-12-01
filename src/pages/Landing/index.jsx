@@ -2,8 +2,8 @@
 import React from 'react';
 
 // --- 내부 (현재) ---
-import { Button } from '../../components/common';
-import { ROUTES } from '../../routes/routeTable';
+import { Button } from '@shared/ui';
+import { ROUTES } from '@app/routes/routeTable';
 import {
   HeroSection,
   RankingSection,
@@ -12,7 +12,7 @@ import {
   FavoriteSection,
   PromoSection,
   MenuCategorySection,
-} from '../../components/Landing';
+} from '@widgets/landing';
 
 // --- 페이지 엔트리 (Default Export 허용) ---
 export default function Home() {

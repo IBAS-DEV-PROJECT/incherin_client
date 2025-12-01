@@ -1,7 +1,7 @@
 // --- 라이브러리 ---
 import { Outlet } from 'react-router-dom';
 // --- 내부 ---
-import Sidebar from '../../layouts/Sidebar';
+import Sidebar from '@widgets/Sidebar';
 
 export default function MyPage() {
   return (

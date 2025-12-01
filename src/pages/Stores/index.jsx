@@ -4,15 +4,15 @@ import styled from '@emotion/styled';
 import { useAtom } from 'jotai';
 
 // --- 내부 (부모) ---
-import { StoreCard, StoreSearch, StoreDropdown } from '../../components/Store';
-import { Tab } from '../../components/common/Tab';
-import { Button } from '../../components/common';
-import { Spinner } from '../../components/common';
-import { useInfiniteScroll } from '../../hooks/useInfiniteScroll';
-import { FILTER_TYPES, filterTypeAtom } from '../../stores/filterStore';
+import { StoreCard, StoreSearch, StoreDropdown } from '@entities/store/ui';
+import { Tab } from '@shared/ui/Tab';
+import { Button } from '@shared/ui';
+import { Spinner } from '@shared/ui';
+import { useInfiniteScroll } from '@shared/lib/hooks/useInfiniteScroll';
+import { FILTER_TYPES, filterTypeAtom } from '@features/store-filter/model/filterStore';
 
 // --- 에셋 ---
-import FoodImg from '../../assets/image/food.webp';
+import FoodImg from '@shared/assets/image/food.webp';
 
 // ================== 스타일 ==================
 const StyledStoresContainer = styled.div({

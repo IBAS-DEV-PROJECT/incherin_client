@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { ListPannel } from '../../components/Map/ListPannel';
-import { MapsPageSidebar } from '../../layouts/MapsPageSidebar';
-import { useKakaoMap } from '../../hooks/useKakaoMap';
+import { ListPannel } from '@widgets/map/ListPannel';
+import { MapsPageSidebar } from '@widgets/MapsPageSidebar';
+import { useKakaoMap } from '@shared/lib/hooks/useKakaoMap';
 
 // 페이지 전체를 감싸는 컨테이너. 모든 자식 요소들의 위치 기준점
 const StyledPageContainer = styled.div`

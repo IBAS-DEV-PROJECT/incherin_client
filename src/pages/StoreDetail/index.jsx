@@ -6,7 +6,7 @@ import {
   StoreDetailHeader,
   StoreDetailTabs,
   StoreDetailInfo,
-} from '../../components/StoreDetail';
+} from '@widgets/store-detail';
 
 // --- 페이지 엔트리 (Default Export 허용) ---
 export default function StoreDetail() {

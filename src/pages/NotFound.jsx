@@ -3,7 +3,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 // --- 내부 (부모) ---
-import { Button } from '../components/common';
+import { Button } from '@shared/ui';
 
 // Styled 컴포넌트 (theme 사용)
 const StyledContainer = styled.div(({ theme }) => ({
