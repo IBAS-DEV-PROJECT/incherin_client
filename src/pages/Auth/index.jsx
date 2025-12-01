@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
 
 // --- 내부 ---
-import { AuthForm } from '../../components/Auth';
+import { AuthForm } from '@features/auth';
 
 // ================== 스타일 ==================
 const StyledAuthContainer = styled.div(({ theme }) => ({
