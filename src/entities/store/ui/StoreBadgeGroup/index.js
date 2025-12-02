@@ -1,1 +1,0 @@
-export { StoreBadgeGroup } from './StoreBadgeGroup';

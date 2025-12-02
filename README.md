@@ -32,48 +32,68 @@ npm run lint:fix
 npm run format
 ```
 
-## 프로젝트 구조(요약)
+## 아키텍처
+
+이 프로젝트는 **FSD (Feature-Sliced Design)** 아키텍처를 따릅니다.
+
+### 프로젝트 구조
 
 ```
 src/
-  components/common/      공통 UI 컴포넌트
-  layouts/                레이아웃(Header, Footer 등)
-  pages/                  페이지 엔트리
-  routes/                 라우터 구성(AppRouter, routeTable)
-  styles/                 전역 테마(theme.js)
-  utils/, hooks/, services/ 유틸/훅/서비스
+├── app/          애플리케이션 레이어 (초기화, 라우팅)
+├── pages/        페이지 레이어 (라우트별 페이지)
+├── widgets/      위젯 레이어 (독립적인 큰 UI 블록)
+├── features/     기능 레이어 (사용자 시나리오, 비즈니스 기능)
+├── entities/     엔티티 레이어 (비즈니스 엔티티)
+└── shared/       공유 레이어 (UI, API, 유틸리티)
 ```
 
-## 라우팅
+의존성 방향: `app → pages → widgets → features → entities → shared`
 
-- `src/routes/routeTable.js`에서 경로 상수 관리
-- `src/routes/AppRouter.jsx`에서 라우터 생성
-- 기본 레이아웃(`Header`, `Footer`)은 라우터의 루트 레이아웃에 고정되어 대부분 페이지에 노출됩니다.
-- 예외: `MAP(/map)` 페이지는 레이아웃 밖에서 렌더되어 `Header`/`Footer`가 표시되지 않습니다.
+### 📚 FSD 아키텍처 가이드
 
-## 스타일/테마
+프로젝트에 처음 참여하시나요? 아래 문서를 읽어보세요!
 
-- `src/styles/theme.js`에서 색상, 타이포 등 토큰 정의
-- 전역 스타일은 `src/App.jsx`에서 Emotion `Global`을 통해 적용합니다.
-  - 기본 적용: `body { margin: 0 }`, `html, body, #root { height: 100% }`
+**👉 [FSD 아키텍처 가이드](docs/FSD_ARCHITECTURE.md) (필독!)**
+
+이 문서에서 다루는 내용:
+- FSD 아키텍처란?
+- 각 레이어의 역할과 책임
+- 의존성 규칙
+- 새 기능 추가하는 방법
+- 실전 예시
 
 ## 컨벤션 문서
 
-`docs/` 폴더에 컴포넌트/스타일/폴더/라우팅/상태관리/훅/임포트 컨벤션이 정리되어 있습니다.
+모든 컨벤션 문서는 `docs/` 폴더에 있습니다.
 
-- [COMPONENT_STRUCTURE_CONVENTIONS.md](docs/COMPONENT_STRUCTURE_CONVENTIONS.md)
-- [COMPONENT_STYLE_CONVENTIONS.md](docs/COMPONENT_STYLE_CONVENTIONS.md)
-- [FOLDER_STRUCTURE_NAMING_CONVENTIONS.md](docs/FOLDER_STRUCTURE_NAMING_CONVENTIONS.md)
-- [IMPORT_CONVENTIONS.md](docs/IMPORT_CONVENTIONS.md)
-- [SERVICE_API_ROUTING_CONVENTIONS.md](docs/SERVICE_API_ROUTING_CONVENTIONS.md)
-- [STATE_MANAGEMENT_ASYNC_CONVENTIONS.md](docs/STATE_MANAGEMENT_ASYNC_CONVENTIONS.md)
-- [HOOKS_CONVENTIONS.md](docs/HOOKS_CONVENTIONS.md)
+### 📖 필독
+- **[FSD_ARCHITECTURE.md](docs/FSD_ARCHITECTURE.md)** - FSD 아키텍처 전반 설명 ⭐
+- [FOLDER_STRUCTURE_NAMING_CONVENTIONS.md](docs/FOLDER_STRUCTURE_NAMING_CONVENTIONS.md) - 폴더 구조 및 네이밍
+
+### 📋 코딩 컨벤션
+- [COMPONENT_STRUCTURE_CONVENTIONS.md](docs/COMPONENT_STRUCTURE_CONVENTIONS.md) - 컴포넌트 구조
+- [COMPONENT_STYLE_CONVENTIONS.md](docs/COMPONENT_STYLE_CONVENTIONS.md) - 스타일 작성
+- [HOOKS_CONVENTIONS.md](docs/HOOKS_CONVENTIONS.md) - 커스텀 훅
+- [STATE_MANAGEMENT_ASYNC_CONVENTIONS.md](docs/STATE_MANAGEMENT_ASYNC_CONVENTIONS.md) - 상태 관리
+- [SERVICE_API_ROUTING_CONVENTIONS.md](docs/SERVICE_API_ROUTING_CONVENTIONS.md) - API 호출
+- [IMPORT_CONVENTIONS.md](docs/IMPORT_CONVENTIONS.md) - Import 규칙
+
+더 자세한 내용은 [docs/README.md](docs/README.md)를 참고하세요.
 
 ## 빌드 결과물
 
 - `dist/`에 산출됩니다. `dist/index.html`로 정적 서빙 가능합니다.
 
+## 새 기능 추가하기
+
+1. [FSD 아키텍처 가이드](docs/FSD_ARCHITECTURE.md)의 "새 기능 추가하기" 섹션 읽기
+2. 적절한 레이어에 슬라이스 폴더 생성
+3. Public API (`index.js`) 작성
+4. 세그먼트별로 구현 (`ui/`, `model/`, `api/` 등)
+
 ## 참고 사항
 
-- 인증 보호 라우트는 추후 전역 상태(Jotai 등) 연동 예정입니다.
-- 공통 컴포넌트는 `src/components/common/` 하위에 위치하며, 스타일은 Emotion을 사용합니다.
+- 상태 관리: Jotai 사용
+- 스타일링: Emotion (@emotion/react, @emotion/styled)
+- 공통 UI 컴포넌트는 `src/shared/ui/`에 위치

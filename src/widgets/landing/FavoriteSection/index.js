@@ -1,1 +1,0 @@
-export { FavoriteSection } from './FavoriteSection';

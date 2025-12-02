@@ -1,1 +1,0 @@
-export { StoreSearch } from './StoreSearch';
