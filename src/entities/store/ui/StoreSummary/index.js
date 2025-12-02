@@ -1,1 +1,0 @@
-export { StoreSummary } from './StoreSummary';

@@ -1,85 +1,126 @@
 # 폴더구조/네이밍 컨벤션
 
-### **📂 폴더 구조**
+> ⚠️ **이 프로젝트는 FSD (Feature-Sliced Design) 아키텍처를 따릅니다.**  
+> 자세한 설명은 [FSD_ARCHITECTURE.md](./FSD_ARCHITECTURE.md)를 참고하세요.
+
+### **📂 폴더 구조 (FSD 기반)**
 
 ```
 src/
-  assets/                # 이미지, 아이콘, 폰트 등 정적 자원 (컴포넌트와 함께 관리)
-  components/
-    common/              # 재사용 가능한 원자/분자 컴포넌트
-    domain/<Feature>/    # 피처 단위 컴포넌트
-  contexts/              # 전역 상태 관리 Context
-  hooks/                 # 재사용 가능한 커스텀 훅
-  layouts/               # 레이아웃 컴포넌트
-  pages/
-    <RouteName>/index.jsx # 페이지 단위 엔트리 (코드 스플리팅 단위)
-  routes/                # 라우트 테이블 정의
-  services/              # API 서비스 계층
-  styles/                # 글로벌 스타일, 테마 토큰
-  utils/                 # 유틸리티 함수 모음
+├── app/                   # 애플리케이션 레이어
+│   ├── index.js          #   - 진입점
+│   ├── App.jsx           #   - 메인 컴포넌트
+│   ├── routes/           #   - 라우팅 설정
+│   ├── providers/        #   - 전역 프로바이더
+│   └── styles/           #   - 전역 스타일
+│
+├── pages/                 # 페이지 레이어
+│   └── <page-name>/      #   - 라우트와 1:1 매칭
+│       ├── index.js      #   - Public API
+│       └── ui/           #   - 페이지 컴포넌트
+│
+├── widgets/               # 위젯 레이어
+│   └── <widget-name>/    #   - 큰 독립적인 UI 블록
+│       ├── index.js      #   - Public API
+│       └── ui/           #   - 위젯 컴포넌트
+│
+├── features/              # 기능 레이어
+│   └── <domain>/         #   - 사용자 시나리오/기능
+│       └── <feature-name>/
+│           ├── index.js  #   - Public API
+│           ├── ui/       #   - UI 컴포넌트
+│           └── model/    #   - 비즈니스 로직
+│
+├── entities/              # 엔티티 레이어
+│   └── <entity-name>/    #   - 비즈니스 엔티티
+│       ├── index.js      #   - Public API
+│       ├── api/          #   - API 함수
+│       ├── model/        #   - 상태 관리
+│       └── ui/           #   - UI 컴포넌트
+│
+└── shared/                # 공유 레이어
+    ├── ui/               #   - 재사용 UI 컴포넌트
+    ├── api/              #   - HTTP 클라이언트
+    ├── lib/              #   - 유틸리티, 훅
+    ├── config/           #   - 상수, 설정
+    └── assets/           #   - 정적 자원
 ```
 
-> **피처 단위 컴포넌트 폴더 구조 예시**
+> **슬라이스(Slice) 구조 예시**
 
-- 특정 기능(Feature)에 종속적인 UI 컴포넌트를 모아둠
-- 보통은 index.js를 배럴 파일로 둬서 import를 간결하게
+각 레이어는 슬라이스(기능 단위)로 구성되고, 각 슬라이스는 세그먼트로 구성됩니다.
 
-```jsx
-components / domain / User / UserCard.jsx;
-UserProfile.jsx;
-UserList.jsx;
-index.js;
+```
+entities/shop/
+├── index.js              # Public API (외부 노출용)
+├── api/                  # API 호출
+│   └── shopApi.js
+├── model/                # 상태 관리, 비즈니스 로직
+│   └── shopAtom.js
+└── ui/                   # UI 컴포넌트
+    └── ShopCard.jsx
 ```
 
-> **페이지 단위 엔트리 폴더 구조 예시**
+> **페이지 구조 예시**
 
-- 라우트와 1:1 매칭되는 화면
-- 보통은 해당 페이지에서 사용하는 domain 컴포넌트들을 조립해서 완성된 UI를 구성
-- export default 허용되는 대표적인 파일.
-
-```jsx
-pages / Users / index.jsx;
+```
+pages/shop-list/
+├── index.js              # Public API
+└── ui/
+    └── ShopListPage.jsx  # 페이지 컴포넌트
 ```
 
 ---
 
-### **📌 assets 위치 가이드**
+### **📌 Assets 위치 가이드**
 
-<aside>
-
-- public/: 번들러가 관리하지 않고 그대로 복사됨 → URL로 직접 접근 (/logo.png).
+- **public/**: 번들러가 관리하지 않고 그대로 복사됨 → URL로 직접 접근 (/logo.png)
   - favicon, manifest.json, robots.txt
   - 외부에서 절대 경로 접근이 필요한 파일
-- src/assets/: import해서 사용하는 정적 자원 → 빌드시 해시 처리, 캐싱 관리 가능. - 컴포넌트 안에서 사용하는 이미지, 아이콘, SVG, 폰트 - 코드와 함께 버전 관리되어야 하는 리소스
-</aside>
+  
+- **src/shared/assets/**: import해서 사용하는 정적 자원 → 빌드시 해시 처리, 캐싱 관리
+  - 컴포넌트 안에서 사용하는 이미지, 아이콘, SVG, 폰트
+  - 코드와 함께 버전 관리되어야 하는 리소스
 
-> **결론: UI에 쓰이는 대부분의 이미지/아이콘은 src/assets/에 두고, SEO/메타데이터용은 public/ 유지**
+> **결론: UI에 쓰이는 대부분의 이미지/아이콘은 `shared/assets/`에 두고, SEO/메타데이터용은 `public/` 유지**
 
 ---
 
-### **📦 배럴 파일 규칙**
+### **📦 Public API 패턴 (Barrel File)**
 
-- **배럴 파일(Barrel file)**은 index.js를 두고 해당 폴더의 export를 한 번에 모아주는 패턴
+FSD에서는 각 슬라이스마다 **index.js**를 Public API로 사용합니다.
 
-> **예시:**
+> **목적**
+- 슬라이스 내부 구현을 캡슐화
+- 외부에서 사용할 것만 명시적으로 export
+- import 경로를 간결하게 유지
+
+> **예시**
 
 ```
-components/domain/User/
-  UserCard.jsx
-  UserProfile.jsx
-  index.js
+entities/shop/
+├── index.js              # Public API
+├── api/
+│   └── shopApi.js
+└── ui/
+    └── ShopCard.jsx
 ```
 
-```jsx
-// index.js
-export { default as UserCard } from './UserCard';
-export { default as UserProfile } from './UserProfile';
+```javascript
+// entities/shop/index.js
+export { fetchShops, fetchShopById } from './api/shopApi';
+export { ShopCard } from './ui/ShopCard';
 ```
 
-> import를 간결하게 만들지만, 전역으로 쓰면 추적이 어려움
+```javascript
+// 사용하는 곳에서
+import { fetchShops, ShopCard } from '@/entities/shop';
+```
 
-- **허용**: 특정 도메인/피처 단위(components/domain/<Feature>/index.js)
-- **금지**: 전역(components/index.js 등)
+> **규칙**
+- ✅ **허용**: 각 슬라이스의 Public API (`entities/shop/index.js`)
+- ✅ **허용**: Shared UI의 배럴 파일 (`shared/ui/index.js`)
+- ❌ **금지**: 레이어 전체를 모으는 배럴 파일 (`entities/index.js`)
 
 ---
 

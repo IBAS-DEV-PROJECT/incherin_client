@@ -1,1 +1,0 @@
-export { RankingSection } from './RankingSection';

@@ -1,1 +1,0 @@
-export { StoreDetailTabs } from './StoreDetailTabs';

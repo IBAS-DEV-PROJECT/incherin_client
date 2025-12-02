@@ -1,1 +1,0 @@
-export { StoreDetailInfo } from './StoreDetailInfo';

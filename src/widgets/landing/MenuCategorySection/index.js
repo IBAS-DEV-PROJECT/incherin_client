@@ -1,1 +1,0 @@
-export { MenuCategorySection } from './MenuCategorySection';
