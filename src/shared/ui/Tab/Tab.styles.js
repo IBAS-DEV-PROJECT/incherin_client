@@ -1,7 +1,7 @@
 // Tab 스타일 헬퍼
 export const getTabsContainerStyles = theme => ({
   width: '100%',
-  borderBottom: `1px solid ${theme.colors.darkGray}`,
+  borderBottom: `1px solid ${theme?.colors?.darkGray || '#e0e0e0'}`,
 });
 
 export const getTabsListStyles = () => ({
@@ -17,7 +17,7 @@ export const getTabStyles = (theme, isActive) => ({
   background: 'none',
   fontSize: 15,
   fontWeight: isActive ? 600 : 400,
-  color: isActive ? theme.colors.blue : theme.colors.darkGray,
+  color: isActive ? (theme?.colors?.blue || '#0066cc') : (theme?.colors?.darkGray || '#666666'),
   cursor: 'pointer',
   transition: 'color 0.2s ease',
 
@@ -29,12 +29,12 @@ export const getTabStyles = (theme, isActive) => ({
     left: 0,
     right: 0,
     height: 2,
-    backgroundColor: theme.colors.blue,
+    backgroundColor: theme?.colors?.blue || '#0066cc',
     opacity: isActive ? 1 : 0,
     transition: 'opacity 0.2s ease',
   },
 
   '&:hover': {
-    color: isActive ? theme.colors.blue : theme.colors.black,
+    color: isActive ? (theme?.colors?.blue || '#0066cc') : (theme?.colors?.black || '#000000'),
   },
 });

@@ -7,7 +7,7 @@ import { getVariantStyles, CARD_VARIANTS } from './Card.styles';
 
 // Styled 컴포넌트
 const StyledCard = styled.div(({ theme, $variant, $padding, $shadow }) => ({
-  backgroundColor: theme.colors.white,
+  backgroundColor: theme?.colors?.white || '#ffffff',
   borderRadius: 12,
   boxShadow: $shadow || '0 1px 6px rgba(0,0,0,0.08)',
   overflow: 'hidden',
