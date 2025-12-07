@@ -1,8 +1,7 @@
-// src/widgets/roulette-section/ui/RouletteSection.jsx
 import React from 'react';
 import { Roulette } from '@features/roulette/play/ui/Roulette';
 
-const RouletteSection = () => {
+export const RouletteSection = ({ onCategoryChange }) => {
   return (
     <div style={{
       backgroundColor: '#ffffff',
@@ -18,10 +17,8 @@ const RouletteSection = () => {
         maxWidth: 800, 
         margin: '0 auto'
       }}>
-        <Roulette />
+        <Roulette onCategoryChange={onCategoryChange} />
       </div>
     </div>
   );
 };
-
-export default RouletteSection;
