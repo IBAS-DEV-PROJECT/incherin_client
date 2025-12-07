@@ -1,10 +1,10 @@
 // src/widgets/header/ui/Header.jsx
 import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CATEGORIES } from '../../../entities/category/data/categories';
-import logo2 from '../../../shared/assets/image/logo2.png';
-import induckLogo from '../../../shared/assets/image/induck-line-logo.png';
-import blueBg from '../../../shared/assets/image/blue.png';
+import { CATEGORIES } from '@entities/category/data/categories';
+import logo2 from '@shared/assets/image/logo2.png';
+import induckLogo from '@shared/assets/image/induck-line-logo.png';
+import blueBg from '@shared/assets/image/blue.png';
 
 const Header = () => {
   const navigate = useNavigate();

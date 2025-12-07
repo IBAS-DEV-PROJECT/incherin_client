@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { fetchShops } from '../../../../entities/shop/api/shopApi';
-import { Button } from '../../../../shared/ui/Button/Button';
-import { Card } from '../../../../shared/ui/Card/Card';
-import { getRandomItem } from '../../../../shared/lib/random';
+import { fetchShops } from '@entities/shop/api/shopApi';
+import { Button } from '@shared/ui/Button/Button';
+import { Card } from '@shared/ui/Card/Card';
+import { getRandomItem } from '@shared/lib/random';
 import { useNavigate } from 'react-router-dom';
 
 const ANIMATION_DURATION = 2000; // 2초

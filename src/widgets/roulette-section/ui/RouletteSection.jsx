@@ -1,6 +1,6 @@
 // src/widgets/roulette-section/ui/RouletteSection.jsx
 import React from 'react';
-import { Roulette } from '../../../features/roulette/play/ui/Roulette';
+import { Roulette } from '@features/roulette/play/ui/Roulette';
 
 const RouletteSection = () => {
   return (

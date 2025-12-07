@@ -1,5 +1,5 @@
-import Header from '../../../widgets/header/ui/Header';
-import RouletteSection from '../../../widgets/roulette-section/ui/RouletteSection';
+import Header from '@widgets/header/ui/Header';
+import RouletteSection from '@widgets/roulette-section/ui/RouletteSection';
 
 const HomePage = () => {
   return (
