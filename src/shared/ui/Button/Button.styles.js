@@ -6,32 +6,32 @@ export const getVariantStyles = (theme, variant, active) => {
   switch (safeVariant) {
     case 'subsidiary' /*보조 버튼*/:
       return {
-        backgroundColor: theme?.colors?.white || '#ffffff',
-        color: theme?.colors?.blue || '#0066cc',
-        border: `1.5px solid ${theme?.colors?.blue || '#0066cc'}`,
+        backgroundColor: theme.colors.white,
+        color: theme.colors.blue,
+        border: `1.5px solid ${theme.colors.blue}`,
         ...(active && {
-          borderColor: theme?.colors?.darkGray || '#666666',
-          backgroundColor: theme?.colors?.white || '#ffffff',
+          borderColor: theme.colors.darkGray,
+          backgroundColor: theme.colors.white,
         }),
       };
 
     case 'secondary' /*부가 버튼*/:
       return {
-        backgroundColor: theme?.colors?.gray || '#e0e0e0',
-        color: theme?.colors?.blue || '#0066cc',
+        backgroundColor: theme.colors.gray,
+        color: theme.colors.blue,
         border: 'none',
         ...(active && {
-          border: `solid 1.5px ${theme?.colors?.darkGray || '#666666'}`,
-          backgroundColor: theme?.colors?.white || '#ffffff',
-          color: theme?.colors?.darkGray || '#666666',
+          border: `solid 1.5px ${theme.colors.darkGray}`,
+          backgroundColor: theme.colors.white,
+          color: theme.colors.darkGray,
         }),
       };
 
     default: /*기본 버튼 (primary) */
       return {
         ...(active && {
-          backgroundColor: theme?.colors?.lightBlue || '#e6f2ff',
-          color: theme?.colors?.blue || '#0066cc',
+          backgroundColor: theme.colors.lightBlue,
+          color: theme.colors.blue,
         }),
       };
   }
@@ -39,10 +39,10 @@ export const getVariantStyles = (theme, variant, active) => {
 
 // 기본 버튼 스타일
 export const getBaseStyles = theme => ({
-  ...(theme?.typography?.paragraph?.p2 || {}),
-  fontFamily: theme?.typography?.fontFamily || 'system-ui, -apple-system, sans-serif',
-  backgroundColor: theme?.colors?.blue || '#0066cc',
-  color: theme?.colors?.white || '#ffffff',
+  ...theme.typography.paragraph.p2,
+  fontFamily: theme.typography.fontFamily,
+  backgroundColor: theme.colors.blue,
+  color: theme.colors.white,
   border: 'none',
   padding: '5px 22px',
   borderRadius: '50px',
@@ -59,7 +59,7 @@ export const getBaseStyles = theme => ({
   },
   '&:focus': {
     outline: 'none',
-    boxShadow: `0 0 0 2px ${theme?.colors?.lightBlue || '#e6f2ff'}`,
+    boxShadow: `0 0 0 2px ${theme.colors.lightBlue}`,
   },
   '&:disabled': {
     opacity: 0.6,

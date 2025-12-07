@@ -1,6 +1,7 @@
 // src/widgets/header/ui/Header.jsx
 import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CategoryTab } from '@entities/category';
 import { CATEGORIES } from '@entities/category/data/categories';
 import logo2 from '@shared/assets/image/logo2.png';
 import induckLogo from '@shared/assets/image/induck-line-logo.png';
@@ -92,55 +93,21 @@ const Header = () => {
             인하대/인하공전 학생들이 직접 공유하고 솔직하게 리뷰하는 인슐랭 가이드입니다:)
           </p>
 
-          {/* 카테고리 버튼 */}
+          {/* 👇 카테고리 버튼 영역 (CategoryTab 컴포넌트 사용) */}
           <div style={{
             display: 'flex',
             flexWrap: 'wrap',
             gap: '12px',
             justifyContent: 'center'
           }}>
-            {CATEGORIES.map((category) => {
-              const isActive = activeCategory === category.value;
-
-              return (
-                <button
+            {CATEGORIES.map((category) => (
+              <CategoryTab
                 key={category.value}
+                label={category.label}
+                isActive={activeCategory === category.value}
                 onClick={() => handleCategoryClick(category.value)}
-                style={{
-                  padding: '16px 32px',
-                  fontSize: '17px',
-                  fontWeight: isActive ? 700 : 600,
-                  borderRadius: '12px',
-                  border: 'none',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  backgroundColor: isActive 
-                    ? '#0066cc' 
-                    : 'rgba(255,255,255,0.25)',
-                  color: '#ffffff',
-                  boxShadow: isActive 
-                    ? '0 6px 20px rgba(0, 102, 204, 0.5)' 
-                    : '0 2px 8px rgba(0,0,0,0.15)',
-                  transform: isActive ? 'translateY(-2px)' : 'translateY(0)',
-                  backdropFilter: 'blur(10px)'
-                }}
-                onMouseEnter={(e) => {
-                  if (!isActive) {
-                    e.target.style.backgroundColor = 'rgba(255,255,255,0.35)';
-                    e.target.style.transform = 'translateY(-2px)';
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!isActive) {
-                    e.target.style.backgroundColor = 'rgba(255,255,255,0.25)';
-                    e.target.style.transform = 'translateY(0)';
-                  }
-                }}
-              >
-                {category.label}
-              </button>              
-              );
-            })}
+              />
+            ))}
           </div>
         </div>
       </div>

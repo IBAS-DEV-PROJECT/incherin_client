@@ -17,8 +17,8 @@
     "@emotion/styled": "^11.14.1",
     "@untitledui/icons": "^0.0.19",
     "jotai": "^2.12.5",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "^19.1.2",
+    "react-dom": "^19.1.2",
     "react-router-dom": "^6.30.1"
   },
   "devDependencies": {

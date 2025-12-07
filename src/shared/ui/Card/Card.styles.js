@@ -23,9 +23,9 @@ export const getVariantStyles = (theme, variant) => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      color: theme?.colors?.black || '#000000',
+      color: theme.colors.black,
       fontWeight: 700,
-      backgroundColor: theme?.colors?.gray || '#e0e0e0',
+      backgroundColor: theme.colors.gray,
     },
     [CARD_VARIANTS.FEATURE]: {
       padding: 16,
