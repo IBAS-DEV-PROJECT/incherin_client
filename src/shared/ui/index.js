@@ -9,5 +9,6 @@ export { Input } from './Input';
 export { Modal } from './Modal';
 export { SelectBox } from './SelectBox';
 export { Spinner } from './Spinner';
+export { Tab } from './Tab';
 export { TextArea } from './TextArea';
 export { Toggle } from './Toggle';
