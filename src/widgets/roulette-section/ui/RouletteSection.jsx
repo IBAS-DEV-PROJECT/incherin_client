@@ -8,7 +8,7 @@ export const RouletteSection = ({ onCategoryChange }) => {
       padding: '50px 24px 60px',
       borderTopLeftRadius: '28px',
       borderTopRightRadius: '28px',
-      marginTop: '-28px',
+      marginTop: '0',
       position: 'relative',
       zIndex: 2,
       boxShadow: '0 -4px 24px rgba(0,0,0,0.06)'
