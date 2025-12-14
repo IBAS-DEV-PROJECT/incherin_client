@@ -1,59 +1,77 @@
-import { getRandomInt, getRandomItem } from '@shared/lib/random';
-import { storage } from '@shared/lib/local-storage';
-
-const STORAGE_KEY = 'incherin.randomNickname.v1';
-
-const MASCOT_PREFIXES = ['인덕', '안뇽'];
-const ADJECTIVES = [
-  '든든한',
-  '꼼꼼한',
-  '배고픈',
-  '후끈한',
+const adjectives = [
+  '반짝이는',
+  '산뜻한',
+  '웃음가득',
+  '설레는',
+  '포근한',
+  '따스한',
+  '싱그러운',
+  '재미있는',
+  '감미로운',
+  '용감한',
+  '빛나는',
+  '정다움 가득한',
+  '폭신폭신',
+  '달콤한',
+  '차분한',
+  '활기찬',
   '상냥한',
-  '꿀조합',
-  '새내기',
-  '캠퍼스',
-  '열정만땅',
-  '야식단골',
+  '귀여운',
 ];
-const ROLES = ['맛집러', '탐험가', '리뷰왕', '길잡이', '단짝', '소식통'];
-const EMOJIS = ['🍜', '🍙', '🧋', '🥟', '🍛', '🧭', '💫'];
 
-const composeNickname = () => {
-  const adjective = getRandomItem(ADJECTIVES) || '든든한';
-  const mascot = getRandomItem(MASCOT_PREFIXES) || '인덕';
-  const role = getRandomItem(ROLES) || '맛집러';
-  const serial = getRandomInt(1, 99).toString().padStart(2, '0');
-  const emoji = getRandomItem(EMOJIS) || '🍜';
+const nouns = [
+  '경영학과',
+  '경제학과',
+  '국제통상학과',
+  '정치외교학과',
+  '사회복지학과',
+  '기계공학과',
+  '항공우주공학과',
+  '조선해양공학과',
+  '전기공학과',
+  '전자공학과',
+  '정보통신공학과',
+  '컴퓨터공학과',
+  '산업경영공학과',
+  '신소재공학과',
+  '화학공학과',
+  '생명공학과',
+  '환경공학과',
+  '수학과',
+  '통계학과',
+  '물리학과',
+  '화학과',
+  '해양과학과',
+  '생물과학과',
+  '식품영양학과',
+  '체육학과',
+];
 
-  return `${adjective} ${mascot}${role}${serial} ${emoji}`;
-};
+let lastNickname = '';
 
-const readStoredNickname = () => {
-  const stored = storage.get(STORAGE_KEY);
-  return stored?.nickname || '';
-};
+const pickRandom = list => list[Math.floor(Math.random() * list.length)];
 
-const persistNickname = nickname => {
-  storage.set(STORAGE_KEY, {
-    nickname,
-    updatedAt: Date.now(),
-  });
-};
+export const generateNickname = (options = {}) => {
+  const { forceNew = false } = options;
 
-export const generateNickname = ({ forceNew = false } = {}) => {
-  if (!forceNew) {
-    const cached = readStoredNickname();
-    if (cached) {
-      return cached;
+  if (!forceNew && lastNickname) {
+    return lastNickname;
+  }
+
+  let nextNickname = '';
+
+  for (let attempt = 0; attempt < 5; attempt += 1) {
+    const candidate = `${pickRandom(adjectives)} ${pickRandom(nouns)}`;
+    if (!forceNew || candidate !== lastNickname) {
+      nextNickname = candidate;
+      break;
     }
   }
 
-  const nickname = composeNickname();
-  persistNickname(nickname);
-  return nickname;
-};
+  if (!nextNickname) {
+    nextNickname = `${pickRandom(adjectives)} ${pickRandom(nouns)}`;
+  }
 
-export const resetNickname = () => {
-  storage.remove(STORAGE_KEY);
+  lastNickname = nextNickname;
+  return nextNickname;
 };
