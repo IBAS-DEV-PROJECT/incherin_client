@@ -13,7 +13,10 @@ export const getTextareaStyles = theme => ({
   borderRadius: '10px',
   backgroundColor: theme.colors.white,
   fontFamily: theme.typography.fontFamily,
-  ...theme.typography.paragraph.p3,
+  ...(theme.typography?.paragraph?.p1 || {
+    fontSize: '16px',
+    lineHeight: '24px',
+  }),
   color: theme.colors.black,
   resize: 'none',
   outline: 'none',
