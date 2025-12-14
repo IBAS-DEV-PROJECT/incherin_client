@@ -13,7 +13,7 @@ export const ReviewBoard = ({
     <section style={{ display: 'grid', gap: '32px' }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
         <h2 style={{ margin: 0, fontSize: '28px', fontWeight: 800, color: '#1a2a6c' }}>
-          인덕 & 안뇽이 리뷰 보드
+          리뷰 보드
         </h2>
         <p style={{ margin: 0, fontSize: '16px', color: '#4b5563' }}>
           로그인 없이 랜덤 닉네임으로 바로 리뷰를 남겨보세요.
@@ -29,7 +29,7 @@ export const ReviewBoard = ({
 
       <div style={{ display: 'grid', gap: '20px' }}>
         <h3 style={{ margin: 0, fontSize: '22px', fontWeight: 700, color: '#1f2933' }}>
-          지금까지의 이야기
+          지금까지의 리뷰
         </h3>
 
         {reviews && reviews.length > 0 ? (

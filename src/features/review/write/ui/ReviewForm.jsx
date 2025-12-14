@@ -118,7 +118,7 @@ export const ReviewForm = ({
 					id="review-content"
 					value={content}
 					onChange={event => setContent(event.target.value.slice(0, MAX_LENGTH))}
-					placeholder="인덕 & 안뇽이에게 여러분의 솔직한 이야기를 들려주세요!"
+					placeholder="인덕 & 안뇽이에게 여러분의 솔직한 리뷰를 들려주세요!"
 				/>
 				<div style={{ textAlign: 'right', fontSize: '13px', color: remaining < 0 ? '#d32f2f' : '#4b5563' }}>
 					{remaining < 0 ? 0 : remaining}자 남음
