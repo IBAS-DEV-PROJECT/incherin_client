@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Header } from '@widgets/header';
 import { CATEGORIES } from '@entities/category/data/categories';
 import { CategoryTab } from '@entities/category/ui/CategoryTab';
 import { ShopListView } from '@widgets/shop-list-view';
 import { fetchShops } from '@entities/shop/api/shopApi';
+import { Card, Grid, Button } from '@shared/ui';
 import { Spinner } from '@shared/ui/Spinner';
 
 const ALL_CATEGORY = '전체';
@@ -65,50 +65,63 @@ const ShopListPage = () => {
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#f1f4fb' }}>
-      <Header />
-
-      <main style={{ maxWidth: 1200, margin: '0 auto', padding: '48px 24px 80px', display: 'grid', gap: '32px' }}>
-        <section style={{ display: 'grid', gap: '20px' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <h1 style={{ margin: 0, fontSize: '34px', fontWeight: 800, color: '#1a2a6c' }}>인슐랭 맛집 리스트</h1>
-            <p style={{ margin: 0, fontSize: '16px', color: '#4b5563' }}>
-              카테고리를 선택하고 인하대 주변 검증된 맛집을 둘러보세요.
-            </p>
-          </div>
-
+      <main
+        style={{
+          maxWidth: 1200,
+          margin: '0 auto',
+          padding: '48px 24px 80px',
+          display: 'grid',
+          gap: '32px',
+        }}
+      >
+        <Card variant="default" padding="20px">
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-            {[ALL_CATEGORY, ...CATEGORIES.map(category => category.value)].map(categoryValue => (
-              <CategoryTab
-                key={categoryValue}
-                label={categoryValue}
-                isActive={activeCategory === categoryValue}
-                onClick={() => handleCategoryChange(categoryValue)}
-              />
-            ))}
+            {[ALL_CATEGORY, ...CATEGORIES.map(category => category.value)].map(
+              categoryValue => (
+                <CategoryTab
+                  key={categoryValue}
+                  label={categoryValue}
+                  isActive={activeCategory === categoryValue}
+                  onClick={() => handleCategoryChange(categoryValue)}
+                />
+              )
+            )}
           </div>
-        </section>
+        </Card>
 
         {error && (
-          <div
-            style={{
-              backgroundColor: '#ffe7e7',
-              color: '#c62828',
-              padding: '16px 20px',
-              borderRadius: '16px',
-              fontWeight: 600,
-            }}
-          >
-            {error}
-          </div>
+          <Card variant="default" padding="20px">
+            <p
+              style={{
+                margin: 0,
+                color: '#c62828',
+                fontSize: '16px',
+                fontWeight: 600,
+              }}
+            >
+              {error}
+            </p>
+          </Card>
         )}
 
-        {isLoading ? (
-          <div style={{ display: 'flex', justifyContent: 'center', padding: '60px 0' }}>
-            <Spinner showMessage={false} />
-          </div>
-        ) : (
-          <ShopListView shops={filteredShops} onSelectShop={handleSelectShop} />
-        )}
+        <Card padding="0">
+          {isLoading ? (
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                padding: '60px 0',
+              }}
+            >
+              <Spinner showMessage={false} />
+            </div>
+          ) : (
+            <ShopListView
+              shops={filteredShops}
+              onSelectShop={handleSelectShop}
+            />
+          )}
+        </Card>
       </main>
     </div>
   );
