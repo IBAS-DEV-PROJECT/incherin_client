@@ -12,33 +12,31 @@ export const CategoryTab = ({ label, isActive, onClick }) => {
     <button
       onClick={onClick}
       style={{
-        padding: '16px 32px',
-        fontSize: '17px',
-        fontWeight: isActive ? 700 : 600,
+        padding: '14px 28px',
+        fontSize: '16px',
+        fontWeight: isActive ? 700 : 500,
         borderRadius: '12px',
-        border: 'none',
+        border: isActive ? 'none' : '1px solid #e2e8f0',
         cursor: 'pointer',
-        transition: 'all 0.3s ease',
-        // 활성/비활성 상태에 따른 배경색 및 그림자
-        backgroundColor: isActive ? '#0066cc' : 'rgba(255,255,255,0.25)',
-        color: '#ffffff',
+        transition: 'all 0.2s ease',
+        // 상태에 따른 색상 분기
+        backgroundColor: isActive ? '#0066cc' : '#ffffff',
+        color: isActive ? '#ffffff' : '#475569',
         boxShadow: isActive
-          ? '0 6px 20px rgba(0, 102, 204, 0.5)'
-          : '0 2px 8px rgba(0,0,0,0.15)',
-        transform: isActive ? 'translateY(-2px)' : 'translateY(0)',
-        backdropFilter: 'blur(10px)',
+          ? '0 4px 12px rgba(0, 102, 204, 0.3)'
+          : '0 1px 3px rgba(0,0,0,0.05)',
+        transform: isActive ? 'translateY(-1px)' : 'translateY(0)',
       }}
-      // 호버 효과 (인라인 스타일 조작)
       onMouseEnter={(e) => {
         if (!isActive) {
-          e.target.style.backgroundColor = 'rgba(255,255,255,0.35)';
-          e.target.style.transform = 'translateY(-2px)';
+          e.target.style.backgroundColor = '#f8fafc';
+          e.target.style.borderColor = '#cbd5e1';
         }
       }}
       onMouseLeave={(e) => {
         if (!isActive) {
-          e.target.style.backgroundColor = 'rgba(255,255,255,0.25)';
-          e.target.style.transform = 'translateY(0)';
+          e.target.style.backgroundColor = '#ffffff';
+          e.target.style.borderColor = '#e2e8f0';
         }
       }}
     >

@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
-import { getRandomItem } from '@shared/lib/random';
+import { getRandomItem } from '@features/roulette/lib/random';
 
 const ANIMATION_DURATION = 2000;
 const SPIN_INTERVAL_START = 50;
@@ -8,9 +8,9 @@ const SPIN_INTERVAL_END = 200;
 export function useRoulette(shops, onCategoryChange) {
   const [isSpinning, setIsSpinning] = useState(false);
   const [currentShop, setCurrentShop] = useState(null); // 애니메이션용
-  const [result, setResult] = useState(null);           // 최종 결과
+  const [result, setResult] = useState(null); // 최종 결과
   const [error, setError] = useState('');
-  
+
   const intervalRef = useRef();
 
   const start = useCallback(() => {
@@ -47,17 +47,20 @@ export function useRoulette(shops, onCategoryChange) {
     // 애니메이션 루프 함수
     const spin = () => {
       elapsed += currentInterval;
-      
+
       // 랜덤 보여주기
       setCurrentShop(getRandomItem(shops));
 
       // 속도 조절 (점점 느리게)
       if (elapsed < ANIMATION_DURATION * 0.7) {
-        currentInterval = SPIN_INTERVAL_START + (elapsed / ANIMATION_DURATION) * 50;
+        currentInterval =
+          SPIN_INTERVAL_START + (elapsed / ANIMATION_DURATION) * 50;
       } else {
-        currentInterval = SPIN_INTERVAL_START + 
-          (ANIMATION_DURATION * 0.7 / ANIMATION_DURATION) * 50 + 
-          ((elapsed - ANIMATION_DURATION * 0.7) / (ANIMATION_DURATION * 0.3)) * (SPIN_INTERVAL_END - SPIN_INTERVAL_START - 50);
+        currentInterval =
+          SPIN_INTERVAL_START +
+          ((ANIMATION_DURATION * 0.7) / ANIMATION_DURATION) * 50 +
+          ((elapsed - ANIMATION_DURATION * 0.7) / (ANIMATION_DURATION * 0.3)) *
+            (SPIN_INTERVAL_END - SPIN_INTERVAL_START - 50);
       }
 
       if (elapsed < ANIMATION_DURATION) {
@@ -85,6 +88,6 @@ export function useRoulette(shops, onCategoryChange) {
     currentShop,
     result,
     error,
-    start,    // 룰렛 시작 함수
+    start, // 룰렛 시작 함수
   };
 }
