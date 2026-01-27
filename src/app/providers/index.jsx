@@ -24,9 +24,7 @@ export const Providers = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       <Global styles={globalStyles} />
-      <BrowserRouter>
-        {children}
-      </BrowserRouter>
+      <BrowserRouter>{children}</BrowserRouter>
     </ThemeProvider>
   );
 };

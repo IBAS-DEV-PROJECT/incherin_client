@@ -27,13 +27,13 @@ export const CategoryTab = ({ label, isActive, onClick }) => {
           : '0 1px 3px rgba(0,0,0,0.05)',
         transform: isActive ? 'translateY(-1px)' : 'translateY(0)',
       }}
-      onMouseEnter={(e) => {
+      onMouseEnter={e => {
         if (!isActive) {
           e.target.style.backgroundColor = '#f8fafc';
           e.target.style.borderColor = '#cbd5e1';
         }
       }}
-      onMouseLeave={(e) => {
+      onMouseLeave={e => {
         if (!isActive) {
           e.target.style.backgroundColor = '#ffffff';
           e.target.style.borderColor = '#e2e8f0';

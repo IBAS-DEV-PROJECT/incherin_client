@@ -12,7 +12,14 @@ export const ReviewBoard = ({
   return (
     <section style={{ display: 'grid', gap: '32px' }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <h2 style={{ margin: 0, fontSize: '28px', fontWeight: 800, color: '#1a2a6c' }}>
+        <h2
+          style={{
+            margin: 0,
+            fontSize: '28px',
+            fontWeight: 800,
+            color: '#1a2a6c',
+          }}
+        >
           리뷰 보드
         </h2>
         <p style={{ margin: 0, fontSize: '16px', color: '#4b5563' }}>
@@ -28,7 +35,14 @@ export const ReviewBoard = ({
       />
 
       <div style={{ display: 'grid', gap: '20px' }}>
-        <h3 style={{ margin: 0, fontSize: '22px', fontWeight: 700, color: '#1f2933' }}>
+        <h3
+          style={{
+            margin: 0,
+            fontSize: '22px',
+            fontWeight: 700,
+            color: '#1f2933',
+          }}
+        >
           지금까지의 리뷰
         </h3>
 
@@ -50,7 +64,8 @@ export const ReviewBoard = ({
               border: '1px dashed #d7e0ff',
             }}
           >
-            아직 리뷰가 없어요. 첫 번째로 인덕 & 안뇽이에게 맛집 후기를 남겨주세요!
+            아직 리뷰가 없어요. 첫 번째로 인덕 & 안뇽이에게 맛집 후기를
+            남겨주세요!
           </div>
         )}
       </div>

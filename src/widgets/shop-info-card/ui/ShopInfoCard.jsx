@@ -18,11 +18,18 @@ export const ShopInfoCard = ({ shop }) => {
       }}
     >
       {shop.image && (
-        <div style={{ position: 'relative', height: '280px', overflow: 'hidden' }}>
+        <div
+          style={{ position: 'relative', height: '280px', overflow: 'hidden' }}
+        >
           <img
             src={shop.image}
             alt={shop.name}
-            style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.93)' }}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              filter: 'brightness(0.93)',
+            }}
           />
           <Badge
             variant="primary"
@@ -43,9 +50,29 @@ export const ShopInfoCard = ({ shop }) => {
       )}
 
       <div style={{ padding: '32px 36px', display: 'grid', gap: '28px' }}>
-        <header style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <h1 style={{ margin: 0, fontSize: '34px', color: '#1a2a6c', fontWeight: 800 }}>{shop.name}</h1>
-          <p style={{ margin: 0, fontSize: '17px', lineHeight: '26px', color: '#3f4a5e' }}>{shop.description}</p>
+        <header
+          style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}
+        >
+          <h1
+            style={{
+              margin: 0,
+              fontSize: '34px',
+              color: '#1a2a6c',
+              fontWeight: 800,
+            }}
+          >
+            {shop.name}
+          </h1>
+          <p
+            style={{
+              margin: 0,
+              fontSize: '17px',
+              lineHeight: '26px',
+              color: '#3f4a5e',
+            }}
+          >
+            {shop.description}
+          </p>
 
           {Array.isArray(shop.highlights) && shop.highlights.length > 0 && (
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
@@ -67,9 +94,28 @@ export const ShopInfoCard = ({ shop }) => {
         <ShopDetailInfo shop={shop} />
 
         {Array.isArray(shop.menu) && shop.menu.length > 0 && (
-          <section style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            <h2 style={{ margin: 0, fontSize: '18px', fontWeight: 700, color: '#1f2933' }}>추천 메뉴</h2>
-            <ul style={{ margin: 0, paddingLeft: '20px', color: '#374151', fontSize: '15px', lineHeight: '24px' }}>
+          <section
+            style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}
+          >
+            <h2
+              style={{
+                margin: 0,
+                fontSize: '18px',
+                fontWeight: 700,
+                color: '#1f2933',
+              }}
+            >
+              추천 메뉴
+            </h2>
+            <ul
+              style={{
+                margin: 0,
+                paddingLeft: '20px',
+                color: '#374151',
+                fontSize: '15px',
+                lineHeight: '24px',
+              }}
+            >
               {shop.menu.map(menuItem => (
                 <li key={menuItem}>{menuItem}</li>
               ))}

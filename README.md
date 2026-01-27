@@ -57,6 +57,7 @@ src/
 **👉 [FSD 아키텍처 가이드](docs/FSD_ARCHITECTURE.md) (필독!)**
 
 이 문서에서 다루는 내용:
+
 - FSD 아키텍처란?
 - 각 레이어의 역할과 책임
 - 의존성 규칙
@@ -68,10 +69,12 @@ src/
 모든 컨벤션 문서는 `docs/` 폴더에 있습니다.
 
 ### 📖 필독
+
 - **[FSD_ARCHITECTURE.md](docs/FSD_ARCHITECTURE.md)** - FSD 아키텍처 전반 설명 ⭐
 - [FOLDER_STRUCTURE_NAMING_CONVENTIONS.md](docs/FOLDER_STRUCTURE_NAMING_CONVENTIONS.md) - 폴더 구조 및 네이밍
 
 ### 📋 코딩 컨벤션
+
 - [COMPONENT_STRUCTURE_CONVENTIONS.md](docs/COMPONENT_STRUCTURE_CONVENTIONS.md) - 컴포넌트 구조
 - [COMPONENT_STYLE_CONVENTIONS.md](docs/COMPONENT_STYLE_CONVENTIONS.md) - 스타일 작성
 - [HOOKS_CONVENTIONS.md](docs/HOOKS_CONVENTIONS.md) - 커스텀 훅

@@ -30,8 +30,12 @@ export const ReviewItem = ({ review }) => {
           gap: '12px',
         }}
       >
-        <span style={{ fontWeight: 700, fontSize: '16px', color: '#1b3a7c' }}>{nickname}</span>
-        <span style={{ fontSize: '12px', color: '#6b7280' }}>{displayDate}</span>
+        <span style={{ fontWeight: 700, fontSize: '16px', color: '#1b3a7c' }}>
+          {nickname}
+        </span>
+        <span style={{ fontSize: '12px', color: '#6b7280' }}>
+          {displayDate}
+        </span>
       </header>
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         <div style={{ color: '#FFB400', fontSize: '20px', lineHeight: 1 }}>
@@ -41,7 +45,15 @@ export const ReviewItem = ({ review }) => {
           {ratingValue.toFixed(1)} / 5
         </span>
       </div>
-      <p style={{ margin: 0, fontSize: '15px', lineHeight: '22px', color: '#1f2933', whiteSpace: 'pre-wrap' }}>
+      <p
+        style={{
+          margin: 0,
+          fontSize: '15px',
+          lineHeight: '22px',
+          color: '#1f2933',
+          whiteSpace: 'pre-wrap',
+        }}
+      >
         {content}
       </p>
     </article>

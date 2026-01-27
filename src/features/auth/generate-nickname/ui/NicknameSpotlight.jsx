@@ -36,7 +36,8 @@ export const NicknameSpotlight = ({ onNicknameChange }) => {
   return (
     <div
       style={{
-        background: 'linear-gradient(135deg, #1f3f8a 0%, #27509B 40%, #4c6df5 100%)',
+        background:
+          'linear-gradient(135deg, #1f3f8a 0%, #27509B 40%, #4c6df5 100%)',
         borderRadius: '28px',
         padding: '32px 36px',
         color: '#ffffff',
@@ -46,7 +47,9 @@ export const NicknameSpotlight = ({ onNicknameChange }) => {
         gap: '16px',
       }}
     >
-      <h2 style={{ margin: 0, fontSize: '26px', fontWeight: 800 }}>오늘의 랜덤 닉네임</h2>
+      <h2 style={{ margin: 0, fontSize: '26px', fontWeight: 800 }}>
+        오늘의 랜덤 닉네임
+      </h2>
       <p style={{ margin: 0, fontSize: '16px', opacity: 0.85 }}>
         인덕 & 안뇽이가 선물하는 랜덤 닉네임으로 자유롭게 리뷰를 남겨보세요.
       </p>
@@ -62,7 +65,9 @@ export const NicknameSpotlight = ({ onNicknameChange }) => {
         }}
       >
         <span style={{ fontSize: '14px', opacity: 0.75 }}>나의 미식 별명</span>
-        <strong style={{ fontSize: '28px', fontWeight: 800 }}>{nickname || '생성 중...'}</strong>
+        <strong style={{ fontSize: '28px', fontWeight: 800 }}>
+          {nickname || '생성 중...'}
+        </strong>
       </div>
 
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
