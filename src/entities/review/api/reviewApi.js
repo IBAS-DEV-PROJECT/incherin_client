@@ -53,6 +53,9 @@ const sanitizeReview = review => ({
   rating: Number(review?.rating) || 0,
   content: (review?.content || '').trim(),
   createdAt: review?.createdAt || new Date().toISOString(),
+  images: Array.isArray(review?.images) 
+    ? review.images.map(img => (typeof img === 'string' ? img : img?.preview)).filter(Boolean)
+    : [],
 });
 
 export const fetchReviewsByShop = async shopId => {
@@ -68,7 +71,9 @@ export const saveReviewForShop = async (shopId, review) => {
     throw new Error('shopId is required to save a review.');
   }
 
+  console.log('saveReviewForShop - received review:', review); // 디버깅
   const safeReview = sanitizeReview({ ...review, shopId });
+  console.log('saveReviewForShop - sanitized review:', safeReview); // 디버깅
   const target = ensureShopReviews(shopId);
   target.unshift(safeReview);
 

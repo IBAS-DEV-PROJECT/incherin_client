@@ -71,7 +71,7 @@ const ShopDetailPage = () => {
   }, []);
 
   const handleSubmitReview = useCallback(
-    async ({ rating, content }) => {
+    async ({ rating, content, images }) => {
       if (!id) return;
 
       setIsSubmitting(true);
@@ -81,6 +81,7 @@ const ShopDetailPage = () => {
           nickname,
           rating,
           content,
+          images,
         });
 
         setReviews(prev => [saved, ...prev]);
