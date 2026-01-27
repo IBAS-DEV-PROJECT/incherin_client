@@ -5,17 +5,59 @@ import { fetchShops } from '@entities/shop/api/shopApi';
 import { Button } from '@shared/ui/Button/Button';
 import { Card } from '@shared/ui/Card/Card';
 import { useRoulette } from '../model/playRoulette';
+import { media } from '@shared/config/media';
 
 const RouletteContainer = styled.div`
   position: relative;
-  width: 320px;
-  height: 320px;
-  margin: 0 auto 40px;
+  margin: 0 auto 50px;
+  width: 400px;
+  height: 400px;
+
+  ${media.tablet} {
+    width: 320px;
+    height: 320px;
+    margin-bottom: 40px;
+  }
+
+  ${media.mobile} {
+    width: 300px;
+    height: 300px;
+    margin-bottom: 30px;
+  }
+
+  ${media.mobileS} {
+    width: 260px;
+    height: 260px;
+  }
+`;
+
+// 룰렛 제목
+const Title = styled.h3`
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 40px;
+  color: #1b2a55;
+  text-align: center;
+
+  ${media.tablet} {
+    font-size: 22px;
+    margin-bottom: 36px;
+  }
+
+  ${media.mobile} {
+    font-size: 22px;
+    margin-bottom: 34px;
+  }
+
+  ${media.mobileS} {
+    font-size: 18px;
+  }
 `;
 
 const WheelWrapper = styled.div`
   width: 100%;
   height: 100%;
+  box-sizing: border-box;
   border-radius: 50%;
   border: 8px solid #1b2a55;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
@@ -54,6 +96,77 @@ const CenterCircle = styled.div`
   justify-content: center;
   font-weight: bold;
   color: #1b2a55;
+`;
+
+// 당첨된 가게 이름 스타일
+const ResultTitle = styled.div`
+  font-size: 22px;
+  font-weight: 800;
+  color: #0066cc;
+  margin-bottom: 8px;
+  background-color: #f0f7ff;
+  padding: 16px 24px;
+  border-radius: 16px;
+  display: inline-block;
+
+  white-space: nowrap;
+
+  ${media.tablet} {
+    font-size: 18px;
+    padding: 12px 20px;
+  }
+
+  ${media.mobile} {
+    font-size: 16px;
+    padding: 10px 16px;
+    max-width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  ${media.mobileS} {
+    font-size: 16px;
+    padding: 10px 16px;
+    max-width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+`;
+
+const ShopDescription = styled.div`
+  font-size: 16px;
+  color: #666666;
+  margin-bottom: 24px;
+  word-break: keep-all;
+
+  ${media.tablet} {
+    font-size: 14px;
+  }
+
+  ${media.mobile} {
+    font-size: 14px;
+  }
+
+  ${media.mobileS} {
+    font-size: 12px;
+  }
+`;
+
+const DecisionArea = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+
+  ${media.mobile} {
+    /* 모바일에서 버튼이 너무 좁아지면 세로로 배치 */
+    flex-direction: column;
+    align-items: center;
+  }
+  ${media.mobileS} {
+    /* 모바일에서 버튼이 너무 좁아지면 세로로 배치 */
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export function Roulette({ onCategoryChange }) {
@@ -110,23 +223,13 @@ export function Roulette({ onCategoryChange }) {
       style={{
         padding: '40px 32px',
         textAlign: 'center',
-        minHeight: 500,
         backgroundColor: '#ffffff',
         borderRadius: '28px',
         boxShadow: '0 15px 35px rgba(0,0,0,0.06)',
         border: '1px solid #f0f0f0',
       }}
     >
-      <h3
-        style={{
-          fontSize: '26px',
-          fontWeight: 800,
-          marginBottom: '40px',
-          color: '#1b2a55',
-        }}
-      >
-        🎰 오늘은 무엇을 먹을까요?
-      </h3>
+      <Title>🎰 오늘은 무엇을 먹을까요?</Title>
 
       <RouletteContainer>
         <Pointer />
@@ -180,29 +283,10 @@ export function Roulette({ onCategoryChange }) {
 
       {result && !isSpinning ? (
         <div style={{ animation: 'fadeIn 0.5s ease' }}>
-          <div
-            style={{
-              fontSize: '22px',
-              fontWeight: 800,
-              color: '#0066cc',
-              marginBottom: '8px',
-              backgroundColor: '#f0f7ff',
-              padding: '16px',
-              borderRadius: '16px',
-              display: 'inline-block',
-            }}
-          >
-            🎉 {result.name} 당첨!
-          </div>
-          <div
-            style={{ fontSize: '16px', color: '#666666', marginBottom: '24px' }}
-          >
-            {result.description}
-          </div>
+          <ResultTitle>🎉 {result.name} 당첨!</ResultTitle>
+          <ShopDescription>{result.description}</ShopDescription>
 
-          <div
-            style={{ display: 'flex', justifyContent: 'center', gap: '16px' }}
-          >
+          <DecisionArea>
             <Button
               variant="primary"
               onClick={handleLike}
@@ -217,7 +301,7 @@ export function Roulette({ onCategoryChange }) {
             >
               👎 음.. 다시 돌릴래요
             </Button>
-          </div>
+          </DecisionArea>
         </div>
       ) : (
         <Button
