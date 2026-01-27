@@ -287,35 +287,35 @@ const SubmitButton = styled(Button)`
 `;
 
 export const ReviewForm = ({
-	nickname,
-	onSubmit,
-	onRefreshNickname,
-	isSubmitting = false,
+  nickname,
+  onSubmit,
+  onRefreshNickname,
+  isSubmitting = false,
 }) => {
 	const [rating, setRating] = useState(0);
 	const [content, setContent] = useState('');
 	const [images, setImages] = useState([]);
 	const [error, setError] = useState('');
 
-	const handleSubmit = async event => {
-		event.preventDefault();
-		setError('');
+  const handleSubmit = async event => {
+    event.preventDefault();
+    setError('');
 
-		if (rating <= 0) {
-			setError('평점을 먼저 선택해주세요.');
-			return;
-		}
+    if (rating <= 0) {
+      setError('평점을 먼저 선택해주세요.');
+      return;
+    }
 
-		const trimmed = content.trim();
-		if (!trimmed) {
-			setError('솔직한 한 줄을 남겨주세요!');
-			return;
-		}
+    const trimmed = content.trim();
+    if (!trimmed) {
+      setError('솔직한 한 줄을 남겨주세요!');
+      return;
+    }
 
-		if (trimmed.length > MAX_LENGTH) {
-			setError('리뷰는 500자 이내로 작성해주세요.');
-			return;
-		}
+    if (trimmed.length > MAX_LENGTH) {
+      setError('리뷰는 500자 이내로 작성해주세요.');
+      return;
+    }
 
 		try {
 			console.log('ReviewForm - submitting images:', images); // 디버깅
@@ -329,8 +329,8 @@ export const ReviewForm = ({
 		}
 	};
 
-	const remaining = MAX_LENGTH - content.length;
-	const nicknameLabel = nickname || '닉네임 생성 중...';
+  const remaining = MAX_LENGTH - content.length;
+  const nicknameLabel = nickname || '닉네임 생성 중...';
 
 	return (
 		<FormContainer onSubmit={handleSubmit}>

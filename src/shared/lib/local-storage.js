@@ -1,5 +1,5 @@
 export const storage = {
-  get: (key) => {
+  get: key => {
     try {
       const item = localStorage.getItem(key);
       return item ? JSON.parse(item) : null;
@@ -15,7 +15,7 @@ export const storage = {
       console.error('Error writing to localStorage', error);
     }
   },
-  remove: (key) => {
+  remove: key => {
     try {
       localStorage.removeItem(key);
     } catch (error) {

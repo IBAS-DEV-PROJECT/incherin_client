@@ -1,6 +1,7 @@
 # 🏗️ FSD (Feature-Sliced Design) 아키텍처 가이드
 
 ## 📖 목차
+
 1. [FSD란?](#fsd란)
 2. [프로젝트 구조](#프로젝트-구조)
 3. [레이어별 설명](#레이어별-설명)
@@ -13,10 +14,11 @@
 ## FSD란?
 
 **Feature-Sliced Design**은 프론트엔드 애플리케이션을 위한 아키텍처 방법론입니다.
-코드를 **레이어(Layers)**, **슬라이스(Slices)**, **세그먼트(Segments)**로 구조화하여 
+코드를 **레이어(Layers)**, **슬라이스(Slices)**, **세그먼트(Segments)**로 구조화하여
 확장 가능하고 유지보수하기 쉬운 코드베이스를 만듭니다.
 
 ### 핵심 원칙
+
 - 📦 **명확한 책임 분리**: 각 레이어는 명확한 역할을 가짐
 - 🔒 **단방향 의존성**: 상위 레이어만 하위 레이어를 import
 - 🎯 **높은 응집도**: 관련된 코드를 함께 배치
@@ -70,15 +72,18 @@ src/
 ## 레이어별 설명
 
 ### 1. 📱 App - 애플리케이션 레이어
+
 **역할**: 앱 초기화, 전역 설정, 라우팅
 
 **포함되는 것**:
+
 - 애플리케이션 진입점 (`index.js`)
 - 라우트 설정 (`routes/`)
 - 전역 프로바이더 (Provider, Router 등)
 - 전역 스타일 (reset.css, global styles)
 
 **예시**:
+
 ```javascript
 // app/routes/index.jsx
 export const AppRoutes = () => {
@@ -94,13 +99,16 @@ export const AppRoutes = () => {
 ---
 
 ### 2. 📄 Pages - 페이지 레이어
+
 **역할**: 라우트와 1:1로 매칭되는 페이지 컴포넌트
 
 **포함되는 것**:
+
 - URL 경로에 대응하는 페이지
 - Widgets와 Features를 조합하여 완성된 화면 구성
 
 **구조**:
+
 ```
 pages/
 └── shop-list/
@@ -110,6 +118,7 @@ pages/
 ```
 
 **예시**:
+
 ```javascript
 // pages/shop-list/ui/ShopListPage.jsx
 import { Header } from '@/widgets/header';
@@ -130,13 +139,16 @@ export const ShopListPage = () => {
 ---
 
 ### 3. 🧩 Widgets - 위젯 레이어
+
 **역할**: 독립적으로 동작하는 큰 UI 블록
 
 **포함되는 것**:
+
 - 여러 Entities와 Features를 조합한 복합 컴포넌트
 - 헤더, 사이드바, 복잡한 카드 등
 
 **구조**:
+
 ```
 widgets/
 └── header/
@@ -146,6 +158,7 @@ widgets/
 ```
 
 **예시**:
+
 ```javascript
 // widgets/header/ui/Header.jsx
 import { UserBadge } from '@/entities/user';
@@ -165,14 +178,17 @@ export const Header = () => {
 ---
 
 ### 4. ⚡ Features - 기능 레이어
+
 **역할**: 사용자 시나리오와 비즈니스 기능
 
 **포함되는 것**:
+
 - 사용자 인터랙션이 있는 기능
 - 비즈니스 로직
 - 상태 관리
 
 **구조**:
+
 ```
 features/
 └── review/
@@ -185,6 +201,7 @@ features/
 ```
 
 **예시**:
+
 ```javascript
 // features/review/write/ui/ReviewForm.jsx
 import { useState } from 'react';
@@ -193,7 +210,7 @@ import { submitReview } from '../model/submitReview';
 
 export const ReviewForm = ({ shopId }) => {
   const [content, setContent] = useState('');
-  
+
   const handleSubmit = async () => {
     await submitReview({ shopId, content });
   };
@@ -210,14 +227,17 @@ export const ReviewForm = ({ shopId }) => {
 ---
 
 ### 5. 🎯 Entities - 엔티티 레이어
+
 **역할**: 비즈니스 엔티티 (데이터 모델)
 
 **포함되는 것**:
+
 - 도메인 데이터와 관련된 UI
 - API 호출 함수
 - 상태 관리 (atoms, stores)
 
 **구조**:
+
 ```
 entities/
 └── shop/
@@ -231,6 +251,7 @@ entities/
 ```
 
 **예시**:
+
 ```javascript
 // entities/shop/ui/ShopCard.jsx
 import { Card, Badge } from '@/shared/ui';
@@ -248,7 +269,7 @@ export const ShopCard = ({ shop }) => {
 // entities/shop/api/shopApi.js
 import { httpClient } from '@/shared/api';
 
-export const fetchShops = async (params) => {
+export const fetchShops = async params => {
   const response = await httpClient.get('/shops', { params });
   return response.data;
 };
@@ -257,9 +278,11 @@ export const fetchShops = async (params) => {
 ---
 
 ### 6. 🔧 Shared - 공유 레이어
+
 **역할**: 재사용 가능한 코드
 
 **포함되는 것**:
+
 - UI 컴포넌트 (Button, Input, Modal 등)
 - 유틸리티 함수
 - 커스텀 훅
@@ -267,6 +290,7 @@ export const fetchShops = async (params) => {
 - 상수, 설정
 
 **구조**:
+
 ```
 shared/
 ├── ui/                    # UI 컴포넌트
@@ -283,6 +307,7 @@ shared/
 ```
 
 **예시**:
+
 ```javascript
 // shared/ui/Button/Button.jsx
 export const Button = ({ children, variant = 'primary', ...props }) => {
@@ -320,6 +345,7 @@ shared    (외부 라이브러리만)
 ```
 
 ### ✅ 올바른 예시
+
 ```javascript
 // ✅ pages에서 widgets, features 사용
 import { Header } from '@/widgets/header';
@@ -333,6 +359,7 @@ import { Button } from '@/shared/ui';
 ```
 
 ### ❌ 잘못된 예시
+
 ```javascript
 // ❌ shared에서 entities 사용 불가
 import { ShopCard } from '@/entities/shop';
@@ -359,9 +386,11 @@ import { shopModel } from '@/entities/shop';
 ## 새 기능 추가하기
 
 ### 1️⃣ 기능 분석
+
 먼저 추가할 기능이 어느 레이어에 속하는지 판단합니다.
 
 **질문**:
+
 - 새로운 페이지인가? → `pages/`
 - 사용자 인터랙션이 있는 기능인가? → `features/`
 - 재사용 가능한 UI 컴포넌트인가? → `shared/ui/`
@@ -370,6 +399,7 @@ import { shopModel } from '@/entities/shop';
 ### 2️⃣ 폴더 생성
 
 **Feature 추가 예시**:
+
 ```bash
 features/
 └── shop/
@@ -398,7 +428,7 @@ import { toggleFavorite } from '../model/toggleFavorite';
 
 export const FavoriteButton = ({ shopId }) => {
   const handleClick = () => toggleFavorite(shopId);
-  
+
   return <Button onClick={handleClick}>⭐ 즐겨찾기</Button>;
 };
 ```
@@ -410,6 +440,7 @@ export const FavoriteButton = ({ shopId }) => {
 ### 예시 1: 리뷰 작성 기능
 
 **구조**:
+
 ```
 features/review/write/
 ├── index.js
@@ -427,6 +458,7 @@ entities/review/
 ```
 
 **코드**:
+
 ```javascript
 // features/review/write/ui/ReviewForm.jsx
 import { useState } from 'react';
@@ -445,9 +477,9 @@ export const ReviewForm = ({ shopId, onSuccess }) => {
   return (
     <form>
       <StarRating value={rating} onChange={setRating} />
-      <TextArea 
-        value={content} 
-        onChange={(e) => setContent(e.target.value)}
+      <TextArea
+        value={content}
+        onChange={e => setContent(e.target.value)}
         placeholder="리뷰를 작성해주세요"
       />
       <Button onClick={handleSubmit}>작성하기</Button>
@@ -470,7 +502,7 @@ export const submitReview = async ({ shopId, rating, content }) => {
 // entities/review/api/reviewApi.js
 import { httpClient } from '@/shared/api';
 
-export const createReview = async (data) => {
+export const createReview = async data => {
   const response = await httpClient.post('/reviews', data);
   return response.data;
 };
@@ -493,10 +525,7 @@ export const ShopListPage = () => {
   return (
     <div>
       <Header />
-      <CategoryFilter 
-        value={selectedCategory}
-        onChange={setSelectedCategory}
-      />
+      <CategoryFilter value={selectedCategory} onChange={setSelectedCategory} />
       <ShopListView category={selectedCategory} />
     </div>
   );
@@ -539,6 +568,7 @@ export const ShopListView = ({ category }) => {
 ## 💡 베스트 프랙티스
 
 ### 1. Public API 패턴
+
 각 슬라이스는 `index.js`로 외부에 공개할 것만 export
 
 ```javascript
@@ -552,11 +582,13 @@ export { validateReview } from './model/validateReview';
 ```
 
 ### 2. 명확한 명명
+
 - Features: **동사 + 명사** (`write-review`, `filter-category`)
 - Entities: **명사** (`shop`, `user`, `review`)
 - Widgets: **UI 블록 이름** (`header`, `sidebar`)
 
 ### 3. 세그먼트 구조
+
 ```
 slice/
 ├── index.js          # Public API (필수)
@@ -567,6 +599,7 @@ slice/
 ```
 
 ### 4. Import 경로
+
 절대 경로 사용 권장 (`@/` alias)
 
 ```javascript
@@ -590,16 +623,19 @@ import { Button } from '../../../shared/ui';
 ## ❓ FAQ
 
 **Q: Feature와 Entity의 차이는?**
+
 - **Entity**: 데이터 중심 (Shop, User, Review 등)
 - **Feature**: 행위 중심 (리뷰 작성하기, 필터링하기 등)
 
 **Q: Widget과 Feature의 차이는?**
+
 - **Widget**: 여러 기능을 조합한 큰 UI 블록
 - **Feature**: 하나의 사용자 시나리오
 
 **Q: 같은 레이어 간 의존성이 필요하다면?**
+
 - 공통 로직을 하위 레이어(entities 또는 shared)로 내려서 공유
 
 **Q: 작은 프로젝트에도 적용해야 하나요?**
-- 초기에는 과할 수 있지만, 확장을 고려한다면 처음부터 구조를 잡는 것이 좋습니다.
 
+- 초기에는 과할 수 있지만, 확장을 고려한다면 처음부터 구조를 잡는 것이 좋습니다.
