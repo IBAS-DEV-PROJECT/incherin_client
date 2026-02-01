@@ -12,17 +12,17 @@ const Article = styled.article`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  
+
   ${media.mobileS} {
     padding: 16px;
     gap: 10px;
   }
-  
+
   ${media.mobile} {
     padding: 16px;
     gap: 10px;
   }
-  
+
   ${media.tablet} {
     padding: 18px;
     gap: 11px;
@@ -40,15 +40,15 @@ const Nickname = styled.span`
   font-weight: 700;
   font-size: 16px;
   color: #1b3a7c;
-  
+
   ${media.mobileS} {
     font-size: 14px;
   }
-  
+
   ${media.mobile} {
     font-size: 14px;
   }
-  
+
   ${media.tablet} {
     font-size: 15px;
   }
@@ -57,15 +57,15 @@ const Nickname = styled.span`
 const Date = styled.span`
   font-size: 12px;
   color: #6b7280;
-  
+
   ${media.mobileS} {
     font-size: 11px;
   }
-  
+
   ${media.mobile} {
     font-size: 11px;
   }
-  
+
   ${media.tablet} {
     font-size: 11px;
   }
@@ -78,18 +78,18 @@ const RatingContainer = styled.div`
 `;
 
 const RatingStars = styled.div`
-  color: #FFB400;
+  color: #ffb400;
   font-size: 20px;
   line-height: 1;
-  
+
   ${media.mobileS} {
     font-size: 18px;
   }
-  
+
   ${media.mobile} {
     font-size: 18px;
   }
-  
+
   ${media.tablet} {
     font-size: 19px;
   }
@@ -99,15 +99,15 @@ const RatingText = styled.span`
   font-size: 14px;
   color: #4b5563;
   font-weight: 600;
-  
+
   ${media.mobileS} {
     font-size: 13px;
   }
-  
+
   ${media.mobile} {
     font-size: 13px;
   }
-  
+
   ${media.tablet} {
     font-size: 13px;
   }
@@ -119,17 +119,17 @@ const Content = styled.p`
   line-height: 22px;
   color: #1f2933;
   white-space: pre-wrap;
-  
+
   ${media.mobileS} {
     font-size: 14px;
     line-height: 20px;
   }
-  
+
   ${media.mobile} {
     font-size: 14px;
     line-height: 20px;
   }
-  
+
   ${media.tablet} {
     font-size: 14px;
     line-height: 21px;
@@ -141,17 +141,17 @@ const ImageGrid = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   gap: 8px;
   margin-top: 4px;
-  
+
   ${media.mobileS} {
     grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
     gap: 6px;
   }
-  
+
   ${media.mobile} {
     grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
     gap: 6px;
   }
-  
+
   ${media.tablet} {
     grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
     gap: 7px;
@@ -166,19 +166,19 @@ const ImageItem = styled.img`
   border: 1px solid #e3e8f5;
   cursor: pointer;
   transition: transform 0.2s;
-  
+
   &:hover {
     transform: scale(1.05);
   }
-  
+
   ${media.mobileS} {
     border-radius: 8px;
   }
-  
+
   ${media.mobile} {
     border-radius: 8px;
   }
-  
+
   ${media.tablet} {
     border-radius: 10px;
   }
@@ -223,24 +223,24 @@ const CloseButton = styled.button`
   justify-content: center;
   transition: all 0.2s;
   z-index: 10001;
-  
+
   &:hover {
     background-color: white;
     transform: scale(1.1);
   }
-  
+
   ${media.mobileS} {
     width: 36px;
     height: 36px;
     font-size: 20px;
   }
-  
+
   ${media.mobile} {
     width: 36px;
     height: 36px;
     font-size: 20px;
   }
-  
+
   ${media.tablet} {
     width: 38px;
     height: 38px;
@@ -266,31 +266,31 @@ const NavButton = styled.button`
   padding-bottom: 5px;
   transition: all 0.2s;
   z-index: 10001;
-  
+
   &:hover:not(:disabled) {
     background-color: white;
     transform: translateY(-50%) scale(1.1);
   }
-  
+
   &:disabled {
     opacity: 0.3;
     cursor: not-allowed;
   }
-  
+
   ${media.mobileS} {
     width: 40px;
     height: 40px;
     font-size: 22px;
     padding-bottom: 4px;
   }
-  
+
   ${media.mobile} {
     width: 40px;
     height: 40px;
     font-size: 22px;
     padding-bottom: 4px;
   }
-  
+
   ${media.tablet} {
     width: 45px;
     height: 45px;
@@ -301,15 +301,15 @@ const NavButton = styled.button`
 
 const PrevButton = styled(NavButton)`
   left: 20px;
-  
+
   ${media.mobileS} {
     left: 10px;
   }
-  
+
   ${media.mobile} {
     left: 10px;
   }
-  
+
   ${media.tablet} {
     left: 15px;
   }
@@ -317,15 +317,15 @@ const PrevButton = styled(NavButton)`
 
 const NextButton = styled(NavButton)`
   right: 20px;
-  
+
   ${media.mobileS} {
     right: 10px;
   }
-  
+
   ${media.mobile} {
     right: 10px;
   }
-  
+
   ${media.tablet} {
     right: 15px;
   }
@@ -343,17 +343,17 @@ const ImageCounter = styled.div`
   font-size: 14px;
   font-weight: 600;
   z-index: 10001;
-  
+
   ${media.mobileS} {
     font-size: 12px;
     padding: 6px 12px;
   }
-  
+
   ${media.mobile} {
     font-size: 12px;
     padding: 6px 12px;
   }
-  
+
   ${media.tablet} {
     font-size: 13px;
     padding: 7px 14px;
@@ -371,7 +371,7 @@ export const ReviewItem = ({ review }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const handleImageClick = (index) => {
+  const handleImageClick = index => {
     setCurrentImageIndex(index);
     setIsModalOpen(true);
   };
@@ -381,12 +381,12 @@ export const ReviewItem = ({ review }) => {
     setCurrentImageIndex(0);
   };
 
-  const handlePrevImage = (e) => {
+  const handlePrevImage = e => {
     e.stopPropagation();
     setCurrentImageIndex(prev => Math.max(0, prev - 1));
   };
 
-  const handleNextImage = (e) => {
+  const handleNextImage = e => {
     e.stopPropagation();
     setCurrentImageIndex(prev => Math.min((images?.length || 1) - 1, prev + 1));
   };
@@ -395,11 +395,13 @@ export const ReviewItem = ({ review }) => {
   React.useEffect(() => {
     if (!isModalOpen) return;
 
-    const handleKeyDown = (e) => {
+    const handleKeyDown = e => {
       if (e.key === 'ArrowLeft') {
         setCurrentImageIndex(prev => Math.max(0, prev - 1));
       } else if (e.key === 'ArrowRight') {
-        setCurrentImageIndex(prev => Math.min((images?.length || 1) - 1, prev + 1));
+        setCurrentImageIndex(prev =>
+          Math.min((images?.length || 1) - 1, prev + 1)
+        );
       } else if (e.key === 'Escape') {
         handleCloseModal();
       }
@@ -426,14 +428,15 @@ export const ReviewItem = ({ review }) => {
         {images && images.length > 0 && (
           <ImageGrid>
             {images.map((image, index) => {
-              const imageUrl = typeof image === 'string' ? image : image?.preview;
+              const imageUrl =
+                typeof image === 'string' ? image : image?.preview;
               return (
                 <ImageItem
                   key={index}
                   src={imageUrl}
                   alt={`리뷰 이미지 ${index + 1}`}
                   onClick={() => handleImageClick(index)}
-                  onError={(e) => {
+                  onError={e => {
                     console.error('이미지 로드 실패:', imageUrl);
                     e.target.style.display = 'none';
                   }}
@@ -446,10 +449,8 @@ export const ReviewItem = ({ review }) => {
 
       {isModalOpen && images && images.length > 0 && (
         <ImageOverlay onClick={handleCloseModal}>
-          <CloseButton onClick={handleCloseModal}>
-            ×
-          </CloseButton>
-          
+          <CloseButton onClick={handleCloseModal}>×</CloseButton>
+
           {images.length > 1 && (
             <>
               <PrevButton
@@ -469,13 +470,15 @@ export const ReviewItem = ({ review }) => {
               </ImageCounter>
             </>
           )}
-          
+
           <LargeImage
-            src={typeof images[currentImageIndex] === 'string' 
-              ? images[currentImageIndex] 
-              : images[currentImageIndex]?.preview}
+            src={
+              typeof images[currentImageIndex] === 'string'
+                ? images[currentImageIndex]
+                : images[currentImageIndex]?.preview
+            }
             alt={`이미지 ${currentImageIndex + 1}`}
-            onClick={(e) => e.stopPropagation()}
+            onClick={e => e.stopPropagation()}
           />
         </ImageOverlay>
       )}

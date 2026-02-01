@@ -21,33 +21,33 @@ import {
  * @returns {JSX.Element}
  */
 export const ImageUploader = ({ images = [], onChange, maxImages = 5 }) => {
-  const handleFileChange = (event) => {
+  const handleFileChange = event => {
     const files = Array.from(event.target.files || []);
-    
+
     if (images.length + files.length > maxImages) {
       alert(`최대 ${maxImages}장까지 업로드할 수 있어요.`);
       return;
     }
-    
+
     const newImages = files.map(file => ({
       file,
-      preview: URL.createObjectURL(file)
+      preview: URL.createObjectURL(file),
     }));
-    
+
     onChange?.([...images, ...newImages]);
   };
-  
-  const handleRemove = (index) => {
+
+  const handleRemove = index => {
     const newImages = images.filter((_, i) => i !== index);
-    
+
     // 메모리 해제
     if (images[index]?.preview) {
       URL.revokeObjectURL(images[index].preview);
     }
-    
+
     onChange?.(newImages);
   };
-  
+
   return (
     <Container>
       <Label>
@@ -60,7 +60,7 @@ export const ImageUploader = ({ images = [], onChange, maxImages = 5 }) => {
           disabled={images.length >= maxImages}
         />
       </Label>
-      
+
       {images.length > 0 && (
         <PreviewContainer>
           {images.map((image, index) => (

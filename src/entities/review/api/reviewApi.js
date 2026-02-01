@@ -53,8 +53,10 @@ const sanitizeReview = review => ({
   rating: Number(review?.rating) || 0,
   content: (review?.content || '').trim(),
   createdAt: review?.createdAt || new Date().toISOString(),
-  images: Array.isArray(review?.images) 
-    ? review.images.map(img => (typeof img === 'string' ? img : img?.preview)).filter(Boolean)
+  images: Array.isArray(review?.images)
+    ? review.images
+        .map(img => (typeof img === 'string' ? img : img?.preview))
+        .filter(Boolean)
     : [],
 });
 
