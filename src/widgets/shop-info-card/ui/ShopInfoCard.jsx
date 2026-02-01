@@ -5,7 +5,6 @@ import { Card } from '@shared/ui/Card/Card';
 import { Badge } from '@shared/ui/Badge/Badge';
 import { ShopDetailInfo } from '@entities/shop';
 
-
 const CardWrapper = styled(Card)`
   overflow: hidden;
   border-radius: 28px;

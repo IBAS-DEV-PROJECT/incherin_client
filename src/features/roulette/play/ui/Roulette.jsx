@@ -6,23 +6,22 @@ import { Button } from '@shared/ui/Button/Button';
 import { Card } from '@shared/ui/Card/Card';
 import { useRoulette } from '../model/playRoulette';
 import { media } from '@shared/config/media';
+import { getRouletteOptions } from '../../api/rouletteApi';
 
 const RouletteContainer = styled.div`
   position: relative;
-  margin: 0 auto 50px;
+  margin: 0 auto 30px;
   width: 400px;
   height: 400px;
 
   ${media.tablet} {
     width: 320px;
     height: 320px;
-    margin-bottom: 40px;
   }
 
   ${media.mobile} {
     width: 300px;
     height: 300px;
-    margin-bottom: 30px;
   }
 
   ${media.mobileS} {
@@ -103,7 +102,7 @@ const ResultTitle = styled.div`
   font-size: 22px;
   font-weight: 800;
   color: #0066cc;
-  margin-bottom: 8px;
+  margin-bottom: 20px;
   background-color: #f0f7ff;
   padding: 16px 24px;
   border-radius: 16px;
@@ -130,25 +129,6 @@ const ResultTitle = styled.div`
     max-width: 90%;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-`;
-
-const ShopDescription = styled.div`
-  font-size: 16px;
-  color: #666666;
-  margin-bottom: 24px;
-  word-break: keep-all;
-
-  ${media.tablet} {
-    font-size: 14px;
-  }
-
-  ${media.mobile} {
-    font-size: 14px;
-  }
-
-  ${media.mobileS} {
-    font-size: 12px;
   }
 `;
 
@@ -183,9 +163,9 @@ export function Roulette({ onCategoryChange }) {
   } = useRoulette(shops, onCategoryChange);
 
   useEffect(() => {
-    fetchShops()
+    getRouletteOptions()
       .then(setShops)
-      .catch(() => setLoadError('가게 목록을 불러오지 못했어요.'));
+      .catch(err => setLoadError('가게 목록을 불러오지 못했어요.'));
   }, []);
 
   // 룰렛 판의 색상 테마
@@ -284,7 +264,6 @@ export function Roulette({ onCategoryChange }) {
       {result && !isSpinning ? (
         <div style={{ animation: 'fadeIn 0.5s ease' }}>
           <ResultTitle>🎉 {result.name} 당첨!</ResultTitle>
-          <ShopDescription>{result.description}</ShopDescription>
 
           <DecisionArea>
             <Button

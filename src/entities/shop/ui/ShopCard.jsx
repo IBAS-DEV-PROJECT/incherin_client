@@ -180,7 +180,13 @@ export const ShopCard = ({ shop, onSelect }) => {
         {Array.isArray(shop.highlights) && shop.highlights.length > 0 && (
           <Highlights>
             {shop.highlights.map(h => (
-              <Badge key={h} variant="secondary" size="small" backgroundColor="#eaf2ff" color="#27509B">
+              <Badge
+                key={h}
+                variant="secondary"
+                size="small"
+                backgroundColor="#eaf2ff"
+                color="#27509B"
+              >
                 #{h}
               </Badge>
             ))}

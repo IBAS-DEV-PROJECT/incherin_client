@@ -7,14 +7,11 @@ const TabButton = styled.button`
   font-size: 16px;
   font-weight: ${({ isActive }) => (isActive ? 700 : 500)};
   border-radius: 12px;
-  border: ${({ isActive }) =>
-    isActive ? 'none' : '1px solid #e2e8f0'};
+  border: ${({ isActive }) => (isActive ? 'none' : '1px solid #e2e8f0')};
   cursor: pointer;
 
-  background-color: ${({ isActive }) =>
-    isActive ? '#0066cc' : '#ffffff'};
-  color: ${({ isActive }) =>
-    isActive ? '#ffffff' : '#475569'};
+  background-color: ${({ isActive }) => (isActive ? '#0066cc' : '#ffffff')};
+  color: ${({ isActive }) => (isActive ? '#ffffff' : '#475569')};
 
   box-shadow: ${({ isActive }) =>
     isActive
@@ -24,10 +21,8 @@ const TabButton = styled.button`
   transition: all 0.2s ease;
 
   &:hover {
-    background-color: ${({ isActive }) =>
-      isActive ? '#0066cc' : '#f8fafc'};
-    border-color: ${({ isActive }) =>
-      isActive ? 'none' : '#cbd5e1'};
+    background-color: ${({ isActive }) => (isActive ? '#0066cc' : '#f8fafc')};
+    border-color: ${({ isActive }) => (isActive ? 'none' : '#cbd5e1')};
   }
 
   /* Tablet */

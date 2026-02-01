@@ -48,28 +48,20 @@ const Grid = styled.div`
 
   /* mobileS */
   ${media.mobileS} {
-     grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
     gap: 16px;
   }
 `;
 
 export const ShopListView = ({ shops, onSelectShop }) => {
   if (!shops || shops.length === 0) {
-    return (
-      <EmptyState>
-        아직 등록된 가게가 없어요.
-      </EmptyState>
-    );
+    return <EmptyState>아직 등록된 가게가 없어요.</EmptyState>;
   }
 
   return (
     <Grid>
       {shops.map(shop => (
-        <ShopCard
-          key={shop.id}
-          shop={shop}
-          onSelect={onSelectShop}
-        />
+        <ShopCard key={shop.id} shop={shop} onSelect={onSelectShop} />
       ))}
     </Grid>
   );
