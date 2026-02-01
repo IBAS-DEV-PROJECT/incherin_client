@@ -1,37 +1,68 @@
 import React from 'react';
+import styled from '@emotion/styled';
+import { media } from '@shared/config/media';
 import { ShopCard } from '@entities/shop';
+
+/* 빈 화면 */
+const EmptyState = styled.div`
+  background-color: #f4f6fb;
+  border-radius: 20px;
+  padding: 60px 24px;
+  border: 1px dashed #c7d2fe;
+  text-align: center;
+  color: #4b5563;
+  font-size: 16px;
+  font-weight: 500;
+
+  ${media.mobile} {
+    padding: 48px 20px;
+    font-size: 15px;
+  }
+
+  ${media.mobileS} {
+    padding: 40px 16px;
+    font-size: 14px;
+  }
+`;
+
+/* Grid Wrapper */
+const Grid = styled.div`
+  display: grid;
+  gap: 28px;
+
+  /* desktop */
+  ${media.desktop} {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* tablet */
+  ${media.tablet} {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* mobile */
+  ${media.mobile} {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  /* mobileS */
+  ${media.mobileS} {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+`;
 
 export const ShopListView = ({ shops, onSelectShop }) => {
   if (!shops || shops.length === 0) {
-    return (
-      <div
-        style={{
-          backgroundColor: '#f4f6fb',
-          borderRadius: '20px',
-          padding: '60px 24px',
-          border: '1px dashed #c7d2fe',
-          textAlign: 'center',
-          color: '#4b5563',
-          fontSize: '16px',
-          fontWeight: 500,
-        }}
-      >
-        아직 등록된 가게가 없어요. 첫 번째 리뷰어가 되어주세요!
-      </div>
-    );
+    return <EmptyState>아직 등록된 가게가 없어요.</EmptyState>;
   }
 
   return (
-    <div
-      style={{
-        display: 'grid',
-        gap: '28px',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
-      }}
-    >
+    <Grid>
       {shops.map(shop => (
         <ShopCard key={shop.id} shop={shop} onSelect={onSelectShop} />
       ))}
-    </div>
+    </Grid>
   );
 };
