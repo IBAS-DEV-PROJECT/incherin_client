@@ -77,7 +77,6 @@ pages/shop-list/
 - **public/**: 번들러가 관리하지 않고 그대로 복사됨 → URL로 직접 접근 (/logo.png)
   - favicon, manifest.json, robots.txt
   - 외부에서 절대 경로 접근이 필요한 파일
-  
 - **src/shared/assets/**: import해서 사용하는 정적 자원 → 빌드시 해시 처리, 캐싱 관리
   - 컴포넌트 안에서 사용하는 이미지, 아이콘, SVG, 폰트
   - 코드와 함께 버전 관리되어야 하는 리소스
@@ -91,6 +90,7 @@ pages/shop-list/
 FSD에서는 각 슬라이스마다 **index.js**를 Public API로 사용합니다.
 
 > **목적**
+
 - 슬라이스 내부 구현을 캡슐화
 - 외부에서 사용할 것만 명시적으로 export
 - import 경로를 간결하게 유지
@@ -118,6 +118,7 @@ import { fetchShops, ShopCard } from '@/entities/shop';
 ```
 
 > **규칙**
+
 - ✅ **허용**: 각 슬라이스의 Public API (`entities/shop/index.js`)
 - ✅ **허용**: Shared UI의 배럴 파일 (`shared/ui/index.js`)
 - ❌ **금지**: 레이어 전체를 모으는 배럴 파일 (`entities/index.js`)

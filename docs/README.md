@@ -5,9 +5,11 @@
 ## 📖 필독 문서
 
 ### 1. [FSD_ARCHITECTURE.md](./FSD_ARCHITECTURE.md) 🏗️
+
 **가장 먼저 읽어야 할 문서!**
 
 FSD(Feature-Sliced Design) 아키텍처의 전반적인 구조와 원칙을 설명합니다.
+
 - FSD란 무엇인가
 - 레이어별 역할과 책임
 - 의존성 규칙
@@ -21,37 +23,44 @@ FSD(Feature-Sliced Design) 아키텍처의 전반적인 구조와 원칙을 설�
 ## 📋 코딩 컨벤션
 
 ### 2. [FOLDER_STRUCTURE_NAMING_CONVENTIONS.md](./FOLDER_STRUCTURE_NAMING_CONVENTIONS.md)
+
 - 폴더 구조 규칙
 - 파일 및 컴포넌트 네이밍 규칙
 - Public API 패턴
 - Export 규칙
 
 ### 3. [COMPONENT_STRUCTURE_CONVENTIONS.md](./COMPONENT_STRUCTURE_CONVENTIONS.md)
+
 - 컴포넌트 구조 규칙
 - Props 정의 방법
 - 컴포넌트 분리 원칙
 
 ### 4. [COMPONENT_STYLE_CONVENTIONS.md](./COMPONENT_STYLE_CONVENTIONS.md)
+
 - Emotion/Styled Components 사용법
 - 스타일 파일 구조
 - CSS 네이밍 규칙
 
 ### 5. [HOOKS_CONVENTIONS.md](./HOOKS_CONVENTIONS.md)
+
 - 커스텀 훅 작성 규칙
 - 훅 네이밍 규칙
 - 훅 사용 베스트 프랙티스
 
 ### 6. [STATE_MANAGEMENT_ASYNC_CONVENTIONS.md](./STATE_MANAGEMENT_ASYNC_CONVENTIONS.md)
+
 - Jotai를 이용한 상태 관리
 - 비동기 상태 처리
 - Atom 작성 규칙
 
 ### 7. [SERVICE_API_ROUTING_CONVENTIONS.md](./SERVICE_API_ROUTING_CONVENTIONS.md)
+
 - API 호출 규칙
 - HTTP 클라이언트 사용법
 - 라우팅 설정 방법
 
 ### 8. [IMPORT_CONVENTIONS.md](./IMPORT_CONVENTIONS.md)
+
 - Import 순서 규칙
 - 절대 경로 vs 상대 경로
 - Import 그룹화 방법
@@ -103,4 +112,3 @@ src/
 ## 🤝 컨벤션 개선 제안
 
 컨벤션이나 문서에 개선이 필요하다고 생각되면 팀에 제안해주세요!
-

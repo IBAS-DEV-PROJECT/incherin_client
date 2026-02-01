@@ -5,5 +5,6 @@ export const createReviewModel = (overrides = {}) => ({
   content: '',
   rating: 0,
   createdAt: '',
+  images: [],
   ...overrides,
 });

@@ -6,7 +6,9 @@ const isValidRating = rating => {
 };
 
 export const submitReview = async reviewData => {
-  const { shopId, nickname, content, rating } = reviewData || {};
+  const { shopId, nickname, content, rating, images } = reviewData || {};
+
+  console.log('submitReview - received images:', images); // 디버깅
 
   if (!shopId) {
     throw new Error('shopId가 필요해요.');
@@ -25,5 +27,6 @@ export const submitReview = async reviewData => {
     nickname,
     rating: Number(rating),
     content: trimmedContent,
+    images: images || [],
   });
 };
