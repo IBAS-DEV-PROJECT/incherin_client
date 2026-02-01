@@ -2,9 +2,9 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { media } from '@shared/config/media';
 import { Card } from '@shared/ui/Card/Card';
-import { Badge } from '@shared/ui/Badge/Badge';
 import { Button } from '@shared/ui/Button/Button';
-import { Phone, Map01, Clock } from '@untitledui/icons';
+import { Phone, Map01 } from '@untitledui/icons';
+import defaultFoodImage from '../../../shared/assets/image/food.webp';
 
 /* ShopCard (리스트용) */
 
@@ -109,38 +109,6 @@ const Title = styled.h3`
   }
 `;
 
-const Description = styled.p`
-  margin: 8px 0 0;
-  font-size: 15px;
-  line-height: 22px;
-  color: #4b5563;
-
-  min-height: calc(22px * 2);
-
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-
-  ${media.mobile} {
-    font-size: 14px;
-    line-height: 20px;
-    min-height: calc(20px * 2);
-  }
-
-  ${media.mobileS} {
-    font-size: 13px;
-    line-height: 18px;
-    min-height: calc(18px * 2);
-  }
-`;
-
-const Highlights = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-`;
-
 const DetailButton = styled(Button)`
   margin-top: auto;
   padding: 12px 0;
@@ -164,34 +132,19 @@ export const ShopCard = ({ shop, onSelect }) => {
 
   return (
     <CardWrapper padding="0">
-      {shop.image && (
-        <ImageWrapper>
-          <img src={shop.image} alt={shop.name} />
-          <CategoryTag>{shop.category}</CategoryTag>
-        </ImageWrapper>
-      )}
+      <ImageWrapper> 
+        <img src={shop.thumbnail || defaultFoodImage} 
+        alt={shop.name} 
+        /> 
+        <CategoryTag>
+          {shop.category}
+        </CategoryTag> 
+      </ImageWrapper>
 
       <Content>
         <div>
           <Title>{shop.name}</Title>
-          <Description>{shop.description}</Description>
         </div>
-
-        {Array.isArray(shop.highlights) && shop.highlights.length > 0 && (
-          <Highlights>
-            {shop.highlights.map(h => (
-              <Badge
-                key={h}
-                variant="secondary"
-                size="small"
-                backgroundColor="#eaf2ff"
-                color="#27509B"
-              >
-                #{h}
-              </Badge>
-            ))}
-          </Highlights>
-        )}
 
         <DetailButton variant="primary" onClick={() => onSelect?.(shop)}>
           자세히 보기
@@ -271,7 +224,6 @@ export const ShopDetailInfo = ({ shop }) => {
   const infoRows = [
     { label: '전화번호', value: shop.phone || '정보 준비 중', Icon: Phone },
     { label: '주소', value: shop.address || '정보 준비 중', Icon: Map01 },
-    { label: '영업시간', value: shop.hours || '정보 준비 중', Icon: Clock },
   ];
 
   return (

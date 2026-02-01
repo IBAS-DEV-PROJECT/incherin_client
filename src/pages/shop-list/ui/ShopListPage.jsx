@@ -1,23 +1,26 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+
 import { CATEGORIES } from '@entities/category/data/categories';
 import { CategoryTab } from '@entities/category/ui/CategoryTab';
 import { ShopListView } from '@widgets/shop-list-view';
 import { fetchShops } from '@entities/shop/api/shopApi';
-import { Card, Grid, Button } from '@shared/ui';
-import { Spinner } from '@shared/ui/Spinner';
 
-const ALL_CATEGORY = '전체';
+import { Card } from '@shared/ui';
+import { Spinner } from '@shared/ui/Spinner';
 
 const ShopListPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [activeCategory, setActiveCategory] = useState(null);
   const [shops, setShops] = useState([]);
-  const [activeCategory, setActiveCategory] = useState(ALL_CATEGORY);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
+  /**
+   * URL 쿼리 (?c=korean) → 상태 동기화
+   */
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const categoryFromQuery = params.get('c');
@@ -25,12 +28,16 @@ const ShopListPage = () => {
     if (categoryFromQuery) {
       setActiveCategory(categoryFromQuery);
     } else {
-      setActiveCategory(ALL_CATEGORY);
+      setActiveCategory(null);
     }
   }, [location.search]);
 
+  /**
+   * 가게 목록 조회
+   */
   useEffect(() => {
     setIsLoading(true);
+
     fetchShops()
       .then(data => {
         setShops(data);
@@ -42,23 +49,33 @@ const ShopListPage = () => {
       .finally(() => setIsLoading(false));
   }, []);
 
+  /**
+   * 카테고리 필터링
+   */
   const filteredShops = useMemo(() => {
-    if (activeCategory === ALL_CATEGORY) {
-      return shops;
-    }
+    if (!activeCategory) return shops;
     return shops.filter(shop => shop.category === activeCategory);
   }, [shops, activeCategory]);
 
+  /**
+   * 카테고리 변경 핸들러
+   */
   const handleCategoryChange = categoryValue => {
     setActiveCategory(categoryValue);
+
     const params = new URLSearchParams();
-    if (categoryValue !== ALL_CATEGORY) {
+    if (categoryValue) {
       params.set('c', categoryValue);
     }
-    const query = params.toString();
-    navigate(`/shops${query ? `?${query}` : ''}`, { replace: true });
+
+    navigate(`/shops${params.toString() ? `?${params}` : ''}`, {
+      replace: true,
+    });
   };
 
+  /**
+   * 가게 선택 → 상세 페이지 이동
+   */
   const handleSelectShop = shop => {
     navigate(`/shops/${shop.id}`);
   };
@@ -74,21 +91,19 @@ const ShopListPage = () => {
           gap: '32px',
         }}
       >
+        {/* ===== 카테고리 탭 ===== */}
         <Card variant="default" padding="20px">
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-            {[ALL_CATEGORY, ...CATEGORIES.map(category => category.value)].map(
-              categoryValue => (
-                <CategoryTab
-                  key={categoryValue}
-                  label={categoryValue}
-                  isActive={activeCategory === categoryValue}
-                  onClick={() => handleCategoryChange(categoryValue)}
-                />
-              )
-            )}
+            {CATEGORIES.map(category => (
+              <CategoryTab
+                key={category.value ?? 'all'}
+                label={category.label}              
+                isActive={activeCategory === category.value}
+                onClick={() => handleCategoryChange(category.value)}
+              />
+            ))}
           </div>
         </Card>
-
         {error && (
           <Card variant="default" padding="20px">
             <p
@@ -103,7 +118,6 @@ const ShopListPage = () => {
             </p>
           </Card>
         )}
-
         <Card padding="0">
           {isLoading ? (
             <div

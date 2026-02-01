@@ -1,8 +1,11 @@
 export const CATEGORIES = [
-  { value: '한식', label: '한식' },
-  { value: '중식', label: '중식' },
-  { value: '일식', label: '일식' },
-  { value: '양식', label: '양식' },
-  { value: '분식', label: '분식' },
-  { value: '카페', label: '카페' },
+  { value: null, label: '전체' },
+  { value: 'korean', label: '한식' },
+  { value: 'chinese', label: '중식' },
+  { value: 'japanese', label: '일식' },
+  { value: 'western', label: '양식' },
+  { value: 'snack', label: '분식' },
+  { value: 'cafe', label: '카페' },
+  { value: 'bar', label: '술/안주' },
+  { value: 'others', label: '기타' },
 ];
