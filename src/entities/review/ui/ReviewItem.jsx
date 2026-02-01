@@ -361,35 +361,10 @@ const ImageCounter = styled.div`
 `;
 
 export const ReviewItem = ({ review }) => {
-  if (!review) return null;
-
-  const { nickname, createdAt, content, rating, images } = review;
-  const displayDate = formatDate(createdAt);
-  const numericRating = Number(rating);
-  const ratingValue = Number.isFinite(numericRating) ? numericRating : 0;
+  const { nickname, createdAt, content, rating, images = [] } = review || {};
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  const handleImageClick = index => {
-    setCurrentImageIndex(index);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setCurrentImageIndex(0);
-  };
-
-  const handlePrevImage = e => {
-    e.stopPropagation();
-    setCurrentImageIndex(prev => Math.max(0, prev - 1));
-  };
-
-  const handleNextImage = e => {
-    e.stopPropagation();
-    setCurrentImageIndex(prev => Math.min((images?.length || 1) - 1, prev + 1));
-  };
 
   // 키보드 방향키로 넘기기
   React.useEffect(() => {
@@ -410,6 +385,32 @@ export const ReviewItem = ({ review }) => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isModalOpen, images]);
+
+  if (!review) return null;
+
+  const displayDate = formatDate(createdAt);
+  const numericRating = Number(rating);
+  const ratingValue = Number.isFinite(numericRating) ? numericRating : 0;
+
+  const handleImageClick = index => {
+    setCurrentImageIndex(index);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setCurrentImageIndex(0);
+  };
+
+  const handlePrevImage = e => {
+    e.stopPropagation();
+    setCurrentImageIndex(prev => Math.max(0, prev - 1));
+  };
+
+  const handleNextImage = e => {
+    e.stopPropagation();
+    setCurrentImageIndex(prev => Math.min((images?.length || 1) - 1, prev + 1));
+  };
 
   return (
     <>

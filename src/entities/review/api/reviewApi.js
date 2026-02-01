@@ -1,88 +1,82 @@
-const simulateDelay = (ms = 80) =>
-  new Promise(resolve => {
-    setTimeout(resolve, ms);
-  });
+import { API_BASE_URL, API_ENDPOINTS } from '@shared/config/api';
 
-const initialReviews = {
-  1: [
-    {
-      id: 'rv_1',
-      shopId: '1',
-      nickname: '리뷰왕',
-      rating: 5,
-      content: '여기는 진짜 환상의 국밥집이에요. 매일 가고 싶어요.',
-      createdAt: new Date(Date.now() - 1000 * 60 * 60).toISOString(),
-    },
-    {
-      id: 'rv_2',
-      shopId: '1',
-      nickname: '인덕군',
-      rating: 4,
-      content: '국물이 깊고 밥알도 살아 있어요.',
-      createdAt: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
-    },
-  ],
-  2: [
-    {
-      id: 'rv_3',
-      shopId: '2',
-      nickname: '짱맛러',
-      rating: 5,
-      content: '딤섬부터 볶음밥까지 하나하나 훌륭합니다.',
-      createdAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
-    },
-  ],
-};
+export const fetchRandomNickname = async () => {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}${API_ENDPOINTS.RANDOM_NICKNAME}`
+    );
 
-const reviewStore = { ...initialReviews };
+    if (!response.ok) {
+      throw new Error(`Failed to fetch random nickname: ${response.status}`);
+    }
 
-const ensureShopReviews = shopId => {
-  if (!reviewStore[shopId]) {
-    reviewStore[shopId] = [];
+    const data = await response.json();
+    return data.nickname;
+  } catch (error) {
+    console.error('Error fetching random nickname:', error);
+    throw error;
   }
-  return reviewStore[shopId];
 };
-
-const sortByNewest = reviews =>
-  [...reviews].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
-const sanitizeReview = review => ({
-  id: review?.id || `rv_${Date.now().toString(36)}`,
-  shopId: review.shopId,
-  nickname: review?.nickname || '익명',
-  rating: Number(review?.rating) || 0,
-  content: (review?.content || '').trim(),
-  createdAt: review?.createdAt || new Date().toISOString(),
-  images: Array.isArray(review?.images)
-    ? review.images
-        .map(img => (typeof img === 'string' ? img : img?.preview))
-        .filter(Boolean)
-    : [],
-});
 
 export const fetchReviewsByShop = async shopId => {
-  await simulateDelay();
+  if (!shopId) {
+    throw new Error('shopId is required');
+  }
 
-  if (!shopId) return [];
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}${API_ENDPOINTS.SHOP_REVIEWS(shopId)}`
+    );
 
-  return sortByNewest(ensureShopReviews(shopId));
+    if (!response.ok) {
+      throw new Error(`Failed to fetch reviews: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching reviews:', error);
+    throw error;
+  }
 };
 
-export const saveReviewForShop = async (shopId, review) => {
+export const saveReviewForShop = async (shopId, reviewData) => {
   if (!shopId) {
     throw new Error('shopId is required to save a review.');
   }
 
-  console.log('saveReviewForShop - received review:', review); // 디버깅
-  const safeReview = sanitizeReview({ ...review, shopId });
-  console.log('saveReviewForShop - sanitized review:', safeReview); // 디버깅
-  const target = ensureShopReviews(shopId);
-  target.unshift(safeReview);
+  try {
+    const formData = new FormData();
+    formData.append('nickname', reviewData.nickname);
+    formData.append('rating', reviewData.rating);
+    formData.append('content', reviewData.content);
 
-  return safeReview;
-};
+    if (reviewData.images && reviewData.images.length > 0) {
+      reviewData.images.forEach(imageObj => {
+        if (imageObj.file) {
+          formData.append('images', imageObj.file);
+        } else if (imageObj instanceof File) {
+          // 순수 파일 객체가 올 경우
+          formData.append('images', imageObj);
+        }
+      });
+    }
 
-export const clearReviews = shopId => {
-  if (!shopId) return;
-  delete reviewStore[shopId];
+    const response = await fetch(
+      `${API_BASE_URL}${API_ENDPOINTS.SHOP_REVIEWS(shopId)}`,
+      {
+        method: 'POST',
+        body: formData,
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`Failed to submit review: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error submitting review:', error);
+    throw error;
+  }
 };
