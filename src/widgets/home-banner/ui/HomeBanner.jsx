@@ -78,7 +78,7 @@ const LogoImage = styled.img`
   opacity: 0.9;
   filter: brightness(0) invert(1);
   pointer-events: none;
-  zindex: 1;
+  z-index: 1;
 
   ${media.tablet} {
     height: 200px;
@@ -136,7 +136,9 @@ export const HomeBanner = () => {
             justifyContent: 'center',
           }}
         >
-          {CATEGORIES.map(category => (
+          {CATEGORIES
+          .filter(category => category.value !== null)
+          .map(category => (
             <CategoryTab
               key={category.value}
               label={category.label}

@@ -25,21 +25,18 @@ const TabButton = styled.button`
     border-color: ${({ isActive }) => (isActive ? 'none' : '#cbd5e1')};
   }
 
-  /* Tablet */
   ${media.tablet} {
     padding: 12px 22px;
     font-size: 15px;
     border-radius: 10px;
   }
 
-  /* Mobile */
   ${media.mobile} {
     padding: 8px 14px;
     font-size: 13px;
     border-radius: 8px;
   }
 
-  /* Small Mobile */
   ${media.mobileS} {
     padding: 6px 10px;
     font-size: 12px;
@@ -49,7 +46,7 @@ const TabButton = styled.button`
 
 export const CategoryTab = ({ label, isActive, onClick }) => {
   return (
-    <TabButton isActive={isActive} onClick={onClick}>
+    <TabButton type="button" isActive={isActive} onClick={onClick}>
       {label}
     </TabButton>
   );
