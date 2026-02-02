@@ -136,16 +136,16 @@ export const HomeBanner = () => {
             justifyContent: 'center',
           }}
         >
-          {CATEGORIES
-          .filter(category => category.value !== null)
-          .map(category => (
-            <CategoryTab
-              key={category.value}
-              label={category.label}
-              isActive={activeCategory === category.value}
-              onClick={() => handleCategoryClick(category.value)}
-            />
-          ))}
+          {CATEGORIES.filter(category => category.value !== null).map(
+            category => (
+              <CategoryTab
+                key={category.value}
+                label={category.label}
+                isActive={activeCategory === category.value}
+                onClick={() => handleCategoryClick(category.value)}
+              />
+            )
+          )}
         </div>
       </div>
     </BackgroundSection>

@@ -97,7 +97,7 @@ const ShopListPage = () => {
             {CATEGORIES.map(category => (
               <CategoryTab
                 key={category.value ?? 'all'}
-                label={category.label}              
+                label={category.label}
                 isActive={activeCategory === category.value}
                 onClick={() => handleCategoryChange(category.value)}
               />
