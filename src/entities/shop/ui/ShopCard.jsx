@@ -4,7 +4,7 @@ import { media } from '@shared/config/media';
 import { Card } from '@shared/ui/Card/Card';
 import { Button } from '@shared/ui/Button/Button';
 import { Phone, Map01 } from '@untitledui/icons';
-import defaultFoodImage from '../../../shared/assets/image/food.webp';
+import defaultFoodImage from '../../../shared/assets/image/default.png';
 
 /* ShopCard (리스트용) */
 
@@ -90,7 +90,7 @@ const Content = styled.div`
 `;
 
 const Title = styled.h3`
-  margin: 0;
+  margin-bottom: 8px;
   font-size: 22px;
   font-weight: 700;
   color: #1b2a55;
@@ -132,18 +132,21 @@ export const ShopCard = ({ shop, onSelect }) => {
 
   return (
     <CardWrapper padding="0">
-      <ImageWrapper> 
-        <img src={shop.thumbnail || defaultFoodImage} 
-        alt={shop.name} 
-        /> 
-        <CategoryTag>
-          {shop.category}
-        </CategoryTag> 
+      <ImageWrapper>
+        <img src={shop.thumbnail || defaultFoodImage} alt={shop.name} />
+        <CategoryTag>{shop.category}</CategoryTag>
       </ImageWrapper>
 
       <Content>
         <div>
           <Title>{shop.name}</Title>
+
+          {shop.averageRating != null && (
+            <span className="shop-rating">
+              ⭐ {shop.averageRating.toFixed(1)}
+              {shop.reviewCount > 0 && ` (${shop.reviewCount})`}
+            </span>
+  )}
         </div>
 
         <DetailButton variant="primary" onClick={() => onSelect?.(shop)}>
