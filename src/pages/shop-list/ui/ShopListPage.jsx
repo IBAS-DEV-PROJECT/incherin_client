@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { CATEGORIES } from '@entities/category/data/categories';
@@ -19,26 +19,22 @@ const ShopListPage = () => {
   const [error, setError] = useState('');
 
   /**
-   * URL 쿼리 (?c=korean) → 상태 동기화
+   * URL (?c=korean) → 상태 동기화
    */
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const categoryFromQuery = params.get('c');
 
-    if (categoryFromQuery) {
-      setActiveCategory(categoryFromQuery);
-    } else {
-      setActiveCategory(null);
-    }
+    setActiveCategory(categoryFromQuery);
   }, [location.search]);
 
   /**
-   * 가게 목록 조회
+   * 가게 목록 조회 (카테고리 변경 시 재호출)
    */
   useEffect(() => {
     setIsLoading(true);
 
-    fetchShops()
+    fetchShops({ category: activeCategory })
       .then(data => {
         setShops(data);
         setError('');
@@ -47,18 +43,10 @@ const ShopListPage = () => {
         setError('가게 목록을 불러오지 못했어요. 잠시 후 다시 시도해주세요.');
       })
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [activeCategory]);
 
   /**
-   * 카테고리 필터링
-   */
-  const filteredShops = useMemo(() => {
-    if (!activeCategory) return shops;
-    return shops.filter(shop => shop.category === activeCategory);
-  }, [shops, activeCategory]);
-
-  /**
-   * 카테고리 변경 핸들러
+   * 카테고리 변경
    */
   const handleCategoryChange = categoryValue => {
     setActiveCategory(categoryValue);
@@ -104,13 +92,14 @@ const ShopListPage = () => {
             ))}
           </div>
         </Card>
+
         {error && (
           <Card variant="default" padding="20px">
             <p
               style={{
                 margin: 0,
                 color: '#c62828',
-                fontSize: '16px',
+                fontSize: 16,
                 fontWeight: 600,
               }}
             >
@@ -118,6 +107,7 @@ const ShopListPage = () => {
             </p>
           </Card>
         )}
+
         <Card padding="0">
           {isLoading ? (
             <div
@@ -130,10 +120,7 @@ const ShopListPage = () => {
               <Spinner showMessage={false} />
             </div>
           ) : (
-            <ShopListView
-              shops={filteredShops}
-              onSelectShop={handleSelectShop}
-            />
+            <ShopListView shops={shops} onSelectShop={handleSelectShop} />
           )}
         </Card>
       </main>

@@ -1,22 +1,8 @@
 import { API_BASE_URL, API_ENDPOINTS } from '../../../shared/config/api';
 
-const CATEGORY_MAP = {
-  한식: 'korean',
-  중식: 'chinese',
-  일식: 'japanese',
-  양식: 'western',
-  분식: 'snack',
-  '술/안주': 'bar',
-  카페: 'cafe',
-  기타: 'others',
-};
-
 // [GET] 가게 목록 조회
 export const fetchShops = async ({ category } = {}) => {
-  const apiCategory =
-    category && category !== '전체' ? CATEGORY_MAP[category] : null;
-
-  const query = apiCategory ? `?category=${apiCategory}` : '';
+  const query = category ? `?category=${category}` : '';
 
   const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.SHOPS}${query}`);
 
@@ -29,7 +15,7 @@ export const fetchShops = async ({ category } = {}) => {
   return data.stores.map(store => ({
     id: store.id,
     name: store.name,
-    category: store.category, // 서버에서 내려주는 값 그대로
+    category: store.category,
     image: store.thumbnail,
   }));
 };
@@ -53,11 +39,14 @@ export const fetchShopById = async id => {
 
   const data = await response.json();
 
+  console.log('API raw category:', data.category);
+
   return {
     id: data.id,
     name: data.name,
     category: data.category,
     phone: data.tel,
     address: data.address,
+    image: data.thumbnail,
   };
 };
