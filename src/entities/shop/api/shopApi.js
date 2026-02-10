@@ -17,7 +17,7 @@ export const fetchShops = async ({ category } = {}) => {
     name: store.name,
     category: store.category,
     image: store.thumbnail,
-    averageRating: store.averageRating, 
+    averageRating: store.averageRating,
     reviewCount: store.reviewCount,
   }));
 };

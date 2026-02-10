@@ -6,19 +6,17 @@ const TabButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 40px;  
+  min-height: 40px;
   padding: 14px 28px;
   font-size: 16px;
   font-weight: ${({ isActive }) => (isActive ? 700 : 500)};
   border-radius: 12px;
   border: ${({ isActive }) => (isActive ? 'none' : '1px solid #e2e8f0')};
   cursor: pointer;
-  white-space: nowrap; 
+  white-space: nowrap;
 
-  background-color: ${({ isActive }) =>
-    isActive ? '#0066cc' : '#ffffff'};
-  color: ${({ isActive }) =>
-    isActive ? '#ffffff' : '#475569'};
+  background-color: ${({ isActive }) => (isActive ? '#0066cc' : '#ffffff')};
+  color: ${({ isActive }) => (isActive ? '#ffffff' : '#475569')};
 
   box-shadow: ${({ isActive }) =>
     isActive
@@ -28,10 +26,8 @@ const TabButton = styled.button`
   transition: all 0.2s ease;
 
   &:hover {
-    background-color: ${({ isActive }) =>
-      isActive ? '#0066cc' : '#f8fafc'};
-    border-color: ${({ isActive }) =>
-      isActive ? 'none' : '#cbd5e1'};
+    background-color: ${({ isActive }) => (isActive ? '#0066cc' : '#f8fafc')};
+    border-color: ${({ isActive }) => (isActive ? 'none' : '#cbd5e1')};
   }
 
   ${media.tablet} {
@@ -55,11 +51,7 @@ const TabButton = styled.button`
   }
 `;
 
-export const CategoryTab = ({
-  label,
-  isActive = false,
-  onClick,
-}) => {
+export const CategoryTab = ({ label, isActive = false, onClick }) => {
   return (
     <TabButton
       type="button"

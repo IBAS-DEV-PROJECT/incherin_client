@@ -17,14 +17,12 @@ export const HomeCategoryWrapper = styled.div`
 
   ${media.mobile} {
     gap: 10px;
-
   }
 
   ${media.mobileS} {
     gap: 10px;
   }
 `;
-
 
 // 가게 목록 카테고리
 export const ShopListCategoryGrid = styled.div`
@@ -34,14 +32,14 @@ export const ShopListCategoryGrid = styled.div`
   width: 100%;
 
   ${media.tablet} {
-   grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 
   ${media.mobile} {
-   grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 
   ${media.mobileS} {
-   grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 `;
