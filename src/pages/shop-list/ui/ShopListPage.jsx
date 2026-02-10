@@ -78,10 +78,10 @@ const ShopListPage = () => {
       >
         {/* ===== 카테고리 탭 ===== */}
         <Card variant="default" padding="12px">
-            <ShopListCategoryTab
-              activeCategory={activeCategory}
-              onSelect={handleCategoryChange}
-            />
+          <ShopListCategoryTab
+            activeCategory={activeCategory}
+            onSelect={handleCategoryChange}
+          />
         </Card>
 
         {error && (

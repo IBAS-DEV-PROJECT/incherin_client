@@ -146,7 +146,7 @@ export const ShopCard = ({ shop, onSelect }) => {
               ⭐ {shop.averageRating.toFixed(1)}
               {shop.reviewCount > 0 && ` (${shop.reviewCount})`}
             </span>
-  )}
+          )}
         </div>
 
         <DetailButton variant="primary" onClick={() => onSelect?.(shop)}>

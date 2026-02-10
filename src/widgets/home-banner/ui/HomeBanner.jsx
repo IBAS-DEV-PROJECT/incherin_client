@@ -71,30 +71,24 @@ const BannerDescription = styled.p`
 // 로고 이미지
 const LogoImage = styled.img`
   position: absolute;
-  right: 9%;
-  bottom: 5%;
+  right: 8%;
+  bottom: 0%;
   height: 260px;
-  opacity: 0.9;
   filter: brightness(0) invert(1);
   pointer-events: none;
   z-index: 1;
 
   ${media.tablet} {
     height: 200px;
-    right: 5%;
-    bottom: 2%;
+    right: 0%;
   }
   ${media.mobile} {
-    height: 200px;
+    height: 190px;
     right: 5%;
-    bottom: 2%;
-    opacity: 0.5;
   }
   ${media.mobileS} {
-    height: 200px;
+    height: 190px;
     right: 5%;
-    bottom: 2%;
-    opacity: 0.5;
   }
 `;
 
@@ -130,7 +124,7 @@ export const HomeBanner = () => {
         <HomeCategoryTab
           activeCategory={activeCategory}
           onSelect={handleCategoryClick}
-         />
+        />
       </div>
     </BackgroundSection>
   );
