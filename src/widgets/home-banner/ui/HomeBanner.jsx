@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CategoryTab } from '@entities/category/ui/CategoryTab';
-import { CATEGORIES } from '@entities/category/data/categories';
 import induckLogo from '@shared/assets/image/induck-line-logo.png';
 import blueBg from '@shared/assets/image/blue.png';
 import styled from '@emotion/styled';
 import { media } from '@shared/config/media';
+import { HomeCategoryTab } from '@widgets/category-tabs';
 
 // 배경 섹션
 const BackgroundSection = styled.div`
@@ -128,25 +127,10 @@ export const HomeBanner = () => {
           가이드입니다:)
         </BannerDescription>
 
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '12px',
-            justifyContent: 'center',
-          }}
-        >
-          {CATEGORIES.filter(category => category.value !== null).map(
-            category => (
-              <CategoryTab
-                key={category.value}
-                label={category.label}
-                isActive={activeCategory === category.value}
-                onClick={() => handleCategoryClick(category.value)}
-              />
-            )
-          )}
-        </div>
+        <HomeCategoryTab
+          activeCategory={activeCategory}
+          onSelect={handleCategoryClick}
+         />
       </div>
     </BackgroundSection>
   );

@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-
-import { CATEGORIES } from '@entities/category/data/categories';
-import { CategoryTab } from '@entities/category/ui/CategoryTab';
 import { ShopListView } from '@widgets/shop-list-view';
 import { fetchShops } from '@entities/shop/api/shopApi';
-
 import { Card } from '@shared/ui';
 import { Spinner } from '@shared/ui/Spinner';
+import { ShopListCategoryTab } from '@widgets/category-tabs';
 
 const ShopListPage = () => {
   const navigate = useNavigate();
@@ -80,17 +77,11 @@ const ShopListPage = () => {
         }}
       >
         {/* ===== 카테고리 탭 ===== */}
-        <Card variant="default" padding="20px">
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-            {CATEGORIES.map(category => (
-              <CategoryTab
-                key={category.value ?? 'all'}
-                label={category.label}
-                isActive={activeCategory === category.value}
-                onClick={() => handleCategoryChange(category.value)}
-              />
-            ))}
-          </div>
+        <Card variant="default" padding="12px">
+            <ShopListCategoryTab
+              activeCategory={activeCategory}
+              onSelect={handleCategoryChange}
+            />
         </Card>
 
         {error && (
