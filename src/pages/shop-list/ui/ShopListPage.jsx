@@ -10,24 +10,15 @@ const ShopListPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [activeCategory, setActiveCategory] = useState(null);
+  const [activeCategory, setActiveCategory] = useState(() => {
+    const params = new URLSearchParams(location.search);
+    return params.get('c');
+  });
   const [shops, setShops] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  /**
-   * URL (?c=korean) → 상태 동기화
-   */
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const categoryFromQuery = params.get('c');
-
-    setActiveCategory(categoryFromQuery);
-  }, [location.search]);
-
-  /**
-   * 가게 목록 조회 (카테고리 변경 시 재호출)
-   */
+  /*가게 목록 조회*/
   useEffect(() => {
     setIsLoading(true);
 
@@ -42,10 +33,10 @@ const ShopListPage = () => {
       .finally(() => setIsLoading(false));
   }, [activeCategory]);
 
-  /**
-   * 카테고리 변경
-   */
+  /* 카테고리 변경 */
   const handleCategoryChange = categoryValue => {
+    if (categoryValue === activeCategory) return;
+
     setActiveCategory(categoryValue);
 
     const params = new URLSearchParams();
@@ -58,9 +49,7 @@ const ShopListPage = () => {
     });
   };
 
-  /**
-   * 가게 선택 → 상세 페이지 이동
-   */
+  /* 가게 선택 → 상세 페이지 이동 */
   const handleSelectShop = shop => {
     navigate(`/shops/${shop.id}`);
   };
@@ -76,12 +65,11 @@ const ShopListPage = () => {
           gap: '32px',
         }}
       >
-        {/* ===== 카테고리 탭 ===== */}
         <Card variant="default" padding="12px">
-            <ShopListCategoryTab
-              activeCategory={activeCategory}
-              onSelect={handleCategoryChange}
-            />
+          <ShopListCategoryTab
+            activeCategory={activeCategory}
+            onSelect={handleCategoryChange}
+          />
         </Card>
 
         {error && (
