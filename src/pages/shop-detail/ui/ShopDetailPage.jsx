@@ -61,7 +61,10 @@ const ShopDetailPage = () => {
     if (!id) return;
 
     fetchReviewsByShop(id)
-      .then(list => setReviews(list))
+      .then(data => {
+        const actualList = Array.isArray(data) ? data : data.reviews || [];
+        setReviews(actualList);
+      })
       .catch(() => setReviews([]));
   }, [id]);
 
@@ -84,7 +87,10 @@ const ShopDetailPage = () => {
           images,
         });
 
-        setReviews(prev => [saved, ...prev]);
+        setReviews(prev => {
+          const safePrev = Array.isArray(prev) ? prev : [];
+          return [saved, ...safePrev];
+        });
       } catch (error) {
         throw error;
       } finally {

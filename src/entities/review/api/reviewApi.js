@@ -47,6 +47,7 @@ export const saveReviewForShop = async (shopId, reviewData) => {
 
   try {
     const formData = new FormData();
+    formData.append('shopId', Number(shopId));
     formData.append('nickname', reviewData.nickname);
     formData.append('rating', reviewData.rating);
     formData.append('content', reviewData.content);
