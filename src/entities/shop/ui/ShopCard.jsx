@@ -133,7 +133,7 @@ export const ShopCard = ({ shop, onSelect }) => {
   return (
     <CardWrapper padding="0">
       <ImageWrapper>
-        <img src={shop.thumbnail || defaultFoodImage} alt={shop.name} />
+        <img src={shop.image || defaultFoodImage} alt={shop.name} />
         <CategoryTag>{shop.category}</CategoryTag>
       </ImageWrapper>
 
