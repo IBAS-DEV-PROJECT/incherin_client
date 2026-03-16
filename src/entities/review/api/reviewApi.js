@@ -1,3 +1,4 @@
+import imageCompression from 'browser-image-compression';
 import { API_BASE_URL, API_ENDPOINTS } from '@shared/config/api';
 
 export const fetchRandomNickname = async () => {
@@ -52,15 +53,38 @@ export const saveReviewForShop = async (shopId, reviewData) => {
     formData.append('rating', reviewData.rating);
     formData.append('content', reviewData.content);
 
+    // 이미지 압축 옵션 설정
+    const compressionOptions = {
+      maxWidthOrHeight: 1280, // 가로/세로 최대 1280px
+      maxSizeMB: 1, // 최대 1MB
+      useWebWorker: true,
+    };
+
     if (reviewData.images && reviewData.images.length > 0) {
-      reviewData.images.forEach(imageObj => {
-        if (imageObj.file) {
-          formData.append('images', imageObj.file);
-        } else if (imageObj instanceof File) {
-          // 순수 파일 객체가 올 경우
-          formData.append('images', imageObj);
+      for (const imageObj of reviewData.images) {
+        const fileToUpload =
+          imageObj.file || (imageObj instanceof File ? imageObj : null);
+
+        if (fileToUpload) {
+          try {
+            // 이미지 리사이징 및 압축
+            const compressedBlob = await imageCompression(
+              fileToUpload,
+              compressionOptions
+            );
+
+            const finalFile = new File([compressedBlob], fileToUpload.name, {
+              type: fileToUpload.type,
+            });
+
+            formData.append('images', finalFile);
+            console.log(`${fileToUpload.name} 리사이징 완료!`);
+          } catch (err) {
+            console.error('압축 실패, 원본 전송:', err);
+            formData.append('images', fileToUpload);
+          }
         }
-      });
+      }
     }
 
     const response = await fetch(
